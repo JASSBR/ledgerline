@@ -20,7 +20,10 @@
     <Project Path="src/Services/Payments/Ledgerline.Payments/Ledgerline.Payments.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests/Ledgerline.ArchitectureTests/Ledgerline.ArchitectureTests.csproj" />
+    <Project Path="tests/Ledgerline.Fraud.Tests/Ledgerline.Fraud.Tests.csproj" />
     <Project Path="tests/Ledgerline.IntegrationTests/Ledgerline.IntegrationTests.csproj" />
     <Project Path="tests/Ledgerline.Ledger.Domain.Tests/Ledgerline.Ledger.Domain.Tests.csproj" />
+    <Project Path="tests/Ledgerline.Payments.Tests/Ledgerline.Payments.Tests.csproj" />
   </Folder>
 </Solution>

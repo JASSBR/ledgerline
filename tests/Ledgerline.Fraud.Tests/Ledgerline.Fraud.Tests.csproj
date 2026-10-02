@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Services\Fraud\Ledgerline.Fraud.Domain\Ledgerline.Fraud.Domain.csproj" />
+  </ItemGroup>
+</Project>

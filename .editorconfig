@@ -48,3 +48,9 @@ dotnet_diagnostic.MA0004.severity = none
 [**/Migrations/*.cs]
 # EF Core migrations are generated code: analyzers don't apply to them.
 generated_code = true
+
+[tests/**.cs]
+# Assertions compare ASCII identifiers (rule names, codes): culture-sensitive comparison cannot occur, so the
+# string-comparison rules only add noise here. Production code keeps them as errors.
+dotnet_diagnostic.MA0006.severity = none
+dotnet_diagnostic.MA0002.severity = none

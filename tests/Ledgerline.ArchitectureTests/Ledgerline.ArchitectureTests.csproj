@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <PackageReference Include="NetArchTest.Rules" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Services\Ledger\Ledgerline.Ledger\Ledgerline.Ledger.csproj" />
+    <ProjectReference Include="..\..\src\Services\Payments\Ledgerline.Payments\Ledgerline.Payments.csproj" />
+    <ProjectReference Include="..\..\src\Services\Fraud\Ledgerline.Fraud\Ledgerline.Fraud.csproj" />
+  </ItemGroup>
+</Project>
