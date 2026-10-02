@@ -1,0 +1,18 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Ledgerline.AppHost/Ledgerline.AppHost.csproj" />
+    <Project Path="src/Ledgerline.Contracts/Ledgerline.Contracts.csproj" />
+    <Project Path="src/Ledgerline.Hosting/Ledgerline.Hosting.csproj" />
+    <Project Path="src/Ledgerline.ServiceDefaults/Ledgerline.ServiceDefaults.csproj" />
+    <Project Path="src/Ledgerline.SharedKernel/Ledgerline.SharedKernel.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/" />
+  <Folder Name="/src/Services/Ledger/">
+    <Project Path="src/Services/Ledger/Ledgerline.Ledger.Domain/Ledgerline.Ledger.Domain.csproj" />
+    <Project Path="src/Services/Ledger/Ledgerline.Ledger/Ledgerline.Ledger.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Ledgerline.IntegrationTests/Ledgerline.IntegrationTests.csproj" />
+    <Project Path="tests/Ledgerline.Ledger.Domain.Tests/Ledgerline.Ledger.Domain.Tests.csproj" />
+  </Folder>
+</Solution>

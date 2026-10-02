@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <PackageReference Include="CsCheck" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Services\Ledger\Ledgerline.Ledger.Domain\Ledgerline.Ledger.Domain.csproj" />
+  </ItemGroup>
+</Project>

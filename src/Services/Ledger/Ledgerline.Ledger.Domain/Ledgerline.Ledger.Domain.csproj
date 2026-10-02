@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- The ledger's rules, as pure functions over immutable state. No Marten, no Wolverine, no ASP.NET Core. -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Ledgerline.SharedKernel\Ledgerline.SharedKernel.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,3 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Result and Error types shared by every service's domain: no dependency at all (ArchitectureTests). -->
+</Project>

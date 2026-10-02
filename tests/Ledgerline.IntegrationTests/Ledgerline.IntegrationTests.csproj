@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+    <PackageReference Include="Testcontainers.PostgreSql" />
+    <PackageReference Include="Testcontainers.RabbitMq" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Services\Ledger\Ledgerline.Ledger\Ledgerline.Ledger.csproj" />
+  </ItemGroup>
+</Project>

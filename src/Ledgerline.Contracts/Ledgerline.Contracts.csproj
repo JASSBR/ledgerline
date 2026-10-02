@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    Messages exchanged between services over RabbitMQ. Rules (ADR 0003):
+    primitives and strings only (no domain types), additive changes only, a breaking change is a new message type.
+  -->
+</Project>

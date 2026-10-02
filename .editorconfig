@@ -1,0 +1,50 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
+
+[*.{json,yml,yaml,props,csproj,ts,html,scss,md}]
+indent_size = 2
+
+[*.cs]
+csharp_style_namespace_declarations = file_scoped:warning
+csharp_prefer_primary_constructors = true:suggestion
+dotnet_style_qualification_for_field = false:warning
+csharp_style_var_for_built_in_types = true:suggestion
+csharp_using_directive_placement = outside_namespace:warning
+dotnet_sort_system_directives_first = true
+
+# Unused usings fail the build (IDE0005 needs GenerateDocumentationFile to run in build, so it stays a suggestion).
+dotnet_diagnostic.IDE0005.severity = suggestion
+
+# CA1515 (make public types internal) fights minimal-API + WebApplicationFactory, which need public entry points.
+dotnet_diagnostic.CA1515.severity = none
+# MA0048 (file name must match type name) is too strict for small records co-located with their feature.
+dotnet_diagnostic.MA0048.severity = none
+# CA1848 (LoggerMessage delegates) is enforced instead through [LoggerMessage] source generation where logging is hot.
+dotnet_diagnostic.CA1848.severity = suggestion
+
+[tests/**.cs]
+# Test method names use underscores (Method_Outcome_WhenCondition) on purpose.
+dotnet_diagnostic.CA1707.severity = none
+# xUnit test classes are instantiated by the runner, never "sealed by design".
+dotnet_diagnostic.CA1852.severity = none
+
+[src/Ledgerline.SharedKernel/Result.cs]
+# CA1716: "Error" is only reserved in VB.NET; this assembly is never consumed from VB, and Error is the idiomatic name.
+dotnet_diagnostic.CA1716.severity = none
+
+[*.cs]
+# ASP.NET Core has no SynchronizationContext, so ConfigureAwait(false) is noise in this codebase (no library is shipped).
+dotnet_diagnostic.CA2007.severity = none
+dotnet_diagnostic.MA0004.severity = none
+
+
+[**/Migrations/*.cs]
+# EF Core migrations are generated code: analyzers don't apply to them.
+generated_code = true

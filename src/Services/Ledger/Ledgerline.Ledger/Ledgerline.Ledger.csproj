@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <!-- Ledger service: the books. Event-sourced accounts, double-entry journal, holds. -->
+  <ItemGroup>
+    <ProjectReference Include="..\Ledgerline.Ledger.Domain\Ledgerline.Ledger.Domain.csproj" />
+    <ProjectReference Include="..\..\..\Ledgerline.Hosting\Ledgerline.Hosting.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="Ledgerline.IntegrationTests" />
+  </ItemGroup>
+</Project>

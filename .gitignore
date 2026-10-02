@@ -1,0 +1,17 @@
+bin/
+obj/
+*.user
+.vs/
+.idea/
+TestResults/
+coverage/
+*.swp
+.DS_Store
+node_modules/
+dist/
+.angular/
+deploy/.azure.env
+.vercel/
+deploy/terraform/.terraform/
+deploy/terraform/*.tfstate*
+deploy/terraform/*.tfvars

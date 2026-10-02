@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- What every Ledgerline service shares: persistence, messaging, security and HTTP conventions. -->
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Marten" />
+    <PackageReference Include="WolverineFx.Marten" />
+    <PackageReference Include="WolverineFx.RabbitMQ" />
+    <!-- Compiles handler pipelines at startup when no pre-generated code exists (development, tests). -->
+    <PackageReference Include="WolverineFx.RuntimeCompilation" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+    <PackageReference Include="Scalar.AspNetCore" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ledgerline.SharedKernel\Ledgerline.SharedKernel.csproj" />
+    <ProjectReference Include="..\Ledgerline.Contracts\Ledgerline.Contracts.csproj" />
+    <ProjectReference Include="..\Ledgerline.ServiceDefaults\Ledgerline.ServiceDefaults.csproj" />
+  </ItemGroup>
+</Project>
