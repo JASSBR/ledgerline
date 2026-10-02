@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Transfer request rules and lifecycle vocabulary, independent of messaging and persistence. -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Ledgerline.SharedKernel\Ledgerline.SharedKernel.csproj" />
+  </ItemGroup>
+</Project>

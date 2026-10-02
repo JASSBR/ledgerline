@@ -7,7 +7,12 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Ledgerline.IntegrationTests.Support;
 
 /// <summary>Boots one real service (Marten, Wolverine, RabbitMQ) on a fresh database, with test authentication.</summary>
-public class ServiceFactory<TEntryPoint>(string connectionStringName, string databaseConnectionString, string rabbitConnectionString, bool seed)
+public class ServiceFactory<TEntryPoint>(
+    string connectionStringName,
+    string databaseConnectionString,
+    string rabbitConnectionString,
+    bool seed,
+    IReadOnlyDictionary<string, string>? settings = null)
     : WebApplicationFactory<TEntryPoint>
     where TEntryPoint : class
 {
@@ -19,6 +24,11 @@ public class ServiceFactory<TEntryPoint>(string connectionStringName, string dat
         builder.UseSetting("ConnectionStrings:messaging", rabbitConnectionString);
         builder.UseSetting("Demo:Seed", seed ? "true" : "false");
         builder.UseSetting("Auth:Authority", "https://keycloak.invalid/realms/test");
+        foreach (var (key, value) in settings ?? new Dictionary<string, string>(StringComparer.Ordinal))
+        {
+            builder.UseSetting(key, value);
+        }
+
         builder.ConfigureTestServices(services =>
         {
             services.AddAuthentication(TestAuthenticationHandler.SchemeName)

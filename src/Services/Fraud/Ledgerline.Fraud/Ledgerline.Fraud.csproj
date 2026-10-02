@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <!-- Fraud service: screens transfers with explainable rules and runs the analysts' review queue. -->
+  <ItemGroup>
+    <ProjectReference Include="..\Ledgerline.Fraud.Domain\Ledgerline.Fraud.Domain.csproj" />
+    <ProjectReference Include="..\..\..\Ledgerline.Hosting\Ledgerline.Hosting.csproj" />
+  </ItemGroup>
+</Project>

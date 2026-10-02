@@ -28,6 +28,9 @@ public static class LedgerlineServiceExtensions
     public const string CustomerPolicy = "customer";
     public const string OperatorPolicy = "operator";
 
+    private static readonly TimeSpan[] ConcurrencyBackoff =
+        [.. new[] { 10, 25, 50, 100, 200, 300, 500, 800, 1_000, 1_500 }.Select(ms => TimeSpan.FromMilliseconds(ms))];
+
     /// <summary>
     /// The shared skeleton of a Ledgerline service:
     /// Marten (documents + event store) on the service's own database and schema, Wolverine with a transactional
@@ -104,7 +107,9 @@ public static class LedgerlineServiceExtensions
             options.Policies.UseDurableOutboxOnAllSendingEndpoints();
 
             // Two writers on the same account stream: the loser retries against fresh state instead of failing.
-            options.OnException<ConcurrencyException>().RetryWithCooldown(TimeSpan.FromMilliseconds(25), TimeSpan.FromMilliseconds(100), TimeSpan.FromMilliseconds(250));
+            // Backoff grows so that a burst of payments on one account (the concurrency test fires 20 at once) drains.
+            options.OnException<ConcurrencyException>().RetryWithCooldown(ConcurrencyBackoff);
+            options.OnException<EventStreamUnexpectedMaxEventIdException>().RetryWithCooldown(ConcurrencyBackoff);
 
             var rabbit = builder.Configuration.GetConnectionString(MessagingConnectionName)
                 ?? throw new InvalidOperationException($"Connection string '{MessagingConnectionName}' is missing.");

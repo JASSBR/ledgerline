@@ -9,7 +9,6 @@ public sealed class Infrastructure : IAsyncLifetime
     private readonly PostgreSqlContainer _postgres = new PostgreSqlBuilder("postgres:18-alpine").Build();
     private readonly RabbitMqContainer _rabbit = new RabbitMqBuilder("rabbitmq:4-management-alpine").Build();
 
-    public string RabbitConnectionString => _rabbit.GetConnectionString();
 
     public async ValueTask InitializeAsync() => await Task.WhenAll(_postgres.StartAsync(), _rabbit.StartAsync());
 
@@ -17,6 +16,25 @@ public sealed class Infrastructure : IAsyncLifetime
     {
         await _postgres.DisposeAsync();
         await _rabbit.DisposeAsync();
+    }
+
+    /// <summary>
+    /// A RabbitMQ virtual host per group of services under test: queues are named by service and message type,
+    /// so two groups sharing a vhost would consume each other's messages.
+    /// </summary>
+    public async Task<string> CreateVirtualHostAsync(string name)
+    {
+        var vhost = $"{name}-{Guid.NewGuid():N}";
+        foreach (var command in new[] { new[] { "rabbitmqctl", "add_vhost", vhost }, ["rabbitmqctl", "set_permissions", "-p", vhost, "rabbitmq", ".*", ".*", ".*"] })
+        {
+            var result = await _rabbit.ExecAsync(command);
+            if (result.ExitCode != 0)
+            {
+                throw new InvalidOperationException(result.Stderr);
+            }
+        }
+
+        return new UriBuilder(_rabbit.GetConnectionString()) { Path = "/" + vhost }.Uri.ToString();
     }
 
     /// <summary>A fresh database per test class keeps classes independent without paying a container per class.</summary>

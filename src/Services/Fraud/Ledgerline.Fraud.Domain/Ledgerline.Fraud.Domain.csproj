@@ -1,0 +1,3 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Fraud rules as a pure function: facts in, verdict out. Unit-testable without a database or a broker. -->
+</Project>

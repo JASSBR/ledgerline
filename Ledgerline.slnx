@@ -7,9 +7,17 @@
     <Project Path="src/Ledgerline.SharedKernel/Ledgerline.SharedKernel.csproj" />
   </Folder>
   <Folder Name="/src/Services/" />
+  <Folder Name="/src/Services/Fraud/">
+    <Project Path="src/Services/Fraud/Ledgerline.Fraud.Domain/Ledgerline.Fraud.Domain.csproj" />
+    <Project Path="src/Services/Fraud/Ledgerline.Fraud/Ledgerline.Fraud.csproj" />
+  </Folder>
   <Folder Name="/src/Services/Ledger/">
     <Project Path="src/Services/Ledger/Ledgerline.Ledger.Domain/Ledgerline.Ledger.Domain.csproj" />
     <Project Path="src/Services/Ledger/Ledgerline.Ledger/Ledgerline.Ledger.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/Payments/">
+    <Project Path="src/Services/Payments/Ledgerline.Payments.Domain/Ledgerline.Payments.Domain.csproj" />
+    <Project Path="src/Services/Payments/Ledgerline.Payments/Ledgerline.Payments.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/Ledgerline.IntegrationTests/Ledgerline.IntegrationTests.csproj" />

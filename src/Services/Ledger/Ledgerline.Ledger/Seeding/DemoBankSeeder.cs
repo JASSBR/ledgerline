@@ -26,6 +26,7 @@ internal sealed partial class DemoBankSeeder(IServiceProvider services, TimeProv
         await bus.InvokeAsync(new OpenAccount(DemoAccounts.AliceSavings, "Alice Martin — Livret", DemoAccounts.AliceUserId, AccountKind.Customer), cancellationToken);
         await bus.InvokeAsync(new OpenAccount(DemoAccounts.BobCurrent, "Bob Durand — Compte courant", DemoAccounts.BobUserId, AccountKind.Customer), cancellationToken);
         await bus.InvokeAsync(new OpenAccount(DemoAccounts.ChloeCurrent, "Chloé Bernard — Compte courant", DemoAccounts.ChloeUserId, AccountKind.Customer), cancellationToken);
+        await bus.InvokeAsync(new OpenAccount(DemoAccounts.MuleAccount, "Société Écran SARL", "mule-owner", AccountKind.Customer, DemoAccounts.MuleAccountNumber), cancellationToken);
 
         // Value dates in the past: the "balance as of" view shows how each account got where it is.
         var today = time.GetUtcNow();

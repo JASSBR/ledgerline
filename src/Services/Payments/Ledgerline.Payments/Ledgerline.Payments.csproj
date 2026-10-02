@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <!-- Payments service: idempotent transfer requests and the transfer saga orchestrating Ledger and Fraud. -->
+  <ItemGroup>
+    <ProjectReference Include="..\Ledgerline.Payments.Domain\Ledgerline.Payments.Domain.csproj" />
+    <ProjectReference Include="..\..\..\Ledgerline.Hosting\Ledgerline.Hosting.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="Ledgerline.IntegrationTests" />
+    <InternalsVisibleTo Include="Ledgerline.Payments.Tests" />
+  </ItemGroup>
+</Project>

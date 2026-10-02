@@ -16,4 +16,9 @@ public static class DemoAccounts
     public static readonly Guid AliceSavings = Guid.Parse("01920000-0000-7000-8000-00000000a002");
     public static readonly Guid BobCurrent = Guid.Parse("01920000-0000-7000-8000-00000000b001");
     public static readonly Guid ChloeCurrent = Guid.Parse("01920000-0000-7000-8000-00000000c001");
+
+    /// <summary>A customer account whose IBAN is on Fraud's blocklist (FR76 9999 9000 0166 6666 6666 610).</summary>
+    public static readonly Guid MuleAccount = Guid.Parse("01920000-0000-7000-8000-00000000d001");
+
+    public const long MuleAccountNumber = 66_666_666_666;
 }

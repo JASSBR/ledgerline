@@ -22,7 +22,7 @@ public sealed class LedgerApiTests(Infrastructure infrastructure) : IAsyncLifeti
 
     public async ValueTask InitializeAsync()
     {
-        _ledger = new ServiceFactory<LedgerService>("ledgerdb", await infrastructure.CreateDatabaseAsync("ledger"), infrastructure.RabbitConnectionString, seed: true);
+        _ledger = new ServiceFactory<LedgerService>("ledgerdb", await infrastructure.CreateDatabaseAsync("ledger"), await infrastructure.CreateVirtualHostAsync("ledger"), seed: true);
         await _ledger.Services.GetRequiredService<IHost>().WaitForSeedAsync();
     }
 

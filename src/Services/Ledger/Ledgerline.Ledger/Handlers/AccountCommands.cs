@@ -5,7 +5,8 @@ using Marten;
 namespace Ledgerline.Ledger.Handlers;
 
 /// <summary>Opens an account. Local command: used by the seed and by operators.</summary>
-public sealed record OpenAccount(Guid AccountId, string Name, string? OwnerId, AccountKind Kind);
+/// <param name="AccountNumber">Fixed number for well-known demo accounts; random otherwise.</param>
+public sealed record OpenAccount(Guid AccountId, string Name, string? OwnerId, AccountKind Kind, long? AccountNumber = null);
 
 public static class OpenAccountHandler
 {
@@ -17,7 +18,7 @@ public static class OpenAccountHandler
             return null;
         }
 
-        var iban = Iban.ForAccountNumber(Random.Shared.NextInt64(1_000_000_000, 99_999_999_999)).Value;
+        var iban = Iban.ForAccountNumber(command.AccountNumber ?? Random.Shared.NextInt64(1_000_000_000, 99_999_999_999)).Value;
         session.Events.StartStream<Account>(command.AccountId, new AccountOpened(command.AccountId, iban, command.Name, command.OwnerId, command.Kind, time.GetUtcNow()));
         return new AccountRegistered(command.AccountId, iban, command.Name, command.OwnerId, command.Kind.ToString());
     }
