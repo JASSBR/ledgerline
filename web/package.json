@@ -12,7 +12,8 @@
     "test:coverage": "ng test --watch=false --coverage",
     "format:check": "prettier --check \"src/**/*.{ts,html,scss}\"",
     "e2e": "playwright test",
-    "i18n": "ng extract-i18n --output-path src/locale && python3 tools/build-translation.py"
+    "i18n": "ng extract-i18n --output-path src/locale && python3 tools/build-translation.py",
+    "start:kind": "ng serve -c kind --port 4200"
   },
   "private": true,
   "packageManager": "npm@11.19.0",
