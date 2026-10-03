@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: gateway }
+  template:
+    metadata:
+      labels: { app: gateway, tier: app }
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile: { type: RuntimeDefault }
+      containers:
+        - name: gateway
+          image: ledgerline-gateway
+          imagePullPolicy: IfNotPresent
+          ports: [{ containerPort: 8080, name: http }]
+          env:
+            # Service discovery: YARP resolves "https+http://ledger" from these entries.
+            - { name: services__ledger__http__0, value: http://ledger:8080 }
+            - { name: services__payments__http__0, value: http://payments:8080 }
+            - { name: services__fraud__http__0, value: http://fraud:8080 }
+            - { name: Cors__AllowedOrigins__0, value: http://localhost:4200 }
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: [ALL] }
+          startupProbe:
+            httpGet: { path: /alive, port: http }
+            periodSeconds: 3
+            failureThreshold: 40
+          livenessProbe:
+            httpGet: { path: /alive, port: http }
+            periodSeconds: 15
+          readinessProbe:
+            httpGet: { path: /health, port: http }
+            periodSeconds: 5
+          resources:
+            requests: { cpu: 100m, memory: 192Mi }
+            limits: { memory: 512Mi }
+          volumeMounts:
+            # Read-only root filesystem: .NET and Wolverine's runtime code generation still need a scratch directory.
+            - { name: tmp, mountPath: /tmp }
+      volumes:
+        - name: tmp
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway
+spec:
+  selector: { app: gateway }
+  ports: [{ name: http, port: 8080, targetPort: http }]

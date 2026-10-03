@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: keycloak }
+  template:
+    metadata:
+      labels: { app: keycloak }
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        seccompProfile: { type: RuntimeDefault }
+      containers:
+        - name: keycloak
+          image: quay.io/keycloak/keycloak:26.6
+          # Dev mode (embedded H2): the realm is re-imported on every start, so the demo users are always the documented ones.
+          args: [start-dev, --import-realm, --health-enabled=true]
+          ports:
+            - { containerPort: 8080, name: http }
+            - { containerPort: 9000, name: management }
+          env:
+            - { name: KC_BOOTSTRAP_ADMIN_USERNAME, value: admin }
+            - name: KC_BOOTSTRAP_ADMIN_PASSWORD
+              valueFrom: { secretKeyRef: { name: ledgerline-secrets, key: keycloak-admin-password } }
+            # Tokens carry this issuer; the services validate it, so every client must use the same URL.
+            - { name: KC_HOSTNAME, value: http://keycloak:8080 }
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities: { drop: [ALL] }
+          readinessProbe:
+            httpGet: { path: /health/ready, port: management }
+            initialDelaySeconds: 20
+            periodSeconds: 5
+          resources:
+            requests: { cpu: 200m, memory: 512Mi }
+            limits: { memory: 1Gi }
+          volumeMounts:
+            - { name: realm, mountPath: /opt/keycloak/data/import, readOnly: true }
+      volumes:
+        - name: realm
+          configMap: { name: keycloak-realm }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: keycloak
+spec:
+  selector: { app: keycloak }
+  ports: [{ name: http, port: 8080, targetPort: http }]

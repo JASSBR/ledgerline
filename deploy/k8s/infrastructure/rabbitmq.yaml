@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: rabbitmq }
+  template:
+    metadata:
+      labels: { app: rabbitmq }
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 999
+        fsGroup: 999
+        seccompProfile: { type: RuntimeDefault }
+      containers:
+        - name: rabbitmq
+          image: rabbitmq:4-management
+          ports:
+            - { containerPort: 5672, name: amqp }
+            - { containerPort: 15672, name: management }
+          env:
+            - { name: RABBITMQ_DEFAULT_USER, value: ledgerline }
+            - name: RABBITMQ_DEFAULT_PASS
+              valueFrom: { secretKeyRef: { name: ledgerline-secrets, key: rabbitmq-password } }
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities: { drop: [ALL] }
+          readinessProbe:
+            exec: { command: [rabbitmq-diagnostics, -q, check_port_connectivity] }
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 10
+          resources:
+            requests: { cpu: 100m, memory: 256Mi }
+            limits: { memory: 512Mi }
+          volumeMounts:
+            - { name: data, mountPath: /var/lib/rabbitmq }
+      volumes:
+        - name: data
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq
+spec:
+  selector: { app: rabbitmq }
+  ports: [{ name: amqp, port: 5672, targetPort: amqp }]

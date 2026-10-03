@@ -1,0 +1,9 @@
+**/bin/
+**/obj/
+**/TestResults/
+web/
+tests/
+deploy/
+docs/
+.git/
+.claude/

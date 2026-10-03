@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ledgerline
+  labels:
+    # Every pod must run as non-root without privilege escalation (the chiseled images already do).
+    pod-security.kubernetes.io/enforce: restricted

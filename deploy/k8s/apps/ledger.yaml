@@ -1,0 +1,65 @@
+# One replica: the demo seeder runs at startup; the services themselves are stateless.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ledger
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: ledger }
+  template:
+    metadata:
+      labels: { app: ledger, tier: app }
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile: { type: RuntimeDefault }
+      containers:
+        - name: ledger
+          image: ledgerline-ledger
+          imagePullPolicy: IfNotPresent
+          ports: [{ containerPort: 8080, name: http }]
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom: { secretKeyRef: { name: ledgerline-secrets, key: postgres-password } }
+            - name: RABBITMQ_PASSWORD
+              valueFrom: { secretKeyRef: { name: ledgerline-secrets, key: rabbitmq-password } }
+            # $(VAR) expands the variables above: the secret never sits in a manifest.
+            - name: ConnectionStrings__ledgerdb
+              value: Host=postgres;Database=ledgerdb;Username=postgres;Password=$(POSTGRES_PASSWORD)
+            - name: ConnectionStrings__messaging
+              value: amqp://ledgerline:$(RABBITMQ_PASSWORD)@rabbitmq:5672
+            - { name: Auth__Authority, value: http://keycloak:8080/realms/ledgerline }
+            - { name: Auth__RequireHttpsMetadata, value: "false" }
+            - { name: Demo__Seed, value: "true" }
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: [ALL] }
+          startupProbe:
+            httpGet: { path: /alive, port: http }
+            periodSeconds: 3
+            failureThreshold: 40
+          livenessProbe:
+            httpGet: { path: /alive, port: http }
+            periodSeconds: 15
+          readinessProbe:
+            httpGet: { path: /health, port: http }
+            periodSeconds: 5
+          resources:
+            requests: { cpu: 100m, memory: 192Mi }
+            limits: { memory: 512Mi }
+          volumeMounts:
+            # Read-only root filesystem: .NET and Wolverine's runtime code generation still need a scratch directory.
+            - { name: tmp, mountPath: /tmp }
+      volumes:
+        - name: tmp
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ledger
+spec:
+  selector: { app: ledger }
+  ports: [{ name: http, port: 8080, targetPort: http }]

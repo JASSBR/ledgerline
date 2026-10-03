@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payments
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: payments }
+  template:
+    metadata:
+      labels: { app: payments, tier: app }
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile: { type: RuntimeDefault }
+      containers:
+        - name: payments
+          image: ledgerline-payments
+          imagePullPolicy: IfNotPresent
+          ports: [{ containerPort: 8080, name: http }]
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom: { secretKeyRef: { name: ledgerline-secrets, key: postgres-password } }
+            - name: RABBITMQ_PASSWORD
+              valueFrom: { secretKeyRef: { name: ledgerline-secrets, key: rabbitmq-password } }
+            # $(VAR) expands the variables above: the secret never sits in a manifest.
+            - name: ConnectionStrings__paymentsdb
+              value: Host=postgres;Database=paymentsdb;Username=postgres;Password=$(POSTGRES_PASSWORD)
+            - name: ConnectionStrings__messaging
+              value: amqp://ledgerline:$(RABBITMQ_PASSWORD)@rabbitmq:5672
+            - { name: Auth__Authority, value: http://keycloak:8080/realms/ledgerline }
+            - { name: Auth__RequireHttpsMetadata, value: "false" }
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: [ALL] }
+          startupProbe:
+            httpGet: { path: /alive, port: http }
+            periodSeconds: 3
+            failureThreshold: 40
+          livenessProbe:
+            httpGet: { path: /alive, port: http }
+            periodSeconds: 15
+          readinessProbe:
+            httpGet: { path: /health, port: http }
+            periodSeconds: 5
+          resources:
+            requests: { cpu: 100m, memory: 192Mi }
+            limits: { memory: 512Mi }
+          volumeMounts:
+            # Read-only root filesystem: .NET and Wolverine's runtime code generation still need a scratch directory.
+            - { name: tmp, mountPath: /tmp }
+      volumes:
+        - name: tmp
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payments
+spec:
+  selector: { app: payments }
+  ports: [{ name: http, port: 8080, targetPort: http }]

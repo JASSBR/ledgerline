@@ -1,0 +1,56 @@
+# Default deny, then only the flows the architecture needs: the gateway is the single way in.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+spec:
+  podSelector: {}
+  policyTypes: [Ingress]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: gateway-from-anywhere
+spec:
+  podSelector:
+    matchLabels: { app: gateway }
+  ingress:
+    - ports: [{ port: 8080 }]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: services-from-gateway
+spec:
+  podSelector:
+    matchExpressions:
+      - { key: app, operator: In, values: [ledger, payments, fraud] }
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels: { app: gateway }
+      ports: [{ port: 8080 }]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: infrastructure-from-apps
+spec:
+  podSelector:
+    matchExpressions:
+      - { key: app, operator: In, values: [postgres, rabbitmq] }
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels: { tier: app }
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: keycloak-from-anywhere
+spec:
+  # Browsers sign in here; the services fetch its signing keys.
+  podSelector:
+    matchLabels: { app: keycloak }
+  ingress:
+    - ports: [{ port: 8080 }]
