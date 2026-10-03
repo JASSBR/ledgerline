@@ -1,0 +1,26 @@
+version: 2
+updates:
+  - package-ecosystem: nuget
+    directory: /
+    schedule: { interval: weekly }
+    groups:
+      aspire: { patterns: ["Aspire.*"] }
+      critter-stack: { patterns: ["Marten*", "WolverineFx*"] }
+      testing: { patterns: ["xunit*", "Testcontainers*", "Microsoft.Testing.*", "Shouldly", "NetArchTest*", "CsCheck"] }
+      opentelemetry: { patterns: ["OpenTelemetry*"] }
+  - package-ecosystem: npm
+    directory: /web
+    schedule: { interval: weekly }
+    ignore:
+      # Angular pins the TypeScript range it supports; a TypeScript major lands with the matching Angular major.
+      - dependency-name: typescript
+        update-types: ["version-update:semver-major"]
+    groups:
+      angular: { patterns: ["@angular/*", "@angular-devkit/*", "angular-eslint", "typescript"] }
+      ngrx: { patterns: ["@ngrx/*"] }
+  - package-ecosystem: docker
+    directory: /
+    schedule: { interval: monthly }
+  - package-ecosystem: github-actions
+    directory: /
+    schedule: { interval: monthly }

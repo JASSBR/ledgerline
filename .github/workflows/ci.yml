@@ -1,0 +1,118 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    name: Backend · build, test, coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - name: Restore
+        run: dotnet restore Ledgerline.slnx
+      - name: Build (analyzers on, warnings are errors)
+        run: dotnet build Ledgerline.slnx -c Release --no-restore
+      - name: Format check
+        run: dotnet format Ledgerline.slnx --verify-no-changes --no-restore
+      - name: Test (domain, property-based, architecture, integration on real PostgreSQL + RabbitMQ)
+        run: dotnet test --solution Ledgerline.slnx -c Release --no-build --coverage --coverage-output-format cobertura --coverage-output coverage.cobertura.xml
+      - name: Coverage gate (≥ 80 % of production lines)
+        run: python3 eng/coverage-gate.py 80
+      - name: Vulnerable dependencies
+        run: |
+          dotnet list Ledgerline.slnx package --vulnerable --include-transitive | tee vulnerable.txt
+          ! grep -q "has the following vulnerable packages" vulnerable.txt
+
+  frontend:
+    name: Frontend · lint, test, build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - run: npm ci
+      - run: npm run format:check
+      - run: npm run lint
+      - run: npm run test:coverage
+      - name: Build (FR + EN, fails on a missing translation)
+        run: npm run build
+      - run: npm audit --audit-level=high
+
+  kubernetes:
+    name: Kubernetes · deploy on kind, smoke test, Playwright
+    runs-on: ubuntu-latest
+    needs: [backend, frontend]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: helm/kind-action@v1
+        with:
+          cluster_name: ledgerline
+      - name: Build images, deploy with Kustomize, smoke test through the gateway
+        run: ./deploy/k8s/kind.sh
+      - name: Expose Keycloak and the gateway
+        run: |
+          # The browser must reach Keycloak under the issuer the services validate: http://keycloak:8080.
+          echo "127.0.0.1 keycloak" | sudo tee -a /etc/hosts
+          kubectl -n ledgerline port-forward svc/keycloak 8080:8080 > keycloak-pf.log 2>&1 &
+          kubectl -n ledgerline port-forward svc/gateway 5300:8080 > gateway-pf.log 2>&1 &
+          timeout 60 bash -c 'until curl -sf http://keycloak:8080/realms/ledgerline > /dev/null; do sleep 2; done'
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Start Angular against the cluster
+        working-directory: web
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+          services__gateway__http__0=http://localhost:5300 npm run start:kind > ../web.log 2>&1 &
+          timeout 180 bash -c 'until curl -sf http://localhost:4200 > /dev/null; do sleep 2; done'
+      - name: Playwright
+        working-directory: web
+        run: npm run e2e
+      - name: Cluster state
+        if: failure()
+        run: |
+          kubectl -n ledgerline get pods -o wide
+          for app in ledger payments fraud gateway keycloak; do kubectl -n ledgerline logs deploy/$app --tail=80 || true; done
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-report
+          path: |
+            web/playwright-report
+            web/test-results
+            web.log
+
+  terraform:
+    name: Terraform · fmt, validate
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: deploy/terraform
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+      - run: terraform fmt -check -recursive
+      - run: terraform init -backend=false
+      - run: terraform validate
