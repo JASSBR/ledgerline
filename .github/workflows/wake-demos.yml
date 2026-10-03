@@ -1,0 +1,34 @@
+name: Wake the demos
+
+# The three portfolio demos (ClaimFlow, Ledgerline, Comptoir) run on free tiers that sleep when idle.
+# Run this a few minutes before sending an application or starting an interview: Actions → Wake the demos → Run.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  wake:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Wake ClaimFlow, Ledgerline and Comptoir
+        run: |
+          set -o pipefail
+          ./eng/wake-demos.sh | tee wake.log
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "### Demos"
+            echo
+            sed 's/^/- /' wake.log
+            echo
+            echo "| Demo | Link |"
+            echo "|---|---|"
+            echo "| ClaimFlow | https://claimflow-insurance.vercel.app |"
+            echo "| Ledgerline | https://ledgerline-bank.vercel.app |"
+            echo "| Comptoir | https://comptoir-facade.lemondune-f6dce829.italynorth.azurecontainerapps.io/app/ |"
+          } >> "$GITHUB_STEP_SUMMARY"
