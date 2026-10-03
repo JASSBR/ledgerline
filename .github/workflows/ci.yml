@@ -96,7 +96,7 @@ jobs:
           kubectl -n ledgerline get pods -o wide
           for app in ledger payments fraud gateway keycloak; do kubectl -n ledgerline logs deploy/$app --tail=80 || true; done
       - if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: e2e-report
           path: |
