@@ -30,7 +30,7 @@ The first runs failed. Each failure was a real production defect, fixed in the c
 
 | Symptom under load | Cause | Fix |
 |---|---|---|
-| 1 008 `sorry, too many clients already` from PostgreSQL | Each pod's Npgsql pool may open 100 connections; the server accepts 100 in total | Pool capped per service (`Maximum Pool Size`), server limit sized to the pod count — and 10 per service on Azure, whose B1ms tier accepts ~50 |
+| 1 008 `sorry, too many clients already` from PostgreSQL | Each pod's Npgsql pool may open 100 connections; the server accepts 100 in total | Pool capped per service (`Maximum Pool Size`), server limit sized to the pod count — and 6 per service on Azure, whose B1ms tier accepts 50 |
 | `deadlock detected` in the Ledger | Alice→Bob and Bob→Alice lock the same two streams in opposite orders | Streams always locked in account-id order ([`Journal.cs`](../src/Services/Ledger/Ledgerline.Ledger/Handlers/Journal.cs)); deadlocks retried as a backstop |
 | 200 transfers stuck in *Reserving*/*Capturing*, messages in RabbitMQ's dead-letter queue | Optimistic concurrency on a hot account: retries ran out (10 fast retries) | Ledger writes take a row lock (`FetchForExclusiveWriting`): contention becomes a queue, not a retry storm. Slow retries (2 s → 1 min) before any dead-lettering ([ADR 0003](adr/0003-event-sourced-ledger.md)) |
 | Payments `OOMKilled` at 512 Mi | Wolverine compiled its handlers with Roslyn at startup: ~410 MB per idle service | Handlers pre-generated during the image build (`codegen write`): **~90 MB per service** |
