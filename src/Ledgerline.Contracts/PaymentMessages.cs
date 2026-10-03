@@ -7,3 +7,13 @@ public sealed record TransferStatusChanged(
     string Status,
     string? Reason,
     DateTimeOffset OccurredAt);
+
+/// <summary>Money landed on someone else's account: tells the beneficiary, who did not start the transfer.</summary>
+public sealed record TransferReceived(
+    Guid TransferId,
+    string BeneficiaryId,
+    Guid ToAccountId,
+    string FromName,
+    long AmountCents,
+    string Reference,
+    DateTimeOffset ReceivedAt);

@@ -7,6 +7,9 @@ using Ledgerline.Ledger;
 using Ledgerline.Ledger.Endpoints;
 using Ledgerline.Payments.Domain;
 using Ledgerline.Payments.Endpoints;
+using Ledgerline.Payments.Realtime;
+using Microsoft.AspNetCore.Http.Connections;
+using Microsoft.AspNetCore.SignalR.Client;
 
 namespace Ledgerline.IntegrationTests.Saga;
 
@@ -26,6 +29,31 @@ public sealed class TransferSagaTests(BankFixture bank)
         transfer.Steps.Select(step => step.Status).ShouldBe([TransferStatus.Reserving, TransferStatus.Screening, TransferStatus.Capturing, TransferStatus.Completed]);
         (await AccountAsync(DemoAccounts.BobCurrent)).Balance.ShouldBe(before.Balance + 25m);
         (await TrialBalanceAsync()).Balanced.ShouldBeTrue();
+    }
+
+    [Fact]
+    public async Task Beneficiary_IsToldLive_WhenSomeoneElsesTransferLandsOnTheirAccount()
+    {
+        var received = new TaskCompletionSource<TransferReceivedNotice>(TaskCreationOptions.RunContinuationsAsynchronously);
+        await using var alice = new HubConnectionBuilder()
+            .WithUrl(new Uri(bank.Payments.Server.BaseAddress, TransfersHub.Path), options =>
+            {
+                options.HttpMessageHandlerFactory = _ => bank.Payments.Server.CreateHandler();
+                options.Transports = HttpTransportType.LongPolling;
+                options.Headers["Authorization"] = TestUsers.Customer(DemoAccounts.AliceUserId).ToString();
+            })
+            .Build();
+        alice.On<TransferReceivedNotice>("transferReceived", notice => received.TrySetResult(notice));
+        await alice.StartAsync(TestContext.Current.CancellationToken);
+
+        var transfer = await RunAsync(DemoAccounts.BobUserId, DemoAccounts.BobCurrent, DemoAccounts.AliceCurrent, 12.5m);
+
+        transfer.Status.ShouldBe(TransferStatus.Completed);
+        var notice = await received.Task.WaitAsync(TimeSpan.FromSeconds(15), TestContext.Current.CancellationToken);
+        notice.TransferId.ShouldBe(transfer.Id);
+        notice.ToAccountId.ShouldBe(DemoAccounts.AliceCurrent);
+        notice.Amount.ShouldBe(12.5m);
+        notice.FromName.ShouldBe("Bob Durand — Compte courant");
     }
 
     [Fact]

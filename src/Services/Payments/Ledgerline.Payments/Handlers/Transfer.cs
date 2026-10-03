@@ -99,8 +99,21 @@ public sealed class Transfer : Saga
             ? Nothing()
             : MoveToAsync(TransferStatus.Releasing, "Review deadline passed", session, time, new ReleaseFunds(Id, FromAccountId, "Review deadline passed"));
 
-    public Task<OutgoingMessages> Handle(TransferCaptured reply, IDocumentSession session, TimeProvider time) =>
-        Status != TransferStatus.Capturing ? Nothing() : MoveToAsync(TransferStatus.Completed, null, session, time);
+    public async Task<OutgoingMessages> Handle(TransferCaptured reply, IDocumentSession session, TimeProvider time)
+    {
+        if (Status != TransferStatus.Capturing)
+        {
+            return new OutgoingMessages();
+        }
+
+        var messages = await MoveToAsync(TransferStatus.Completed, null, session, time);
+        if (await NotifyBeneficiaryAsync(reply.PostedAt, session) is { } received)
+        {
+            messages.Add(received);
+        }
+
+        return messages;
+    }
 
     public Task<OutgoingMessages> Handle(TransferCaptureFailed reply, IDocumentSession session, TimeProvider time)
     {
@@ -134,6 +147,19 @@ public sealed class Transfer : Saga
     public static void NotFound(FundsReservationRejected reply) => _ = reply;
 
     private static Task<OutgoingMessages> Nothing() => Task.FromResult(new OutgoingMessages());
+
+    /// <summary>Only another customer is told: moving money between one's own accounts already shows as the sender's transfer.</summary>
+    private async Task<TransferReceived?> NotifyBeneficiaryAsync(DateTimeOffset postedAt, IDocumentSession session)
+    {
+        var beneficiary = await session.LoadAsync<DirectoryAccount>(ToAccountId);
+        if (beneficiary?.OwnerId is not { } beneficiaryId || string.Equals(beneficiaryId, OwnerId, StringComparison.Ordinal))
+        {
+            return null;
+        }
+
+        var sender = await session.LoadAsync<DirectoryAccount>(FromAccountId);
+        return new TransferReceived(Id, beneficiaryId, ToAccountId, sender?.Name ?? string.Empty, AmountCents, Reference, postedAt);
+    }
 
     private async Task<OutgoingMessages> MoveToAsync(TransferStatus status, string? detail, IDocumentSession session, TimeProvider time, params object[] next)
     {

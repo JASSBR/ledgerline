@@ -33,3 +33,15 @@ public static class TransferStatusChangedHandler
         hub.Clients.Groups(TransfersHub.UserGroup(change.OwnerId), TransfersHub.OperatorsGroup)
             .SendAsync("transferChanged", change, cancellationToken);
 }
+
+/// <summary>Euros for the browser, like every HTTP response: cents stay between services.</summary>
+public sealed record TransferReceivedNotice(Guid TransferId, Guid ToAccountId, string FromName, decimal Amount, string Reference, DateTimeOffset ReceivedAt);
+
+public static class TransferReceivedHandler
+{
+    public static Task Handle(TransferReceived received, IHubContext<TransfersHub> hub, CancellationToken cancellationToken) =>
+        hub.Clients.Group(TransfersHub.UserGroup(received.BeneficiaryId)).SendAsync(
+            "transferReceived",
+            new TransferReceivedNotice(received.TransferId, received.ToAccountId, received.FromName, received.AmountCents / 100m, received.Reference, received.ReceivedAt),
+            cancellationToken);
+}
