@@ -25,10 +25,8 @@ IResourceBuilder<ProjectResource> Service<TProject>(string name, IResourceBuilde
         .WithHttpHealthCheck("/health");
 
 var ledger = Service<Projects.Ledgerline_Ledger>("ledger", ledgerDb).WithEnvironment("Demo__Seed", "true");
-// Payments and Fraud subscribe to the Ledger's AccountRegistered events: start them first so their queues exist.
 var payments = Service<Projects.Ledgerline_Payments>("payments", paymentsDb);
 var fraud = Service<Projects.Ledgerline_Fraud>("fraud", fraudDb);
-ledger.WaitFor(payments).WaitFor(fraud);
 
 var gateway = builder.AddProject<Projects.Ledgerline_Gateway>("gateway")
     .WithReference(ledger).WithReference(payments).WithReference(fraud)

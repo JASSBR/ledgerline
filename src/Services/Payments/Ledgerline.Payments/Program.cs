@@ -10,6 +10,7 @@ using Wolverine.ErrorHandling;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddLedgerlineService(PaymentsService.Name, typeof(PaymentsService).Assembly, PaymentsStore.Configure);
+builder.AddAccountDirectorySubscription(PaymentsService.Name);
 builder.Services.AddOptions<PaymentsOptions>().Bind(builder.Configuration.GetSection(PaymentsOptions.SectionName));
 builder.Services.AddSignalR().AddJsonProtocol(options => options.PayloadSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter()));
 builder.Services.ConfigureWolverine(options =>

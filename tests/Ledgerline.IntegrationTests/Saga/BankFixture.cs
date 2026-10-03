@@ -41,11 +41,12 @@ public sealed class BankFixture : IAsyncLifetime
         Fraud = new ServiceFactory<FraudService>("frauddb", await _infrastructure.CreateDatabaseAsync("fraud"), vhost, seed: false,
             new Dictionary<string, string>(StringComparer.Ordinal) { ["Fraud:Policy:VelocityLimit"] = "1000" });
 
-        // Subscribers first, so their queues exist before the Ledger seeds and publishes AccountRegistered.
-        _ = Payments.Server;
-        _ = Fraud.Server;
+        // Worst case on purpose: the Ledger seeds and publishes before any subscriber queue exists, so those events
+        // are dropped by the broker. The subscribers' directory request at startup must still fill their copies.
         _ = Ledger.Server;
         await Ledger.Services.GetRequiredService<IHost>().WaitForSeedAsync();
+        _ = Payments.Server;
+        _ = Fraud.Server;
         await WaitForDirectoryAsync(Payments.Services.GetRequiredService<IDocumentStore>(), store => store.Query<DirectoryAccount>().CountAsync());
         await WaitForDirectoryAsync(Fraud.Services.GetRequiredService<IDocumentStore>(), store => store.Query<KnownAccount>().CountAsync());
 

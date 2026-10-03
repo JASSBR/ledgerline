@@ -130,7 +130,8 @@ public static class LedgerlineServiceExtensions
             {
                 jwt.Authority = builder.Configuration["Auth:Authority"];
                 jwt.Audience = builder.Configuration["Auth:Audience"] ?? "ledgerline-api";
-                jwt.RequireHttpsMetadata = !builder.Environment.IsDevelopment();
+                // Off only where Keycloak is reached over plain HTTP inside a private network (the kind cluster in CI).
+                jwt.RequireHttpsMetadata = builder.Configuration.GetValue("Auth:RequireHttpsMetadata", !builder.Environment.IsDevelopment());
                 // Keycloak's standard claims, kept raw. The realm adds a flat "roles" claim (see the realm export).
                 jwt.MapInboundClaims = false;
                 jwt.TokenValidationParameters.NameClaimType = "preferred_username";
