@@ -15,3 +15,8 @@ deploy/.azure.env
 deploy/terraform/.terraform/
 deploy/terraform/*.tfstate*
 deploy/terraform/*.tfvars
+
+# Playwright
+web/test-results/
+web/playwright-report/
+web/coverage/
