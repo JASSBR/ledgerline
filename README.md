@@ -42,7 +42,10 @@ duplicate a cent, even with 25 transfers per second hammering the same two accou
    that fired. Approve it — Alice's page completes on its own.
 4. As **Chloé** (640 €), send 1 000 €: the Ledger refuses the hold, nothing else happens. As **Bob**, pay *Société
    Écran SARL*: blocklisted, the funds are released.
-5. As Olivia, open the **trial balance**: every account sums to exactly **0,00 €**.
+5. As Olivia, open the **trial balance**: every account sums to exactly **0,00 €**. Open Chloé's account and
+   **freeze** it with a reason: her next transfer is refused by the Ledger, while money sent to her still lands.
+6. Keep a window signed in as Alice while Bob pays her: a **« Virement reçu »** notice appears and her balance updates
+   on its own. **Movements** shows everything in and out, month by month, exportable as CSV.
 
 > The demo scales to zero when idle: the first sign-in after a quiet period can take half a minute while Keycloak and
 > the services start.
@@ -55,7 +58,8 @@ duplicate a cent, even with 25 transfers per second hammering the same two accou
 | **Distributed consistency** | The [`Transfer` saga](src/Services/Payments/Ledgerline.Payments/Handlers/Transfer.cs): hold → screen → capture, or release; a scheduled review deadline — [ADR 0004](docs/adr/0004-transfer-saga-with-holds.md) |
 | **Exactly-once effects** | `Idempotency-Key` with request fingerprint, transfer id = hold id = entry id, durable inbox/outbox — [ADR 0005](docs/adr/0005-idempotency-end-to-end.md) |
 | **Concurrency** | Stream locks in account order after the load test showed optimistic retries running out and deadlocks — [ADR 0003](docs/adr/0003-event-sourced-ledger.md), [performance](docs/performance.md) |
-| **Event sourcing** | Statements and **balance at any value date** replayed from the account's events |
+| **Event sourcing** | Statements, **balance at any value date** and the account's **event history** (the audit trail *is* the stream), all replayed from the account's events |
+| **Back-office controls** | Account **freeze** as a ledger event, enforced where money leaves, under the same stream lock — [ADR 0011](docs/adr/0011-account-freeze-and-audit-trail.md) |
 | **Correctness proofs** | A [CsCheck property](tests/Ledgerline.Ledger.Domain.Tests): thousands of random operation sequences never create money or overdraw |
 | **Security** | Keycloak OIDC + PKCE, policies enforced in every service, 404 for others' accounts, YARP gateway with rate limiting — [SECURITY.md](SECURITY.md) |
 | **Kubernetes** | [`deploy/k8s`](deploy/k8s): restricted Pod Security, read-only root FS, default-deny NetworkPolicies, probes; **deployed on kind in CI** with the E2E suite run against it |
@@ -161,6 +165,7 @@ architectural bet — a modular monolith — on a different domain.
 
 Ledgerline est une banque de virements fictive en trois microservices .NET : un grand livre en partie double et en
 event sourcing, une saga de paiement avec réservation et compensation, et un service anti-fraude avec revue par un
-analyste. Idempotence de bout en bout, authentification Keycloak (OIDC + PKCE), suivi du virement en temps réel,
+analyste. Gel de compte par un opérateur (motif obligatoire, inscrit dans l'historique du compte), mouvements
+entrées/sorties avec export CSV, notification « virement reçu » en direct. Idempotence de bout en bout, authentification Keycloak (OIDC + PKCE), suivi du virement en temps réel,
 déploiement Kubernetes validé en CI et Terraform pour Azure. Interface en français et en anglais.
 [Essayer la démo](https://ledgerline-bank.vercel.app/fr/).

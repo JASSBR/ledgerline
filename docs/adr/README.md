@@ -14,3 +14,4 @@ Each record captures one decision, the context that forced it, and what it costs
 | [0008](0008-frontend-live-saga.md) | Angular: SignalStore fed by SignalR, the saga made visible | Accepted |
 | [0009](0009-deployment-topologies.md) | Kubernetes as the reference topology, one Container App for the demo | Accepted |
 | [0010](0010-testing-strategy.md) | Testing: properties, a real broker, and load as a correctness test | Accepted |
+| [0011](0011-account-freeze-and-audit-trail.md) | Account freeze as a ledger event, and the stream as the audit trail | Accepted |
