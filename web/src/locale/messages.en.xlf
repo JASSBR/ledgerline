@@ -1,0 +1,1523 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="fr" datatype="plaintext" original="ng2.template" target-language="en">
+    <body>
+      <trans-unit id="status.reserving" datatype="html">
+        <source>Réservation des fonds</source>
+        <target>Reserving funds</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/banking/labels.ts</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="status.screening" datatype="html">
+        <source>Contrôle anti-fraude</source>
+        <target>Fraud screening</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/banking/labels.ts</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="status.pendingReview" datatype="html">
+        <source>En revue par un analyste</source>
+        <target>Under analyst review</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/banking/labels.ts</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="status.capturing" datatype="html">
+        <source>Exécution</source>
+        <target>Executing</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/banking/labels.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="status.releasing" datatype="html">
+        <source>Libération des fonds</source>
+        <target>Releasing funds</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/banking/labels.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="status.completed" datatype="html">
+        <source>Exécuté</source>
+        <target>Completed</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/banking/labels.ts</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="status.rejected" datatype="html">
+        <source>Refusé</source>
+        <target>Rejected</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/banking/labels.ts</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="status.failed" datatype="html">
+        <source>Échoué</source>
+        <target>Failed</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/banking/labels.ts</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="screening.cleared" datatype="html">
+        <source>Validé automatiquement</source>
+        <target>Cleared automatically</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/banking/labels.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="screening.blocked" datatype="html">
+        <source>Bloqué par les règles</source>
+        <target>Blocked by rules</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/banking/labels.ts</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="screening.pending" datatype="html">
+        <source>En attente de revue</source>
+        <target>Awaiting review</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/banking/labels.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="screening.approved" datatype="html">
+        <source>Approuvé par un analyste</source>
+        <target>Approved by an analyst</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/banking/labels.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="screening.rejectedByAnalyst" datatype="html">
+        <source>Rejeté par un analyste</source>
+        <target>Rejected by an analyst</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/banking/labels.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="rule.blocked" datatype="html">
+        <source>Bénéficiaire sur liste noire</source>
+        <target>Blocklisted beneficiary</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/banking/labels.ts</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="rule.limit" datatype="html">
+        <source>Plafond par virement</source>
+        <target>Single-transfer limit</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/banking/labels.ts</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="rule.large" datatype="html">
+        <source>Montant élevé</source>
+        <target>Large amount</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/banking/labels.ts</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="rule.velocity" datatype="html">
+        <source>Rafale de virements</source>
+        <target>Transfer burst</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/banking/labels.ts</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="rule.newBeneficiary" datatype="html">
+        <source>Nouveau bénéficiaire</source>
+        <target>New beneficiary</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/banking/labels.ts</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.main" datatype="html">
+        <source>Navigation principale</source>
+        <target>Main navigation</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/shell.html</context>
+          <context context-type="linenumber">8,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.operations" datatype="html">
+        <source>Opérations</source>
+        <target>Operations</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/shell.html</context>
+          <context context-type="linenumber">10,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.reviews" datatype="html">
+        <source>Revue anti-fraude</source>
+        <target>Fraud review</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/shell.html</context>
+          <context context-type="linenumber">12,13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.allTransfers" datatype="html">
+        <source>Tous les virements</source>
+        <target>All transfers</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/shell.html</context>
+          <context context-type="linenumber">18,20</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-detail/transfer-detail.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfers/transfers.html</context>
+          <context context-type="linenumber">5,7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.accounting" datatype="html">
+        <source>Comptabilité</source>
+        <target>Accounting</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/shell.html</context>
+          <context context-type="linenumber">20,21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.journal" datatype="html">
+        <source>Journal</source>
+        <target>Journal</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/shell.html</context>
+          <context context-type="linenumber">22,24</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/journal/journal.html</context>
+          <context context-type="linenumber">4,5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.trialBalance" datatype="html">
+        <source>Balance générale</source>
+        <target>Trial balance</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/shell.html</context>
+          <context context-type="linenumber">25,27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trial-balance/trial-balance.html</context>
+          <context context-type="linenumber">4,5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.accounts" datatype="html">
+        <source>Mes comptes</source>
+        <target>My accounts</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/shell.html</context>
+          <context context-type="linenumber">29,31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">6,10</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.html</context>
+          <context context-type="linenumber">2,5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.newTransfer" datatype="html">
+        <source>Nouveau virement</source>
+        <target>New transfer</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/shell.html</context>
+          <context context-type="linenumber">32,34</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/accounts/accounts.html</context>
+          <context context-type="linenumber">7,11</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfers/transfers.html</context>
+          <context context-type="linenumber">13,16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.transfers" datatype="html">
+        <source>Mes virements</source>
+        <target>My transfers</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/shell.html</context>
+          <context context-type="linenumber">38,39</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-detail/transfer-detail.html</context>
+          <context context-type="linenumber">6,10</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfers/transfers.html</context>
+          <context context-type="linenumber">7,10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.sourceCode" datatype="html">
+        <source>Code source</source>
+        <target>Source code</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/shell.html</context>
+          <context context-type="linenumber">48,50</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/welcome/welcome.html</context>
+          <context context-type="linenumber">34,37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.adr" datatype="html">
+        <source>Décisions d'architecture</source>
+        <target>Architecture decisions</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/shell.html</context>
+          <context context-type="linenumber">51,53</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/welcome/welcome.html</context>
+          <context context-type="linenumber">41,42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="live.on" datatype="html">
+        <source>Temps réel</source>
+        <target>Live</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/shell.html</context>
+          <context context-type="linenumber">61,62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="live.off" datatype="html">
+        <source>Hors ligne</source>
+        <target>Offline</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/shell.html</context>
+          <context context-type="linenumber">63,65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.toggle" datatype="html">
+        <source>Changer de thème</source>
+        <target>Toggle theme</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/shell.html</context>
+          <context context-type="linenumber">80,82</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="role.operator" datatype="html">
+        <source>Analyste conformité</source>
+        <target>Compliance analyst</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/shell.html</context>
+          <context context-type="linenumber">98,99</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="role.customer" datatype="html">
+        <source>Client particulier</source>
+        <target>Retail customer</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/shell.html</context>
+          <context context-type="linenumber">100,102</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="menu.session" datatype="html">
+        <source> Session OpenID Connect (Keycloak, PKCE) </source>
+        <target>OpenID Connect session (Keycloak, PKCE)</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/shell.html</context>
+          <context context-type="linenumber">109,110</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="menu.logout" datatype="html">
+        <source>Se déconnecter</source>
+        <target>Sign out</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/shell.html</context>
+          <context context-type="linenumber">112,113</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="account.notFound" datatype="html">
+        <source> Ce compte n'existe pas ou ne vous appartient pas. </source>
+        <target>This account does not exist or is not yours.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">12,14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="account.eyebrow" datatype="html">
+        <source>Compte</source>
+        <target>Account</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">17,18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="account.copy" datatype="html">
+        <source>Copier l'IBAN</source>
+        <target>Copy IBAN</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">24,26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="account.balance" datatype="html">
+        <source>Solde comptable</source>
+        <target>Ledger balance</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">34,35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="account.available" datatype="html">
+        <source>Solde disponible</source>
+        <target>Available balance</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">38,39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="account.availableHint" datatype="html">
+        <source>Solde moins les réservations en cours</source>
+        <target>Balance minus pending holds</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">41,44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="account.asOf" datatype="html">
+        <source>Solde à une date de valeur</source>
+        <target>Balance at a value date</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">45,47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="account.asOfHint" datatype="html">
+        <source>Rejoué depuis les événements du compte (event sourcing).</source>
+        <target>Replayed from the account's events (event sourcing).</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">57,60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="account.holds" datatype="html">
+        <source>Réservations en cours</source>
+        <target>Pending holds</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">68,70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="account.statement" datatype="html">
+        <source>Relevé</source>
+        <target>Statement</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">84,85</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="account.lines" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ statement.value().length }}" /> écritures</source>
+        <target><x id="INTERPOLATION" equiv-text="{{ statement.value().length }}" /> entries</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">85,86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="account.chart" datatype="html">
+        <source>Évolution du solde</source>
+        <target>Balance over time</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">88,90</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="account.valueDate" datatype="html">
+        <source>Date de valeur</source>
+        <target>Value date</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">94,95</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="account.reference" datatype="html">
+        <source>Libellé</source>
+        <target>Description</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">95,96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="account.counterparty" datatype="html">
+        <source>Contrepartie</source>
+        <target>Counterparty</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">96,97</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="account.amount" datatype="html">
+        <source>Montant</source>
+        <target>Amount</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">97,98</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="account.balanceAfter" datatype="html">
+        <source>Solde</source>
+        <target>Balance</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">98,100</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="account.empty" datatype="html">
+        <source> Aucune écriture sur ce compte. </source>
+        <target>No entries on this account.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">115,116</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.eyebrow" datatype="html">
+        <source>Vue d'ensemble</source>
+        <target>Overview</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/accounts/accounts.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.hello" datatype="html">
+        <source>Bonjour <x id="INTERPOLATION" equiv-text="{{ firstName() }}" /></source>
+        <target>Hello <x id="INTERPOLATION" equiv-text="{{ firstName() }}" /></target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/accounts/accounts.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.total" datatype="html">
+        <source>Avoirs totaux</source>
+        <target>Total holdings</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/accounts/accounts.html</context>
+          <context context-type="linenumber">13,14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.held" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ held() | currency }}" /> réservés par des virements en cours</source>
+        <target><x id="INTERPOLATION" equiv-text="{{ held() | currency }}" /> held by transfers in progress</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/accounts/accounts.html</context>
+          <context context-type="linenumber">24,26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.error" datatype="html">
+        <source>Impossible de charger vos comptes.</source>
+        <target>Could not load your accounts.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/accounts/accounts.html</context>
+          <context context-type="linenumber">31,34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.available" datatype="html">
+        <source>Disponible <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b class=&quot;amount&quot;&gt;" /><x id="INTERPOLATION" equiv-text="{{ account.available | currency }}" /><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;" /></source>
+        <target>Available <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b class=&quot;amount&quot;&gt;" /><x id="INTERPOLATION" equiv-text="{{ account.available | currency }}" /><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;" /></target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/accounts/accounts.html</context>
+          <context context-type="linenumber">56,58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.holdChip" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ account.held | currency }}" /> réservés</source>
+        <target><x id="INTERPOLATION" equiv-text="{{ account.held | currency }}" /> held</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/accounts/accounts.html</context>
+          <context context-type="linenumber">60,61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.recent" datatype="html">
+        <source>Derniers virements</source>
+        <target>Recent transfers</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/accounts/accounts.html</context>
+          <context context-type="linenumber">70,71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.seeAll" datatype="html">
+        <source>Tout voir</source>
+        <target>See all</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/accounts/accounts.html</context>
+          <context context-type="linenumber">71,73</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.noTransfers" datatype="html">
+        <source> Aucun virement pour l'instant. Essayez-en un : il traverse les trois services en direct. </source>
+        <target>No transfers yet. Try one: it crosses all three services live.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/accounts/accounts.html</context>
+          <context context-type="linenumber">75,78</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="callback.failed" datatype="html">
+        <source> La connexion n'a pas abouti (lien expiré ou déjà utilisé). </source>
+        <target>Sign-in did not complete (link expired or already used).</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/callback/callback.ts</context>
+          <context context-type="linenumber">14,16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="callback.retry" datatype="html">
+        <source>Recommencer</source>
+        <target>Start again</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/callback/callback.ts</context>
+          <context context-type="linenumber">16,18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="callback.progress" datatype="html">
+        <source>Connexion sécurisée en cours…</source>
+        <target>Signing you in securely…</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/callback/callback.ts</context>
+          <context context-type="linenumber">19,23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="journal.eyebrow" datatype="html">
+        <source>Comptabilité en partie double</source>
+        <target>Double-entry bookkeeping</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/journal/journal.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="journal.subtitle" datatype="html">
+        <source> Chaque mouvement est une écriture dont les débits égalent les crédits. Une écriture déséquilibrée est refusée par le domaine avant d'atteindre la base. </source>
+        <target>Every movement is an entry whose debits equal its credits. An unbalanced entry is refused by the domain before it reaches the database.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/journal/journal.html</context>
+          <context context-type="linenumber">6,10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="journal.error" datatype="html">
+        <source>Impossible de charger le journal.</source>
+        <target>Could not load the journal.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/journal/journal.html</context>
+          <context context-type="linenumber">13,16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="journal.balanced" datatype="html">
+        <source>Équilibrée</source>
+        <target>Balanced</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/journal/journal.html</context>
+          <context context-type="linenumber">32,34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="journal.unbalanced" datatype="html">
+        <source>Déséquilibrée</source>
+        <target>Unbalanced</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/journal/journal.html</context>
+          <context context-type="linenumber">35,37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="journal.account" datatype="html">
+        <source>Compte</source>
+        <target>Account</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/journal/journal.html</context>
+          <context context-type="linenumber">41,42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="journal.debit" datatype="html">
+        <source>Débit</source>
+        <target>Debit</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/journal/journal.html</context>
+          <context context-type="linenumber">42,43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="journal.credit" datatype="html">
+        <source>Crédit</source>
+        <target>Credit</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/journal/journal.html</context>
+          <context context-type="linenumber">43,45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="journal.empty" datatype="html">
+        <source>Aucune écriture.</source>
+        <target>No entries.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/journal/journal.html</context>
+          <context context-type="linenumber">61,65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reviews.eyebrow" datatype="html">
+        <source>Conformité · LCB-FT</source>
+        <target>Compliance · AML</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reviews/reviews.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reviews.title" datatype="html">
+        <source>Revue anti-fraude</source>
+        <target>Fraud review</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reviews/reviews.html</context>
+          <context context-type="linenumber">4,5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reviews.subtitle" datatype="html">
+        <source> Virements retenus par les règles. Les fonds du client restent réservés jusqu'à votre décision (48 h maximum, puis rejet automatique). </source>
+        <target>Transfers held by the rules. The customer's funds stay on hold until you decide (48 h at most, then automatic rejection).</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reviews/reviews.html</context>
+          <context context-type="linenumber">6,10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reviews.comment" datatype="html">
+        <source>Commentaire (obligatoire pour rejeter)</source>
+        <target>Comment (required to reject)</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reviews/reviews.html</context>
+          <context context-type="linenumber">44,46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reviews.commentPlaceholder" datatype="html">
+        <source>Client joint par téléphone, opération confirmée…</source>
+        <target>Customer reached by phone, payment confirmed…</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reviews/reviews.html</context>
+          <context context-type="linenumber">50,54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reviews.open" datatype="html">
+        <source>Voir le parcours</source>
+        <target>View journey</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reviews/reviews.html</context>
+          <context context-type="linenumber">63,65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reviews.reject" datatype="html">
+        <source>Rejeter</source>
+        <target>Reject</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reviews/reviews.html</context>
+          <context context-type="linenumber">72,74</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reviews.approve" datatype="html">
+        <source>Approuver</source>
+        <target>Approve</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reviews/reviews.html</context>
+          <context context-type="linenumber">80,82</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reviews.emptyTitle" datatype="html">
+        <source>Aucun virement en attente</source>
+        <target>No transfer awaiting review</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reviews/reviews.html</context>
+          <context context-type="linenumber">88,89</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reviews.emptyHint" datatype="html">
+        <source> Connectez-vous en tant qu'Alice et virez plus de 3 000 € : le virement apparaîtra ici en temps réel. </source>
+        <target>Sign in as Alice and send more than €3,000: the transfer will show up here in real time.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reviews/reviews.html</context>
+          <context context-type="linenumber">90,92</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reviews.history" datatype="html">
+        <source>Derniers contrôles</source>
+        <target>Recent screenings</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reviews/reviews.html</context>
+          <context context-type="linenumber">100,102</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reviews.colFrom" datatype="html">
+        <source>Donneur d'ordre</source>
+        <target>Payer</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reviews/reviews.html</context>
+          <context context-type="linenumber">106,107</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reviews.colTo" datatype="html">
+        <source>Bénéficiaire</source>
+        <target>Beneficiary</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reviews/reviews.html</context>
+          <context context-type="linenumber">107,108</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reviews.colRules" datatype="html">
+        <source>Règles</source>
+        <target>Rules</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reviews/reviews.html</context>
+          <context context-type="linenumber">108,109</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reviews.colOutcome" datatype="html">
+        <source>Issue</source>
+        <target>Outcome</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reviews/reviews.html</context>
+          <context context-type="linenumber">109,110</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reviews.colAmount" datatype="html">
+        <source>Montant</source>
+        <target>Amount</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reviews/reviews.html</context>
+          <context context-type="linenumber">110,112</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reviews.historyEmpty" datatype="html">
+        <source> Aucun contrôle pour l'instant. </source>
+        <target>No screenings yet.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reviews/reviews.html</context>
+          <context context-type="linenumber">140,142</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reviews.approved" datatype="html">
+        <source>Virement approuvé : exécution en cours</source>
+        <target>Transfer approved: executing</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reviews/reviews.ts</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reviews.rejected" datatype="html">
+        <source>Virement rejeté : fonds rendus au client</source>
+        <target>Transfer rejected: funds returned to the customer</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reviews/reviews.ts</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transferDetail.eyebrow" datatype="html">
+        <source>Virement</source>
+        <target>Transfer</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-detail/transfer-detail.html</context>
+          <context context-type="linenumber">13,14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transferDetail.to" datatype="html">
+        <source>vers <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;" /><x id="INTERPOLATION" equiv-text="{{ t.toName }}" /><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;" /></source>
+        <target>to <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;" /><x id="INTERPOLATION" equiv-text="{{ t.toName }}" /><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;" /></target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-detail/transfer-detail.html</context>
+          <context context-type="linenumber">17,19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transferDetail.saga" datatype="html">
+        <source>Parcours du virement</source>
+        <target>Transfer journey</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-detail/transfer-detail.html</context>
+          <context context-type="linenumber">31,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transferDetail.live" datatype="html">
+        <source>En direct</source>
+        <target>Live</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-detail/transfer-detail.html</context>
+          <context context-type="linenumber">34,35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transferDetail.elapsed" datatype="html">
+        <source>Réglé en <x id="INTERPOLATION" equiv-text="{{ elapsed()! / 1000 | number: '1.1-1' }}" /> s</source>
+        <target>Settled in <x id="INTERPOLATION" equiv-text="{{ elapsed()! / 1000 | number: '1.1-1' }}" /> s</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-detail/transfer-detail.html</context>
+          <context context-type="linenumber">37,38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transferDetail.from" datatype="html">
+        <source>Compte débité</source>
+        <target>Debited account</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-detail/transfer-detail.html</context>
+          <context context-type="linenumber">72,74</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transferDetail.beneficiary" datatype="html">
+        <source>Bénéficiaire</source>
+        <target>Beneficiary</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-detail/transfer-detail.html</context>
+          <context context-type="linenumber">76,78</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transferDetail.label" datatype="html">
+        <source>Libellé</source>
+        <target>Description</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-detail/transfer-detail.html</context>
+          <context context-type="linenumber">78,79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transferDetail.requested" datatype="html">
+        <source>Demandé le</source>
+        <target>Requested on</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-detail/transfer-detail.html</context>
+          <context context-type="linenumber">80,81</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transferDetail.reference" datatype="html">
+        <source>Référence</source>
+        <target>Reference</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-detail/transfer-detail.html</context>
+          <context context-type="linenumber">82,84</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transferDetail.note" datatype="html">
+        <source> L'identifiant du virement sert aussi d'identifiant de réservation et d'écriture comptable : un message rejoué ne peut ni réserver ni débiter deux fois. </source>
+        <target>The transfer id is also the hold id and the journal entry id: a replayed message can neither hold nor debit twice.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-detail/transfer-detail.html</context>
+          <context context-type="linenumber">88,91</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="error.transferNotFound" datatype="html">
+        <source>Ce virement n'existe pas.</source>
+        <target>This transfer does not exist.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-detail/transfer-detail.html</context>
+          <context context-type="linenumber">94,96</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/problem-details.ts</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="owner.ledger" datatype="html">
+        <source>Service Ledger</source>
+        <target>Ledger service</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-detail/transfer-detail.ts</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="owner.fraud" datatype="html">
+        <source>Service Fraud</source>
+        <target>Fraud service</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-detail/transfer-detail.ts</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="owner.analyst" datatype="html">
+        <source>Analyste conformité</source>
+        <target>Compliance analyst</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-detail/transfer-detail.ts</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="owner.payments" datatype="html">
+        <source>Service Payments</source>
+        <target>Payments service</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-detail/transfer-detail.ts</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfer.eyebrow" datatype="html">
+        <source>Virement SEPA instantané</source>
+        <target>Instant SEPA transfer</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.html</context>
+          <context context-type="linenumber">7,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfer.title" datatype="html">
+        <source>Nouveau virement</source>
+        <target>New transfer</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.html</context>
+          <context context-type="linenumber">8,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfer.subtitle" datatype="html">
+        <source> Les fonds sont réservés, contrôlés par l'anti-fraude, puis virés — ou rendus si quelque chose échoue. </source>
+        <target>Funds are held, screened for fraud, then transferred — or returned if anything fails.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.html</context>
+          <context context-type="linenumber">10,14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfer.from" datatype="html">
+        <source>Compte à débiter</source>
+        <target>Account to debit</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.html</context>
+          <context context-type="linenumber">19,20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfer.to" datatype="html">
+        <source>IBAN du bénéficiaire</source>
+        <target>Beneficiary IBAN</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.html</context>
+          <context context-type="linenumber">30,32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfer.payeeOk" datatype="html">
+        <source>Ce compte appartient à <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;" /><x id="INTERPOLATION" equiv-text="{{ lookup.name }}" /><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;" /></source>
+        <target>This account belongs to <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;" /><x id="INTERPOLATION" equiv-text="{{ lookup.name }}" /><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;" /></target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.html</context>
+          <context context-type="linenumber">46,47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfer.payeeUnknown" datatype="html">
+        <source>Aucun compte de la banque ne porte cet IBAN.</source>
+        <target>No account at this bank has this IBAN.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.html</context>
+          <context context-type="linenumber">53,55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfer.payeeChecking" datatype="html">
+        <source>Vérification du bénéficiaire…</source>
+        <target>Checking the beneficiary…</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.html</context>
+          <context context-type="linenumber">58,62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfer.amount" datatype="html">
+        <source>Montant (€)</source>
+        <target>Amount (€)</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.html</context>
+          <context context-type="linenumber">64,66</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfer.label" datatype="html">
+        <source>Libellé (facultatif)</source>
+        <target>Description (optional)</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.html</context>
+          <context context-type="linenumber">77,79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfer.labelPlaceholder" datatype="html">
+        <source>Loyer octobre</source>
+        <target>October rent</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.html</context>
+          <context context-type="linenumber">81,83</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfer.overdraft" datatype="html">
+        <source>Le montant dépasse le solde disponible (<x id="INTERPOLATION" equiv-text="{{ from.available | currency }}" />) : la réservation sera refusée par le grand livre.</source>
+        <target>The amount exceeds the available balance (<x id="INTERPOLATION" equiv-text="{{ from.available | currency }}" />): the ledger will refuse the hold.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.html</context>
+          <context context-type="linenumber">94,95</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfer.keyHint" datatype="html">
+        <source>Envoyée dans l'en-tête Idempotency-Key : un double envoi ne crée jamais deux virements.</source>
+        <target>Sent in the Idempotency-Key header: a double submit never creates two transfers.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.html</context>
+          <context context-type="linenumber">109,111</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfer.submit" datatype="html">
+        <source>Envoyer le virement</source>
+        <target>Send transfer</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.html</context>
+          <context context-type="linenumber">116,118</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfer.saved" datatype="html">
+        <source>Bénéficiaires de démonstration</source>
+        <target>Demo beneficiaries</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.html</context>
+          <context context-type="linenumber">122,124</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfer.own" datatype="html">
+        <source>Votre compte</source>
+        <target>Your account</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.html</context>
+          <context context-type="linenumber">133,134</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfer.blocked" datatype="html">
+        <source>Sur liste noire : sera bloqué</source>
+        <target>Blocklisted: will be blocked</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.html</context>
+          <context context-type="linenumber">135,137</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfer.rules" datatype="html">
+        <source> Règles anti-fraude : au-delà de 3 000 €, ou 1 000 € vers un nouveau bénéficiaire, ou plus de 3 virements en 10 minutes, le virement part en revue chez un analyste. Au-delà de 20 000 €, il est bloqué. </source>
+        <target>Fraud rules: above €3,000, or €1,000 to a new beneficiary, or more than 3 transfers in 10 minutes, the transfer goes to an analyst. Above €20,000 it is blocked.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.html</context>
+          <context context-type="linenumber">145,149</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfer.fromRequired" datatype="html">
+        <source>Choisissez le compte à débiter.</source>
+        <target>Choose the account to debit.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.ts</context>
+          <context context-type="linenumber">89</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfer.ibanRequired" datatype="html">
+        <source>L'IBAN du bénéficiaire est obligatoire.</source>
+        <target>The beneficiary IBAN is required.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.ts</context>
+          <context context-type="linenumber">92</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfer.ibanInvalid" datatype="html">
+        <source>IBAN invalide (clé de contrôle incorrecte).</source>
+        <target>Invalid IBAN (wrong check digits).</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.ts</context>
+          <context context-type="linenumber">98</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfer.amountPositive" datatype="html">
+        <source>Le montant doit être positif.</source>
+        <target>The amount must be positive.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.ts</context>
+          <context context-type="linenumber">103</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfer.amountMax" datatype="html">
+        <source>Montant maximum : 999 999,99 €.</source>
+        <target>Maximum amount: €999,999.99.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.ts</context>
+          <context context-type="linenumber">106</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfer.amountCents" datatype="html">
+        <source>Au plus deux décimales.</source>
+        <target>At most two decimals.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.ts</context>
+          <context context-type="linenumber">110</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfer.labelMax" datatype="html">
+        <source>140 caractères maximum (norme SEPA).</source>
+        <target>140 characters at most (SEPA standard).</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.ts</context>
+          <context context-type="linenumber">114</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfers.eyebrow" datatype="html">
+        <source>Historique</source>
+        <target>History</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfers/transfers.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfers.error" datatype="html">
+        <source>Impossible de charger les virements.</source>
+        <target>Could not load transfers.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfers/transfers.html</context>
+          <context context-type="linenumber">33,36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfers.beneficiary" datatype="html">
+        <source>Bénéficiaire</source>
+        <target>Beneficiary</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfers/transfers.html</context>
+          <context context-type="linenumber">41,42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfers.from" datatype="html">
+        <source>Compte débité</source>
+        <target>Debited account</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfers/transfers.html</context>
+          <context context-type="linenumber">42,43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfers.status" datatype="html">
+        <source>Statut</source>
+        <target>Status</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfers/transfers.html</context>
+          <context context-type="linenumber">43,44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfers.when" datatype="html">
+        <source>Demandé</source>
+        <target>Requested</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfers/transfers.html</context>
+          <context context-type="linenumber">44,45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfers.amount" datatype="html">
+        <source>Montant</source>
+        <target>Amount</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfers/transfers.html</context>
+          <context context-type="linenumber">45,47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transfers.empty" datatype="html">
+        <source>Aucun virement ici.</source>
+        <target>No transfers here.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfers/transfers.html</context>
+          <context context-type="linenumber">72,74</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="filter.all" datatype="html">
+        <source>Tous</source>
+        <target>All</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfers/transfers.ts</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="filter.inFlight" datatype="html">
+        <source>En cours</source>
+        <target>In progress</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfers/transfers.ts</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="filter.review" datatype="html">
+        <source>En revue</source>
+        <target>Under review</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfers/transfers.ts</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="filter.completed" datatype="html">
+        <source>Exécutés</source>
+        <target>Completed</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfers/transfers.ts</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="filter.unsuccessful" datatype="html">
+        <source>Refusés ou échoués</source>
+        <target>Rejected or failed</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfers/transfers.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="trial.eyebrow" datatype="html">
+        <source>Contrôle comptable</source>
+        <target>Accounting control</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trial-balance/trial-balance.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="trial.subtitle" datatype="html">
+        <source> La trésorerie de la banque est la contrepartie de tous les dépôts : la somme de tous les comptes vaut toujours zéro. Si ce n'est pas le cas, de l'argent a été créé ou détruit. </source>
+        <target>The bank's treasury is the counterpart of every deposit: all accounts always sum to zero. If they don't, money was created or destroyed.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trial-balance/trial-balance.html</context>
+          <context context-type="linenumber">6,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="trial.balanced" datatype="html">
+        <source>Les livres sont équilibrés</source>
+        <target>The books are balanced</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trial-balance/trial-balance.html</context>
+          <context context-type="linenumber">17,19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="trial.unbalanced" datatype="html">
+        <source>Les livres ne sont pas équilibrés</source>
+        <target>The books are not balanced</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trial-balance/trial-balance.html</context>
+          <context context-type="linenumber">19,21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="trial.proof" datatype="html">
+        <source> Somme des <x id="INTERPOLATION" equiv-text="{{ r.accounts.length }}" /> comptes : <x id="INTERPOLATION_1" equiv-text="{{ r.total | currency }}" /> · <x id="INTERPOLATION_2" equiv-text="{{ r.journalEntries }}" /> écritures au journal </source>
+        <target>Sum of <x id="INTERPOLATION" equiv-text="{{ r.accounts.length }}" /> accounts: <x id="INTERPOLATION_1" equiv-text="{{ r.total | currency }}" /> · <x id="INTERPOLATION_2" equiv-text="{{ r.journalEntries }}" /> journal entries</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trial-balance/trial-balance.html</context>
+          <context context-type="linenumber">22,25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="trial.account" datatype="html">
+        <source>Compte</source>
+        <target>Account</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trial-balance/trial-balance.html</context>
+          <context context-type="linenumber">33,34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="trial.kind" datatype="html">
+        <source>Nature</source>
+        <target>Type</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trial-balance/trial-balance.html</context>
+          <context context-type="linenumber">34,35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="trial.balance" datatype="html">
+        <source>Solde</source>
+        <target>Balance</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trial-balance/trial-balance.html</context>
+          <context context-type="linenumber">35,37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="trial.internal" datatype="html">
+        <source>Interne</source>
+        <target>Internal</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trial-balance/trial-balance.html</context>
+          <context context-type="linenumber">46,47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="trial.customer" datatype="html">
+        <source>Client</source>
+        <target>Customer</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trial-balance/trial-balance.html</context>
+          <context context-type="linenumber">48,50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="trial.total" datatype="html">
+        <source>Total</source>
+        <target>Total</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trial-balance/trial-balance.html</context>
+          <context context-type="linenumber">59,60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="deposit.title" datatype="html">
+        <source>Dépôt d'espèces</source>
+        <target>Cash deposit</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trial-balance/trial-balance.html</context>
+          <context context-type="linenumber">67,68</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="deposit.hint" datatype="html">
+        <source> Crédite un client, débite la trésorerie : une écriture à deux lignes. </source>
+        <target>Credits a customer, debits the treasury: a two-line entry.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trial-balance/trial-balance.html</context>
+          <context context-type="linenumber">69,71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="deposit.account" datatype="html">
+        <source>Compte client</source>
+        <target>Customer account</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trial-balance/trial-balance.html</context>
+          <context context-type="linenumber">72,73</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="deposit.amount" datatype="html">
+        <source>Montant (€)</source>
+        <target>Amount (€)</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trial-balance/trial-balance.html</context>
+          <context context-type="linenumber">80,82</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="deposit.submit" datatype="html">
+        <source>Comptabiliser</source>
+        <target>Post</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trial-balance/trial-balance.html</context>
+          <context context-type="linenumber">93,95</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="trial.error" datatype="html">
+        <source>Impossible de charger la balance.</source>
+        <target>Could not load the trial balance.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trial-balance/trial-balance.html</context>
+          <context context-type="linenumber">98,100</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="deposit.reference" datatype="html">
+        <source>Dépôt guichet</source>
+        <target>Branch deposit</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trial-balance/trial-balance.ts</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="deposit.done" datatype="html">
+        <source>Dépôt comptabilisé</source>
+        <target>Deposit posted</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trial-balance/trial-balance.ts</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="welcome.eyebrow" datatype="html">
+        <source>Démo interactive · banque fictive</source>
+        <target>Interactive demo · fictitious bank</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/welcome/welcome.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="welcome.title" datatype="html">
+        <source> Une banque de virements, <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;gradient&quot;&gt;" />où chaque centime se justifie.<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></source>
+        <target>A transfer bank <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;gradient&quot;&gt;" />where every cent is accounted for.<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/welcome/welcome.html</context>
+          <context context-type="linenumber">7,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="welcome.lead" datatype="html">
+        <source> Trois microservices — grand livre, paiements, anti-fraude — qui coopèrent par messages, sans jamais perdre ni dupliquer un euro, même sous charge concurrente. </source>
+        <target>Three microservices — ledger, payments, fraud — cooperating through messages, never losing or duplicating a euro, even under concurrent load.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/welcome/welcome.html</context>
+          <context context-type="linenumber">10,14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="welcome.choose" datatype="html">
+        <source>Connectez-vous avec un profil</source>
+        <target>Sign in with a profile</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/welcome/welcome.html</context>
+          <context context-type="linenumber">52,53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="welcome.chooseHint" datatype="html">
+        <source> Vous passez par Keycloak (OpenID Connect, PKCE) comme sur un vrai portail bancaire. </source>
+        <target>You go through Keycloak (OpenID Connect, PKCE), as on a real banking portal.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/welcome/welcome.html</context>
+          <context context-type="linenumber">54,57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="welcome.password" datatype="html">
+        <source>Identifiant pré-rempli. Mot de passe commun à tous les profils : <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;" /><x id="INTERPOLATION" equiv-text="{{ password }}" /><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;" /></source>
+        <target>Username pre-filled. Same password for every profile: <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;" /><x id="INTERPOLATION" equiv-text="{{ password }}" /><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;" /></target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/welcome/welcome.html</context>
+          <context context-type="linenumber">84,87</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="user.customer" datatype="html">
+        <source>Cliente</source>
+        <target>Customer</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/welcome/welcome.ts</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/welcome/welcome.ts</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="user.alice" datatype="html">
+        <source>Compte courant et livret : essayez un gros virement, il part en revue.</source>
+        <target>Current and savings accounts: try a large transfer, it goes to review.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/welcome/welcome.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="user.customerM" datatype="html">
+        <source>Client</source>
+        <target>Customer</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/welcome/welcome.ts</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="user.bob" datatype="html">
+        <source>Un compte courant bien provisionné.</source>
+        <target>A well-funded current account.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/welcome/welcome.ts</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="user.chloe" datatype="html">
+        <source>640 € seulement : un virement de 1 000 € est refusé, les fonds sont rendus.</source>
+        <target>Only €640: a €1,000 transfer is refused and the funds are returned.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/welcome/welcome.ts</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="user.operator" datatype="html">
+        <source>Analyste conformité</source>
+        <target>Compliance analyst</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/welcome/welcome.ts</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="user.olivia" datatype="html">
+        <source>Décide des virements suspects, consulte le journal et la balance.</source>
+        <target>Decides on suspicious transfers, reads the journal and the trial balance.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/welcome/welcome.ts</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="welcome.ledgerTitle" datatype="html">
+        <source>Comptabilité en partie double</source>
+        <target>Double-entry bookkeeping</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/welcome/welcome.ts</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="welcome.ledgerText" datatype="html">
+        <source>Chaque euro vient de quelque part : la balance générale est toujours à zéro.</source>
+        <target>Every euro comes from somewhere: the trial balance is always zero.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/welcome/welcome.ts</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="welcome.sagaTitle" datatype="html">
+        <source>Saga avec compensation</source>
+        <target>Saga with compensation</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/welcome/welcome.ts</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="welcome.sagaText" datatype="html">
+        <source>Réservation, contrôle anti-fraude, exécution ou libération des fonds, à travers trois services.</source>
+        <target>Hold, fraud screening, then capture or release of funds, across three services.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/welcome/welcome.ts</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="welcome.idempotencyTitle" datatype="html">
+        <source>Idempotence de bout en bout</source>
+        <target>End-to-end idempotency</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/welcome/welcome.ts</context>
+          <context context-type="linenumber">73</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="welcome.idempotencyText" datatype="html">
+        <source>Double clic, timeout, rejeu réseau : un virement n'est jamais exécuté deux fois.</source>
+        <target>Double click, timeout, network replay: a transfer is never executed twice.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/welcome/welcome.ts</context>
+          <context context-type="linenumber">74</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="welcome.eventsTitle" datatype="html">
+        <source>Event sourcing</source>
+        <target>Event sourcing</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/welcome/welcome.ts</context>
+          <context context-type="linenumber">78</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="welcome.eventsText" datatype="html">
+        <source>Le solde à n'importe quelle date de valeur, rejoué depuis les événements.</source>
+        <target>The balance at any value date, replayed from events.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/welcome/welcome.ts</context>
+          <context context-type="linenumber">79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="error.amountInvalid" datatype="html">
+        <source>Le montant doit être positif, avec au plus deux décimales, et inférieur à 1 000 000 €.</source>
+        <target>The amount must be positive, with at most two decimals, and below €1,000,000.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/problem-details.ts</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="error.labelTooLong" datatype="html">
+        <source>Le libellé est limité à 140 caractères (norme SEPA).</source>
+        <target>The description is limited to 140 characters (SEPA standard).</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/problem-details.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="error.idempotencyMissing" datatype="html">
+        <source>Clé d'idempotence manquante.</source>
+        <target>Missing idempotency key.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/problem-details.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="error.idempotencyReused" datatype="html">
+        <source>Cette clé d'idempotence a déjà servi pour un autre virement.</source>
+        <target>This idempotency key was already used for another transfer.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/problem-details.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="error.sourceAccount" datatype="html">
+        <source>Ce compte à débiter n'existe pas parmi les vôtres.</source>
+        <target>This account to debit is not one of yours.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/problem-details.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="error.beneficiaryUnknown" datatype="html">
+        <source>Aucun compte de la banque ne porte cet IBAN.</source>
+        <target>No account at this bank has this IBAN.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/problem-details.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="error.sameAccount" datatype="html">
+        <source>Le bénéficiaire est le compte débité.</source>
+        <target>The beneficiary is the debited account.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/problem-details.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="error.amountPositive" datatype="html">
+        <source>Le montant doit être strictement positif.</source>
+        <target>The amount must be strictly positive.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/problem-details.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="error.accountNotFound" datatype="html">
+        <source>Ce compte n'existe pas.</source>
+        <target>This account does not exist.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/problem-details.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="error.screeningNotFound" datatype="html">
+        <source>Aucun contrôle n'existe pour ce virement.</source>
+        <target>No screening exists for this transfer.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/problem-details.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="error.alreadyDecided" datatype="html">
+        <source>Ce virement n'attend plus de revue : un autre analyste a déjà décidé.</source>
+        <target>This transfer is no longer awaiting review: another analyst already decided.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/problem-details.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="error.commentRequired" datatype="html">
+        <source>Un commentaire est obligatoire pour rejeter un virement.</source>
+        <target>A comment is required to reject a transfer.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/problem-details.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="error.unexpected" datatype="html">
+        <source>Erreur inattendue.</source>
+        <target>Unexpected error.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/problem-details.ts</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="error.network" datatype="html">
+        <source>Le service est injoignable. Vérifiez votre connexion.</source>
+        <target>The service is unreachable. Check your connection.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/problem-details.ts</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="error.rateLimited" datatype="html">
+        <source>Trop de demandes en peu de temps. Réessayez dans une minute.</source>
+        <target>Too many requests in a short time. Try again in a minute.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/problem-details.ts</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="error.status" datatype="html">
+        <source>Erreur <x id="status" equiv-text="error.status" />.</source>
+        <target>Error <x id="status" equiv-text="error.status" />.</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/problem-details.ts</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="toast.region" datatype="html">
+        <source>Notifications</source>
+        <target>Notifications</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/toast-host.ts</context>
+          <context context-type="linenumber">13,15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="common.close" datatype="html">
+        <source>Fermer</source>
+        <target>Close</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/toast-host.ts</context>
+          <context context-type="linenumber">34,35</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

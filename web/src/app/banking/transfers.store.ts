@@ -56,9 +56,6 @@ export const TransfersStore = signalStore(
       const others = store.transfers().filter((existing) => existing.id !== transfer.id);
       patchState(store, { transfers: [transfer, ...others] });
     },
-    byId(id: string) {
-      return computed(() => store.transfers().find((transfer) => transfer.id === id));
-    },
   })),
   withHooks({
     onInit(store, realtime = inject(TransfersRealtime)) {

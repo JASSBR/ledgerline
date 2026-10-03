@@ -2,7 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { Injectable, effect, inject, signal } from '@angular/core';
 
 export type Theme = 'light' | 'dark';
-const STORAGE_KEY = 'claimflow.theme';
+const STORAGE_KEY = 'ledgerline.theme';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService {

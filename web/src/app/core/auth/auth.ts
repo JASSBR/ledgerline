@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { Injectable, InjectionToken, computed, inject, signal } from '@angular/core';
 import { User, UserManager, WebStorageStateStore } from 'oidc-client-ts';
 import { environment } from '../../../environments/environment';
 
@@ -13,23 +13,31 @@ export interface CurrentUser {
 /** Keycloak realm roles, emitted as a flat "roles" claim by the realm's protocol mapper. */
 export const ROLES = { customer: 'customer', operator: 'operator' } as const;
 
+/** The oidc-client-ts manager, behind a token so tests can stand in for Keycloak. */
+export const USER_MANAGER = new InjectionToken<UserManager>('USER_MANAGER', {
+  providedIn: 'root',
+  factory: () => {
+    const document = inject(DOCUMENT);
+    return new UserManager({
+      authority: environment.oidc.authority,
+      client_id: environment.oidc.clientId,
+      redirect_uri: new URL('callback', document.baseURI).href,
+      post_logout_redirect_uri: document.baseURI,
+      response_type: 'code',
+      scope: 'openid profile',
+      automaticSilentRenew: true,
+      userStore: new WebStorageStateStore({ store: globalThis.sessionStorage }),
+    });
+  },
+});
+
 /**
  * OpenID Connect, authorization code flow with PKCE, against Keycloak — the same protocol a real bank front-end uses.
  * Tokens live in sessionStorage (closing the tab ends the session) and are renewed with the refresh token.
  */
 @Injectable({ providedIn: 'root' })
 export class Auth {
-  private readonly document = inject(DOCUMENT);
-  private readonly manager = new UserManager({
-    authority: environment.oidc.authority,
-    client_id: environment.oidc.clientId,
-    redirect_uri: new URL('callback', this.document.baseURI).href,
-    post_logout_redirect_uri: this.document.baseURI,
-    response_type: 'code',
-    scope: 'openid profile',
-    automaticSilentRenew: true,
-    userStore: new WebStorageStateStore({ store: globalThis.sessionStorage }),
-  });
+  private readonly manager = inject(USER_MANAGER);
   private readonly session = signal<User | null>(null);
 
   readonly user = computed<CurrentUser | null>(() => {
