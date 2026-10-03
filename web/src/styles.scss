@@ -1,52 +1,73 @@
-@use '@fontsource-variable/inter';
+@use '@fontsource/source-serif-4/500.css' as sourceserif-500;
+@use '@fontsource/source-serif-4/600.css' as sourceserif-600;
+@use '@fontsource/source-serif-4/700.css' as sourceserif-700;
+@use '@fontsource/work-sans/400.css' as worksans-400;
+@use '@fontsource/work-sans/500.css' as worksans-500;
+@use '@fontsource/work-sans/600.css' as worksans-600;
 
-/* ---------- Design tokens ---------- */
+/*
+ * Ledgerline — "the columnar ledger book".
+ * Banks kept their books on green-ruled columnar paper, with red vertical rules between the money columns, a double
+ * underline under every total, and a cloth-bound cover stamped in gold. The interface is that book.
+ */
 :root {
-  --bg: #f4f6f8;
-  --surface: #ffffff;
-  --surface-2: #eef0f6;
-  --border: #e3e6ef;
-  --text: #0f1424;
-  --muted: #5b6377;
-  --accent: #0f766e;
-  --accent-2: #2563eb;
-  --accent-soft: #e6f4f2;
+  --bg: #eef4ec;
+  --surface: #fbfdf9;
+  --surface-2: #e4eee1;
+  --border: #c9dcc8;
+  --rule: #bfd8c2;
+  --column: #c8463d;
+  --text: #13261b;
+  --muted: #5d7264;
+  --accent: #1e6b47;
+  --accent-2: #2f5d8a;
+  --accent-soft: #dcebdf;
   --on-accent: #ffffff;
-  --danger: #dc2626;
-  --success: #059669;
-  --status-declared: #4f46e5;
-  --status-review: #b45309;
-  --status-info: #db2777;
-  --status-approved: #059669;
-  --status-rejected: #dc2626;
-  --status-settled: #0e7490;
-  --radius: 12px;
-  --radius-sm: 8px;
-  --shadow: 0 1px 2px rgb(15 20 36 / 5%), 0 1px 3px rgb(15 20 36 / 6%);
-  --shadow-lg: 0 12px 32px -8px rgb(15 20 36 / 18%);
+  --binding: #173d2b;
+  --gold: #b8913a;
+  --danger: #b3261e;
+  --success: #1e6b47;
+  --status-declared: #2f5d8a;
+  --status-review: #9a6400;
+  --status-info: #8a3d6b;
+  --status-approved: #1e6b47;
+  --status-rejected: #b3261e;
+  --status-settled: #2f5d8a;
+  --radius: 4px;
+  --radius-sm: 3px;
+  --shadow: none;
+  --shadow-lg: 0 14px 30px -18px rgb(19 38 27 / 45%);
   --focus: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent);
+  --serif: 'Source Serif 4', Georgia, serif;
+  --sans: 'Work Sans', system-ui, sans-serif;
   color-scheme: light;
 }
 
+/* The same book read at night: dark green cloth, cream rules. */
 [data-theme='dark'] {
-  --bg: #0a0d16;
-  --surface: #111625;
-  --surface-2: #1a2033;
-  --border: #252c42;
-  --text: #e8ebf4;
-  --muted: #99a2b9;
-  --accent: #2dd4bf;
-  --accent-2: #60a5fa;
-  --accent-soft: #10302d;
-  --on-accent: #0a0d16;
-  --status-declared: #a5b4fc;
-  --status-review: #fbbf24;
-  --status-info: #f472b6;
-  --status-approved: #34d399;
-  --status-rejected: #f87171;
-  --status-settled: #67e8f9;
-  --shadow: 0 1px 2px rgb(0 0 0 / 40%);
-  --shadow-lg: 0 16px 40px -10px rgb(0 0 0 / 60%);
+  --bg: #0c1a13;
+  --surface: #12241a;
+  --surface-2: #183022;
+  --border: #24402f;
+  --rule: #2a4a37;
+  --column: #e0675d;
+  --text: #e5efe4;
+  --muted: #98ae9d;
+  --accent: #6fcf97;
+  --accent-2: #8bb8e8;
+  --accent-soft: #1c3a29;
+  --on-accent: #0c1a13;
+  --binding: #08130d;
+  --gold: #d9b45c;
+  --danger: #f08a80;
+  --success: #6fcf97;
+  --status-declared: #8bb8e8;
+  --status-review: #e4b45c;
+  --status-info: #e29bc6;
+  --status-approved: #6fcf97;
+  --status-rejected: #f08a80;
+  --status-settled: #8bb8e8;
+  --shadow-lg: 0 16px 40px -14px rgb(0 0 0 / 70%);
   color-scheme: dark;
 }
 
@@ -65,35 +86,28 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font:
-    15px/1.5 'Inter Variable',
-    system-ui,
-    -apple-system,
-    'Segoe UI',
-    sans-serif;
-  font-feature-settings: 'cv11', 'ss01';
+  font: 15px/1.55 var(--sans);
+  font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
 }
 
 h1,
 h2,
 h3 {
-  letter-spacing: -0.02em;
-  line-height: 1.2;
+  font-family: var(--serif);
+  font-weight: 600;
+  line-height: 1.15;
 }
 h1 {
-  font-size: 1.65rem;
+  font-size: clamp(1.9rem, 3.4vw, 2.5rem);
   margin: 0;
 }
 h2 {
-  font-size: 1rem;
+  font-size: 1.25rem;
   margin: 0 0 0.9rem;
 }
 h3 {
-  font-size: 0.9rem;
+  font-size: 1.05rem;
   margin: 1rem 0 0.5rem;
 }
 a {
@@ -108,16 +122,12 @@ input,
 select,
 textarea {
   font: inherit;
-  font-weight: 400;
   width: 100%;
-  padding: 0.6rem 0.75rem;
+  padding: 0.55rem 0.7rem;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   background: var(--surface);
   color: var(--text);
-  transition:
-    border-color 0.15s,
-    box-shadow 0.15s;
 
   &:focus {
     outline: none;
@@ -129,36 +139,44 @@ textarea {
   }
 }
 
+/* ---------- The ledger page: green rows, red column rules, figures in the book serif ---------- */
 table {
   width: 100%;
   border-collapse: collapse;
 }
 th,
 td {
-  padding: 0.8rem 1rem;
+  padding: 0.7rem 0.9rem;
   text-align: left;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--rule);
 }
 th {
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--muted);
+  font-family: var(--serif);
+  font-size: 0.95rem;
   font-weight: 600;
-  background: var(--surface);
+  color: var(--text);
+  border-bottom: 2px solid var(--text);
+  background: transparent;
 }
-tbody tr {
-  transition: background-color 0.12s;
+/* The red vertical rules a bookkeeper draws before every money column. */
+th.num,
+td.num {
+  border-left: 1px solid color-mix(in srgb, var(--column) 55%, transparent);
 }
 tbody tr:hover {
-  background: color-mix(in srgb, var(--accent) 4%, transparent);
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
 }
-tbody tr:last-child td {
-  border-bottom: 0;
+tfoot th,
+tfoot td {
+  border-top: 1px solid var(--text);
+  border-bottom: 3px double var(--text);
 }
 .num {
   text-align: right;
   font-variant-numeric: tabular-nums;
+}
+.amount {
+  font-family: var(--serif);
 }
 
 /* ---------- Components ---------- */
@@ -253,12 +271,11 @@ button.button {
 }
 .eyebrow {
   display: block;
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--accent);
-  margin-bottom: 0.35rem;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin-bottom: 0.25rem;
 }
 .muted {
   color: var(--muted);
@@ -351,21 +368,26 @@ p.alert {
   color: var(--text);
 }
 .iban {
-  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
-  font-size: 0.85em;
-  letter-spacing: 0.02em;
+  font-family: var(--serif);
+  font-size: 0.95em;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
 }
 
-/* Brand mark, shared by the welcome page and the shell. */
+/* Brand mark: a monogram stamped in gold foil, as on a ledger's cloth cover. */
 .logo {
-  width: 1.7rem;
-  height: 1.7rem;
-  border-radius: 7px;
-  /* Three ruled lines: a ledger page. */
-  background:
-    linear-gradient(var(--on-accent), var(--on-accent)) 0.38rem 0.45rem / 0.95rem 2px no-repeat,
-    linear-gradient(var(--on-accent), var(--on-accent)) 0.38rem 0.78rem / 0.7rem 2px no-repeat,
-    linear-gradient(var(--on-accent), var(--on-accent)) 0.38rem 1.11rem / 0.95rem 2px no-repeat,
-    linear-gradient(135deg, var(--accent), var(--accent-2));
-  box-shadow: 0 6px 16px -6px var(--accent);
+  display: inline-grid;
+  place-items: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border: 1.5px solid var(--gold);
+  border-radius: 2px;
+  color: var(--gold);
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 1.05rem;
+  line-height: 1;
+}
+.logo::before {
+  content: 'L';
 }

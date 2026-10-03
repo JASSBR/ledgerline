@@ -20,12 +20,12 @@ duplicate a cent, even with 25 transfers per second hammering the same two accou
 
 <table>
   <tr>
-    <td width="50%"><img src="docs/images/fraud-review.png" alt="Analyst review queue"></td>
+    <td width="50%"><img src="docs/images/welcome.png" alt="Sign-in page: the ledger cover and its first ruled page"></td>
     <td width="50%"><img src="docs/images/accounts-dark.png" alt="Accounts, dark theme, money on hold"></td>
   </tr>
   <tr>
-    <td align="center"><sub>The analyst's queue: rules that fired, approve or reject</sub></td>
-    <td align="center"><sub>Accounts: ledger balance vs. available, funds on hold</sub></td>
+    <td align="center"><sub>Sign-in: the ledger's cover and its first ruled page</sub></td>
+    <td align="center"><sub>Accounts, dark theme</sub></td>
   </tr>
 </table>
 

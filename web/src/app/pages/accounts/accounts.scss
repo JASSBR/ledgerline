@@ -12,14 +12,12 @@
   align-items: flex-end;
   justify-content: space-between;
   gap: 1rem;
-  padding: 1.5rem;
-  background:
-    radial-gradient(
-      30rem 12rem at 100% 0%,
-      color-mix(in srgb, var(--accent-2) 14%, transparent),
-      transparent 70%
-    ),
-    linear-gradient(135deg, color-mix(in srgb, var(--accent) 10%, var(--surface)), var(--surface));
+  padding: 1.5rem 1.5rem 1.25rem;
+  /* The head of a ledger page: a gold fillet, then the double rule under the balance. */
+  border-top: 3px solid var(--gold);
+  border-bottom: 3px double var(--text);
+  border-radius: 0;
+  background: var(--surface);
 }
 .label {
   display: block;
@@ -28,8 +26,9 @@
   margin-bottom: 0.25rem;
 }
 .total {
-  font-size: clamp(2rem, 4vw, 2.6rem);
-  letter-spacing: -0.03em;
+  font-family: var(--serif);
+  font-size: clamp(2.4rem, 5vw, 3.2rem);
+  font-weight: 600;
 }
 .held {
   display: flex;
@@ -55,10 +54,11 @@
     transform 0.15s,
     box-shadow 0.15s;
 }
+.account {
+  border-top: 3px solid var(--accent);
+}
 .account:hover {
-  border-color: var(--accent);
-  transform: translateY(-2px);
-  box-shadow: 0 14px 28px -18px var(--accent);
+  background: color-mix(in srgb, var(--accent) 5%, var(--surface));
 }
 .head {
   display: flex;
@@ -82,8 +82,9 @@
   color: var(--accent);
 }
 .balance {
-  font-size: 1.6rem;
-  letter-spacing: -0.02em;
+  font-family: var(--serif);
+  font-size: 1.8rem;
+  font-weight: 600;
 }
 .foot {
   display: flex;
