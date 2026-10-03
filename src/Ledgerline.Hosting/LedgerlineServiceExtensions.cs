@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Scalar.AspNetCore;
 using Weasel.Core;
 using Wolverine;
@@ -80,12 +81,16 @@ public static class LedgerlineServiceExtensions
         return app;
     }
 
-    private static void AddPersistence(WebApplicationBuilder builder, string serviceName, Action<StoreOptions> configureStore) =>
-        builder.Services.AddMarten(provider =>
+    private static void AddPersistence(WebApplicationBuilder builder, string serviceName, Action<StoreOptions> configureStore)
+    {
+        var connectionString = builder.Configuration.GetConnectionString($"{serviceName}db")
+            ?? throw new InvalidOperationException($"Connection string '{serviceName}db' is missing.");
+        builder.Services.AddHostedService(provider => new DatabaseReadiness(
+            connectionString, provider.GetRequiredService<TimeProvider>(), provider.GetRequiredService<ILogger<DatabaseReadiness>>()));
+        builder.Services.AddMarten(_ =>
             {
                 var options = new StoreOptions();
-                options.Connection(provider.GetRequiredService<IConfiguration>().GetConnectionString($"{serviceName}db")
-                    ?? throw new InvalidOperationException($"Connection string '{serviceName}db' is missing."));
+                options.Connection(connectionString);
                 options.DatabaseSchemaName = serviceName;
                 options.UseSystemTextJsonForSerialization(EnumStorage.AsString);
                 options.Events.StreamIdentity = StreamIdentity.AsGuid;
@@ -95,6 +100,7 @@ public static class LedgerlineServiceExtensions
             .UseLightweightSessions()
             .IntegrateWithWolverine()
             .ApplyAllDatabaseChangesOnStartup();
+    }
 
     private static void AddMessaging(WebApplicationBuilder builder, string serviceName, System.Reflection.Assembly serviceAssembly) =>
         builder.UseWolverine(options =>
