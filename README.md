@@ -16,16 +16,16 @@ duplicate a cent, even with 25 transfers per second hammering the same two accou
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-kind%20in%20CI-326CE5)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-![A transfer held for review, live](docs/images/transfer-review.png)
+![A transfer that went through review, step by step](docs/images/transfer-completed.png)
 
 <table>
   <tr>
     <td width="50%"><img src="docs/images/fraud-review.png" alt="Analyst review queue"></td>
-    <td width="50%"><img src="docs/images/accounts-dark-en.png" alt="Accounts, English build, dark theme"></td>
+    <td width="50%"><img src="docs/images/accounts-dark.png" alt="Accounts, dark theme, money on hold"></td>
   </tr>
   <tr>
     <td align="center"><sub>The analyst's queue: rules that fired, approve or reject</sub></td>
-    <td align="center"><sub>English build, dark theme</sub></td>
+    <td align="center"><sub>Accounts: ledger balance vs. available, funds on hold</sub></td>
   </tr>
 </table>
 
