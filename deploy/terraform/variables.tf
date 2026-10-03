@@ -59,3 +59,15 @@ variable "postgres_admin_password" {
   sensitive   = true
   description = "Only with existing_postgres_server; a new server gets a generated password."
 }
+
+variable "existing_environment" {
+  type = object({
+    name           = string
+    resource_group = string
+  })
+  default     = null
+  description = <<-EOT
+    Run the apps in an existing Container Apps environment (it must be in WorkloadProfiles mode). Azure for Students
+    allows one environment per region. Null creates a dedicated one.
+  EOT
+}

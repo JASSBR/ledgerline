@@ -6,3 +6,6 @@ spa_origin              = "https://ledgerline-bank.vercel.app"
 # Optional: reuse an existing PostgreSQL Flexible Server (one database per service is created on it).
 # existing_postgres_server = { name = "my-pg", resource_group = "rg-shared" }
 # postgres_admin_password  = "…"
+
+# Optional: reuse an existing Container Apps environment (Azure for Students allows one per region).
+# existing_environment = { name = "my-env", resource_group = "rg-shared" }

@@ -3,7 +3,7 @@
 resource "azurerm_container_app" "keycloak" {
   name                         = "${var.name}-auth"
   resource_group_name          = azurerm_resource_group.this.name
-  container_app_environment_id = azurerm_container_app_environment.this.id
+  container_app_environment_id = local.environment_id
   revision_mode                = "Single"
   workload_profile_name        = "Consumption"
 
@@ -77,7 +77,7 @@ resource "random_password" "keycloak_admin" {
 resource "azurerm_container_app" "bank" {
   name                         = "${var.name}-bank"
   resource_group_name          = azurerm_resource_group.this.name
-  container_app_environment_id = azurerm_container_app_environment.this.id
+  container_app_environment_id = local.environment_id
   revision_mode                = "Single"
   workload_profile_name        = "Consumption"
 

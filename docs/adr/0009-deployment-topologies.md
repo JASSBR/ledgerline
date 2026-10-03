@@ -16,6 +16,11 @@ Six always-on Container Apps (three services, gateway, broker, identity provider
   (sidecars on localhost) that scales to zero, plus Keycloak in a second one. PostgreSQL Flexible Server (B1ms) holds
   one database per service. Images are pulled with a managed identity.
 
+- Two Azure constraints shape the Terraform: since 2026 a new Container Apps environment defaults to *Express* mode,
+  which refuses sidecars, so the environment is declared through the ARM API (`azapi`) in *WorkloadProfiles* mode; and
+  Azure for Students allows one environment per region, so the demo shares ClaimFlow's (`existing_environment`), as it
+  shares its PostgreSQL server (one database per service).
+
 ## Consequences
 
 - ✅ The demo costs nothing when idle; the architecture is still demonstrated in full on Kubernetes.
