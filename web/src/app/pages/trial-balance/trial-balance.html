@@ -1,0 +1,101 @@
+<header class="page-header">
+  <div>
+    <span class="eyebrow" i18n="@@trial.eyebrow">Contrôle comptable</span>
+    <h1 i18n="@@nav.trialBalance">Balance générale</h1>
+    <p class="muted" i18n="@@trial.subtitle">
+      La trésorerie de la banque est la contrepartie de tous les dépôts : la somme de tous les
+      comptes vaut toujours zéro. Si ce n'est pas le cas, de l'argent a été créé ou détruit.
+    </p>
+  </div>
+</header>
+
+@if (report.value(); as r) {
+  <section class="proof card" [class.ok]="r.balanced">
+    <span class="icon"><app-icon [name]="r.balanced ? 'scale' : 'alert'" [size]="26" /></span>
+    <div>
+      @if (r.balanced) {
+        <strong i18n="@@trial.balanced">Les livres sont équilibrés</strong>
+      } @else {
+        <strong i18n="@@trial.unbalanced">Les livres ne sont pas équilibrés</strong>
+      }
+      <p class="muted" i18n="@@trial.proof">
+        Somme des {{ r.accounts.length }} comptes : {{ r.total | currency }} ·
+        {{ r.journalEntries }} écritures au journal
+      </p>
+    </div>
+  </section>
+
+  <div class="layout">
+    <section class="card table-card">
+      <table>
+        <thead>
+          <tr>
+            <th i18n="@@trial.account">Compte</th>
+            <th i18n="@@trial.kind">Nature</th>
+            <th class="num" i18n="@@trial.balance">Solde</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (account of r.accounts; track account.accountId) {
+            <tr>
+              <td>
+                <a [routerLink]="['/accounts', account.accountId]">{{ account.name }}</a>
+              </td>
+              <td>
+                @if (account.kind === 'Internal') {
+                  <span class="chip" i18n="@@trial.internal">Interne</span>
+                } @else {
+                  <span class="muted" i18n="@@trial.customer">Client</span>
+                }
+              </td>
+              <td class="num amount" [class.negative]="account.balance < 0">
+                {{ account.balance | currency }}
+              </td>
+            </tr>
+          }
+        </tbody>
+        <tfoot>
+          <tr>
+            <th colspan="2" i18n="@@trial.total">Total</th>
+            <th class="num amount">{{ r.total | currency }}</th>
+          </tr>
+        </tfoot>
+      </table>
+    </section>
+
+    <form class="card deposit" (submit)="deposit($event)">
+      <h2 i18n="@@deposit.title">Dépôt d'espèces</h2>
+      <p class="muted" i18n="@@deposit.hint">
+        Crédite un client, débite la trésorerie : une écriture à deux lignes.
+      </p>
+      <label>
+        <span i18n="@@deposit.account">Compte client</span>
+        <select [value]="depositAccount()" (change)="depositAccount.set($any($event.target).value)">
+          @for (account of customers(); track account.accountId) {
+            <option [value]="account.accountId">{{ account.name }}</option>
+          }
+        </select>
+      </label>
+      <label>
+        <span i18n="@@deposit.amount">Montant (€)</span>
+        <input
+          type="number"
+          min="0.01"
+          step="0.01"
+          [value]="depositAmount()"
+          (input)="depositAmount.set(+$any($event.target).value)"
+        />
+      </label>
+      @for (message of depositErrors(); track message) {
+        <p class="alert" role="alert">{{ message }}</p>
+      }
+      <button type="submit" class="button primary" [disabled]="depositing()">
+        <app-icon name="euro" [size]="16" /> <span i18n="@@deposit.submit">Comptabiliser</span>
+      </button>
+    </form>
+  </div>
+} @else if (report.error()) {
+  <p class="alert" role="alert" i18n="@@trial.error">Impossible de charger la balance.</p>
+} @else {
+  <div class="skeleton" style="height: 20rem"></div>
+}

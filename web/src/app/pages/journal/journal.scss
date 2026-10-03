@@ -1,0 +1,40 @@
+.entries {
+  display: grid;
+  gap: 0.9rem;
+}
+.entry {
+  padding: 0;
+  overflow: hidden;
+}
+.entry > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+.entry > header div {
+  display: grid;
+}
+.entry th,
+.entry td {
+  padding: 0.55rem 1rem;
+}
+.entry td a {
+  color: inherit;
+  text-decoration: none;
+}
+.entry td a:hover {
+  color: var(--accent);
+}
+// Accountants indent the credited account under the debited one.
+.credit-line {
+  padding-left: 2.5rem !important;
+}
+.chip.ok {
+  color: var(--success);
+}
+.chip.ko {
+  color: var(--danger);
+}

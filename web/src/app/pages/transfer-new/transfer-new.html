@@ -1,0 +1,150 @@
+<a routerLink="/accounts" class="back"
+  ><app-icon name="back" [size]="16" /> <span i18n="@@nav.accounts">Mes comptes</span></a
+>
+
+<header class="page-header">
+  <div>
+    <span class="eyebrow" i18n="@@transfer.eyebrow">Virement SEPA instantané</span>
+    <h1 i18n="@@transfer.title">Nouveau virement</h1>
+    <p class="muted" i18n="@@transfer.subtitle">
+      Les fonds sont réservés, contrôlés par l'anti-fraude, puis virés — ou rendus si quelque chose
+      échoue.
+    </p>
+  </div>
+</header>
+
+<div class="layout">
+  <form class="card" novalidate (submit)="onSubmit($event)">
+    <label>
+      <span i18n="@@transfer.from">Compte à débiter</span>
+      <select [formField]="form.fromAccountId">
+        @for (account of accounts.value(); track account.id) {
+          <option [value]="account.id">
+            {{ account.name }} — {{ account.available | currency }}
+          </option>
+        }
+      </select>
+    </label>
+
+    <label>
+      <span i18n="@@transfer.to">IBAN du bénéficiaire</span>
+      <input
+        [formField]="form.toIban"
+        class="iban"
+        placeholder="FR76 9999 9000 0120 0000 0000 112"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      @for (error of form.toIban().touched() ? form.toIban().errors() : []; track error.kind) {
+        <span class="field-error">{{ error.message }}</span>
+      }
+      @if (payee.value(); as lookup) {
+        @if (lookup.exists) {
+          <span class="payee ok" role="status"
+            ><app-icon name="shield" [size]="16" />
+            <span i18n="@@transfer.payeeOk"
+              >Ce compte appartient à <strong>{{ lookup.name }}</strong></span
+            ></span
+          >
+        } @else {
+          <span class="payee unknown" role="status"
+            ><app-icon name="alert" [size]="16" />
+            <span i18n="@@transfer.payeeUnknown"
+              >Aucun compte de la banque ne porte cet IBAN.</span
+            ></span
+          >
+        }
+      } @else if (payee.isLoading()) {
+        <span class="payee" i18n="@@transfer.payeeChecking">Vérification du bénéficiaire…</span>
+      }
+    </label>
+
+    <div class="row">
+      <label>
+        <span i18n="@@transfer.amount">Montant (€)</span>
+        <input
+          type="number"
+          step="0.01"
+          inputmode="decimal"
+          [formField]="form.amount"
+          class="amount-input"
+        />
+        @for (error of form.amount().touched() ? form.amount().errors() : []; track error.kind) {
+          <span class="field-error">{{ error.message }}</span>
+        }
+      </label>
+      <label>
+        <span i18n="@@transfer.label">Libellé (facultatif)</span>
+        <input
+          [formField]="form.label"
+          i18n-placeholder="@@transfer.labelPlaceholder"
+          placeholder="Loyer octobre"
+        />
+        @for (error of form.label().touched() ? form.label().errors() : []; track error.kind) {
+          <span class="field-error">{{ error.message }}</span>
+        }
+      </label>
+    </div>
+
+    @if (source(); as from) {
+      @if (model().amount > from.available) {
+        <p class="warning" role="status">
+          <app-icon name="alert" [size]="16" />
+          <span i18n="@@transfer.overdraft"
+            >Le montant dépasse le solde disponible ({{ from.available | currency }}) : la
+            réservation sera refusée par le grand livre.</span
+          >
+        </p>
+      }
+    }
+
+    @for (message of serverErrors(); track message) {
+      <p class="alert" role="alert">{{ message }}</p>
+    }
+
+    <div class="submit">
+      <span
+        class="key"
+        i18n-title="@@transfer.keyHint"
+        title="Envoyée dans l'en-tête Idempotency-Key : un double envoi ne crée jamais deux virements."
+      >
+        <app-icon name="key" [size]="14" /> Idempotency-Key
+        <code>{{ idempotencyKey().slice(0, 8) }}…</code>
+      </span>
+      <button type="submit" class="button primary" [disabled]="form().submitting()">
+        <app-icon name="send" [size]="16" />
+        <span i18n="@@transfer.submit">Envoyer le virement</span>
+      </button>
+    </div>
+  </form>
+
+  <aside class="card beneficiaries">
+    <h2 i18n="@@transfer.saved">Bénéficiaires de démonstration</h2>
+    <ul>
+      @for (beneficiary of beneficiaries(); track beneficiary.iban) {
+        <li>
+          <button
+            type="button"
+            (click)="pick(beneficiary)"
+            [attr.data-beneficiary]="beneficiary.name"
+          >
+            <strong>{{ beneficiary.name }}</strong>
+            @if (isOwn(beneficiary)) {
+              <small i18n="@@transfer.own">Votre compte</small>
+            } @else if (!beneficiary.ownerUsername) {
+              <small class="danger" i18n="@@transfer.blocked">Sur liste noire : sera bloqué</small>
+            }
+            <span class="iban"
+              >{{ beneficiary.iban.slice(0, 4) }} … {{ beneficiary.iban.slice(-7) }}</span
+            >
+          </button>
+        </li>
+      }
+    </ul>
+    <p class="muted rules" i18n="@@transfer.rules">
+      Règles anti-fraude : au-delà de 3 000 €, ou 1 000 € vers un nouveau bénéficiaire, ou plus de 3
+      virements en 10 minutes, le virement part en revue chez un analyste. Au-delà de 20 000 €, il
+      est bloqué.
+    </p>
+  </aside>
+</div>

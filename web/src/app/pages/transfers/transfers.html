@@ -1,0 +1,79 @@
+<header class="page-header">
+  <div>
+    <span class="eyebrow" i18n="@@transfers.eyebrow">Historique</span>
+    @if (auth.isOperator()) {
+      <h1 i18n="@@nav.allTransfers">Tous les virements</h1>
+    } @else {
+      <h1 i18n="@@nav.transfers">Mes virements</h1>
+    }
+  </div>
+  @if (!auth.isOperator()) {
+    <a routerLink="/transfers/new" class="button primary"
+      ><app-icon name="plus" [size]="16" />
+      <span i18n="@@nav.newTransfer">Nouveau virement</span></a
+    >
+  }
+</header>
+
+<div class="filters" role="tablist">
+  @for (option of filters; track option.value) {
+    <button
+      type="button"
+      role="tab"
+      [attr.aria-selected]="filter() === option.value"
+      [class.active]="filter() === option.value"
+      (click)="filter.set(option.value)"
+    >
+      {{ option.label }} <span class="count">{{ counts()[option.value] }}</span>
+    </button>
+  }
+</div>
+
+@if (store.error()) {
+  <p class="alert" role="alert" i18n="@@transfers.error">Impossible de charger les virements.</p>
+}
+
+<section class="card table-card">
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th i18n="@@transfers.beneficiary">Bénéficiaire</th>
+          <th i18n="@@transfers.from">Compte débité</th>
+          <th i18n="@@transfers.status">Statut</th>
+          <th i18n="@@transfers.when">Demandé</th>
+          <th class="num" i18n="@@transfers.amount">Montant</th>
+        </tr>
+      </thead>
+      <tbody>
+        @if (store.loading() && store.transfers().length === 0) {
+          @for (i of [1, 2, 3]; track i) {
+            <tr>
+              <td colspan="5"><div class="skeleton" style="height: 1.4rem"></div></td>
+            </tr>
+          }
+        }
+        @for (transfer of visible(); track transfer.id) {
+          <tr>
+            <td>
+              <a [routerLink]="['/transfers', transfer.id]" class="who">
+                <strong>{{ transfer.toName }}</strong>
+                <small>{{ transfer.label || '—' }}</small>
+              </a>
+            </td>
+            <td class="muted">{{ transfer.fromName }}</td>
+            <td><app-status-badge [status]="transfer.status" /></td>
+            <td class="muted">{{ transfer.requestedAt | relativeTime }}</td>
+            <td class="num amount">{{ transfer.amount | currency }}</td>
+          </tr>
+        } @empty {
+          @if (!store.loading()) {
+            <tr>
+              <td colspan="5" class="muted empty" i18n="@@transfers.empty">Aucun virement ici.</td>
+            </tr>
+          }
+        }
+      </tbody>
+    </table>
+  </div>
+</section>

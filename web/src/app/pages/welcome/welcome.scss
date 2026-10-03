@@ -1,0 +1,227 @@
+.page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  background:
+    radial-gradient(
+      60rem 40rem at -10% -20%,
+      color-mix(in srgb, var(--accent) 16%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      40rem 30rem at 110% 120%,
+      color-mix(in srgb, var(--accent-2) 14%, transparent),
+      transparent 60%
+    ),
+    var(--bg);
+}
+
+.hero {
+  padding: clamp(2rem, 6vw, 5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 720px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 800;
+  font-size: 1.2rem;
+  margin-bottom: 3rem;
+}
+
+h1 {
+  font-size: clamp(2rem, 4vw, 3.1rem);
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+  margin-bottom: 1.1rem;
+}
+.gradient {
+  background: linear-gradient(100deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.lead {
+  font-size: 1.08rem;
+  color: var(--muted);
+  max-width: 36rem;
+  margin: 0 0 2rem;
+}
+
+.highlights {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1rem 1.5rem;
+}
+.highlights li {
+  display: flex;
+  gap: 0.8rem;
+}
+.highlights .icon {
+  display: grid;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.highlights strong {
+  font-size: 0.95rem;
+}
+.highlights p {
+  margin: 0.15rem 0 0;
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+
+.stack {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.stack li {
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.panel {
+  display: grid;
+  place-items: center;
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+.panel-card {
+  width: 100%;
+  max-width: 460px;
+  padding: 2rem;
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(12px);
+}
+.panel-card h2 {
+  font-size: 1.3rem;
+  margin-bottom: 0.3rem;
+}
+.panel-card > .muted {
+  font-size: 0.9rem;
+  margin-bottom: 1.4rem;
+}
+
+.personas {
+  display: grid;
+  gap: 0.7rem;
+  margin-bottom: 1.25rem;
+}
+.persona {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  width: 100%;
+  padding: 0.9rem;
+  text-align: left;
+  font: inherit;
+  color: var(--text);
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    transform 0.15s,
+    box-shadow 0.15s;
+}
+.persona:hover:not(:disabled) {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px -14px var(--accent);
+}
+.persona:disabled {
+  cursor: wait;
+}
+.body {
+  display: grid;
+  gap: 0.1rem;
+  flex: 1;
+  min-width: 0;
+}
+.name {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+}
+.title {
+  font-size: 0.82rem;
+  color: var(--accent);
+  font-weight: 600;
+}
+.summary {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.go {
+  color: var(--muted);
+}
+.spinner {
+  display: block;
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.tip {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  margin: 0;
+  padding: 0.75rem;
+  border-radius: var(--radius-sm);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.82rem;
+}
+
+@media (max-width: 960px) {
+  .page {
+    grid-template-columns: 1fr;
+  }
+  // On a phone the visitor came to try the demo: profiles first, the pitch right below.
+  .panel {
+    order: -1;
+    padding-bottom: 0;
+  }
+  .brand {
+    margin-bottom: 1.5rem;
+  }
+}

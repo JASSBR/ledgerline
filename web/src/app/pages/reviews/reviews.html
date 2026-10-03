@@ -1,0 +1,147 @@
+<header class="page-header">
+  <div>
+    <span class="eyebrow" i18n="@@reviews.eyebrow">Conformité · LCB-FT</span>
+    <h1 i18n="@@reviews.title">Revue anti-fraude</h1>
+    <p class="muted" i18n="@@reviews.subtitle">
+      Virements retenus par les règles. Les fonds du client restent réservés jusqu'à votre décision
+      (48 h maximum, puis rejet automatique).
+    </p>
+  </div>
+</header>
+
+<section class="queue">
+  @if (queue.isLoading() && !queue.value().length) {
+    <div class="skeleton" style="height: 12rem"></div>
+  }
+  @for (screening of queue.value(); track screening.transferId) {
+    <article class="card review" [attr.data-transfer]="screening.transferId">
+      <header>
+        <div>
+          <strong class="amount big">{{ screening.amount | currency }}</strong>
+          <p class="muted">
+            {{ screening.fromAccount }} → <strong>{{ screening.toName ?? '?' }}</strong>
+            <span class="iban">{{ formatIban(screening.toIban) }}</span>
+          </p>
+        </div>
+        <span class="chip"
+          ><app-icon name="clock" [size]="14" /> {{ screening.requestedAt | relativeTime }}</span
+        >
+      </header>
+
+      <ul class="hits">
+        @for (hit of screening.hits; track hit.rule) {
+          <li [attr.data-outcome]="hit.outcome">
+            <app-icon [name]="hit.outcome === 'Block' ? 'x' : 'alert'" [size]="16" />
+            <div>
+              <strong>{{ ruleLabels[hit.rule] ?? hit.rule }}</strong>
+              <small>{{ hit.explanation }}</small>
+            </div>
+          </li>
+        }
+      </ul>
+
+      <label class="comment">
+        <span i18n="@@reviews.comment">Commentaire (obligatoire pour rejeter)</span>
+        <textarea
+          rows="2"
+          [value]="comments()[screening.transferId] ?? ''"
+          (input)="setComment(screening.transferId, $any($event.target).value)"
+          i18n-placeholder="@@reviews.commentPlaceholder"
+          placeholder="Client joint par téléphone, opération confirmée…"
+        ></textarea>
+      </label>
+
+      @for (message of errors()[screening.transferId] ?? []; track message) {
+        <p class="alert" role="alert">{{ message }}</p>
+      }
+
+      <div class="actions">
+        <a
+          [routerLink]="['/transfers', screening.transferId]"
+          class="button ghost sm"
+          i18n="@@reviews.open"
+          >Voir le parcours</a
+        >
+        <span class="spacer"></span>
+        <button
+          type="button"
+          class="button danger"
+          [disabled]="deciding() !== null"
+          (click)="decide(screening, false)"
+        >
+          <app-icon name="x" [size]="16" /> <span i18n="@@reviews.reject">Rejeter</span>
+        </button>
+        <button
+          type="button"
+          class="button success"
+          [disabled]="deciding() !== null"
+          (click)="decide(screening, true)"
+        >
+          <app-icon name="check" [size]="16" /> <span i18n="@@reviews.approve">Approuver</span>
+        </button>
+      </div>
+    </article>
+  } @empty {
+    @if (!queue.isLoading()) {
+      <div class="card empty">
+        <app-icon name="shield" [size]="28" />
+        <strong i18n="@@reviews.emptyTitle">Aucun virement en attente</strong>
+        <p class="muted" i18n="@@reviews.emptyHint">
+          Connectez-vous en tant qu'Alice et virez plus de 3 000 € : le virement apparaîtra ici en
+          temps réel.
+        </p>
+      </div>
+    }
+  }
+</section>
+
+<section class="card history">
+  <div class="card-title">
+    <h2 i18n="@@reviews.history">Derniers contrôles</h2>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th i18n="@@reviews.colFrom">Donneur d'ordre</th>
+          <th i18n="@@reviews.colTo">Bénéficiaire</th>
+          <th i18n="@@reviews.colRules">Règles</th>
+          <th i18n="@@reviews.colOutcome">Issue</th>
+          <th class="num" i18n="@@reviews.colAmount">Montant</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (screening of history.value(); track screening.transferId) {
+          <tr>
+            <td>{{ screening.fromAccount }}</td>
+            <td>{{ screening.toName ?? screening.toIban }}</td>
+            <td>
+              @for (hit of screening.hits; track hit.rule) {
+                <span class="chip rule" [attr.data-outcome]="hit.outcome">{{
+                  ruleLabels[hit.rule] ?? hit.rule
+                }}</span>
+              } @empty {
+                <span class="muted">—</span>
+              }
+            </td>
+            <td>
+              <span class="outcome" [attr.data-status]="screening.status">{{
+                statusLabels[screening.status]
+              }}</span>
+              @if (screening.decidedBy && screening.decidedBy !== 'rules') {
+                <small class="muted by">{{ screening.decidedBy }}</small>
+              }
+            </td>
+            <td class="num amount">{{ screening.amount | currency }}</td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="5" class="muted" i18n="@@reviews.historyEmpty">
+              Aucun contrôle pour l'instant.
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>

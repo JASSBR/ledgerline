@@ -1,0 +1,51 @@
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+.filters button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+}
+.filters button.active {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.count {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+.table-card {
+  padding: 0;
+  overflow: hidden;
+}
+.table-wrap {
+  overflow-x: auto;
+}
+.who {
+  display: grid;
+  color: inherit;
+  text-decoration: none;
+}
+.who:hover strong {
+  color: var(--accent);
+}
+.who small {
+  color: var(--muted);
+}
+.empty {
+  text-align: center;
+  padding: 2rem;
+}

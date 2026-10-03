@@ -1,0 +1,160 @@
+.page-header {
+  align-items: flex-start;
+}
+.page-header h1 {
+  font-size: clamp(2rem, 4vw, 2.6rem);
+  letter-spacing: -0.03em;
+  margin-bottom: 0.25rem;
+}
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.chip.live {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.stages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.stages li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.6rem 1fr;
+  gap: 0.9rem;
+  padding-bottom: 1.25rem;
+  animation: enter 0.35s ease-out both;
+}
+.stages li:last-child {
+  padding-bottom: 0;
+}
+// The rail between markers.
+.stages li:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: calc(0.8rem - 1px);
+  top: 1.7rem;
+  bottom: 0.1rem;
+  width: 2px;
+  background: var(--border);
+}
+.stages li[data-state='done']:not(:last-child)::before {
+  background: var(--accent);
+}
+.marker {
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--on-accent);
+}
+[data-state='done'] .marker {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+[data-state='done'][data-status='Rejected'] .marker,
+[data-state='done'][data-status='Failed'] .marker {
+  background: var(--danger);
+  border-color: var(--danger);
+}
+[data-state='done'][data-status='Completed'] .marker {
+  background: var(--success);
+  border-color: var(--success);
+}
+[data-state='current'] .marker {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent);
+  animation: breathe 1.4s ease-in-out infinite;
+}
+[data-state='current'][data-status='PendingReview'] .marker {
+  border-color: var(--status-review);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--status-review) 22%, transparent);
+}
+[data-state='upcoming'] {
+  opacity: 0.5;
+}
+.body {
+  display: grid;
+  gap: 0.2rem;
+  padding-top: 0.1rem;
+}
+.line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+.owner {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--muted);
+}
+.owner[data-owner='fraud'],
+.owner[data-owner='analyst'] {
+  color: var(--status-review);
+  background: color-mix(in srgb, var(--status-review) 12%, transparent);
+}
+.owner[data-owner='ledger'] {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+.detail {
+  margin: 0;
+  font-size: 0.88rem;
+}
+time {
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.facts dl {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0 0 1rem;
+}
+.facts dt {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 0.6rem;
+}
+.facts dt:first-child {
+  margin-top: 0;
+}
+.facts dd {
+  margin: 0;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.note {
+  font-size: 0.8rem;
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+@keyframes breathe {
+  50% {
+    box-shadow: 0 0 0 7px color-mix(in srgb, var(--accent) 8%, transparent);
+  }
+}
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}

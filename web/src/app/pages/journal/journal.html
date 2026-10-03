@@ -1,0 +1,64 @@
+<header class="page-header">
+  <div>
+    <span class="eyebrow" i18n="@@journal.eyebrow">Comptabilité en partie double</span>
+    <h1 i18n="@@nav.journal">Journal</h1>
+    <p class="muted" i18n="@@journal.subtitle">
+      Chaque mouvement est une écriture dont les débits égalent les crédits. Une écriture
+      déséquilibrée est refusée par le domaine avant d'atteindre la base.
+    </p>
+  </div>
+</header>
+
+@if (entries.error()) {
+  <p class="alert" role="alert" i18n="@@journal.error">Impossible de charger le journal.</p>
+}
+
+<div class="entries">
+  @if (entries.isLoading() && !entries.value().length) {
+    @for (i of [1, 2, 3]; track i) {
+      <div class="skeleton" style="height: 7rem"></div>
+    }
+  }
+  @for (entry of entries.value(); track entry.id) {
+    <article class="card entry">
+      <header>
+        <div>
+          <strong>{{ entry.reference }}</strong>
+          <small class="muted">{{ entry.postedAt | date: 'medium' }}</small>
+        </div>
+        @if (entry.balanced) {
+          <span class="chip ok"
+            ><app-icon name="scale" [size]="14" />
+            <span i18n="@@journal.balanced">Équilibrée</span></span
+          >
+        } @else {
+          <span class="chip ko" i18n="@@journal.unbalanced">Déséquilibrée</span>
+        }
+      </header>
+      <table>
+        <thead>
+          <tr>
+            <th i18n="@@journal.account">Compte</th>
+            <th class="num" i18n="@@journal.debit">Débit</th>
+            <th class="num" i18n="@@journal.credit">Crédit</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (line of entry.lines; track line.accountId) {
+            <tr>
+              <td [class.credit-line]="line.credit > 0">
+                <a [routerLink]="['/accounts', line.accountId]">{{ line.accountName }}</a>
+              </td>
+              <td class="num amount">{{ line.debit ? (line.debit | currency) : '' }}</td>
+              <td class="num amount">{{ line.credit ? (line.credit | currency) : '' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </article>
+  } @empty {
+    @if (!entries.isLoading()) {
+      <p class="muted" i18n="@@journal.empty">Aucune écriture.</p>
+    }
+  }
+</div>

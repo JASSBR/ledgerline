@@ -1,0 +1,125 @@
+<div class="layout">
+  <aside class="sidebar">
+    <a [routerLink]="home" class="brand" aria-label="Ledgerline">
+      <span class="logo" aria-hidden="true"></span>
+      <span>Ledgerline</span>
+    </a>
+
+    <nav i18n-aria-label="@@nav.main" aria-label="Navigation principale">
+      @if (auth.isOperator()) {
+        <p class="nav-label" i18n="@@nav.operations">Opérations</p>
+        <a routerLink="/ops/reviews" routerLinkActive="active"
+          ><app-icon name="shield" /> <span i18n="@@nav.reviews">Revue anti-fraude</span>
+          @if (transfers.pendingReview().length; as pending) {
+            <span class="count">{{ pending }}</span>
+          }
+        </a>
+        <a routerLink="/transfers" routerLinkActive="active"
+          ><app-icon name="send" /> <span i18n="@@nav.allTransfers">Tous les virements</span></a
+        >
+        <p class="nav-label" i18n="@@nav.accounting">Comptabilité</p>
+        <a routerLink="/ops/journal" routerLinkActive="active"
+          ><app-icon name="book" /> <span i18n="@@nav.journal">Journal</span></a
+        >
+        <a routerLink="/ops/trial-balance" routerLinkActive="active"
+          ><app-icon name="scale" /> <span i18n="@@nav.trialBalance">Balance générale</span></a
+        >
+      } @else {
+        <a routerLink="/accounts" routerLinkActive="active"
+          ><app-icon name="wallet" /> <span i18n="@@nav.accounts">Mes comptes</span></a
+        >
+        <a routerLink="/transfers/new" routerLinkActive="active"
+          ><app-icon name="plus" /> <span i18n="@@nav.newTransfer">Nouveau virement</span></a
+        >
+        <a
+          routerLink="/transfers"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          ><app-icon name="send" /> <span i18n="@@nav.transfers">Mes virements</span>
+          @if (transfers.inFlight().length; as inFlight) {
+            <span class="count">{{ inFlight }}</span>
+          }
+        </a>
+      }
+    </nav>
+
+    <div class="sidebar-footer">
+      <a [href]="repositoryUrl" target="_blank" rel="noopener"
+        ><app-icon name="github" /> <span i18n="@@nav.sourceCode">Code source</span></a
+      >
+      <a [href]="repositoryUrl + '/tree/main/docs/adr'" target="_blank" rel="noopener"
+        ><app-icon name="file" /> <span i18n="@@nav.adr">Décisions d'architecture</span></a
+      >
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <span class="live" [class.on]="realtime.connected()" role="status">
+        <span class="pulse" aria-hidden="true"></span>
+        @if (realtime.connected()) {
+          <span i18n="@@live.on">Temps réel</span>
+        } @else {
+          <span i18n="@@live.off">Hors ligne</span>
+        }
+      </span>
+
+      <div class="actions">
+        <a
+          class="icon-button lang"
+          [href]="otherLocale.href"
+          [attr.hreflang]="otherLocale.code"
+          [title]="otherLocale.label"
+          >{{ otherLocale.code.toUpperCase() }}</a
+        >
+        <button
+          type="button"
+          class="icon-button"
+          (click)="theme.toggle()"
+          i18n-aria-label="@@theme.toggle"
+          aria-label="Changer de thème"
+        >
+          <app-icon [name]="theme.theme() === 'dark' ? 'sun' : 'moon'" />
+        </button>
+
+        @if (auth.user(); as user) {
+          <div class="user-menu">
+            <button
+              type="button"
+              class="user"
+              (click)="menuOpen.set(!menuOpen())"
+              [attr.aria-expanded]="menuOpen()"
+              aria-haspopup="menu"
+            >
+              <app-avatar [name]="user.name" [size]="34" />
+              <span class="who">
+                <strong>{{ user.name }}</strong>
+                @if (auth.isOperator()) {
+                  <small i18n="@@role.operator">Analyste conformité</small>
+                } @else {
+                  <small i18n="@@role.customer">Client particulier</small>
+                }
+              </span>
+              <app-icon name="chevron" [size]="16" class="caret" />
+            </button>
+
+            @if (menuOpen()) {
+              <div class="menu" role="menu">
+                <p class="menu-label" i18n="@@menu.session">
+                  Session OpenID Connect (Keycloak, PKCE)
+                </p>
+                <button type="button" role="menuitem" class="logout" (click)="auth.logout()">
+                  <app-icon name="logout" /> <span i18n="@@menu.logout">Se déconnecter</span>
+                </button>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </header>
+
+    <main class="content">
+      <router-outlet />
+    </main>
+  </div>
+</div>

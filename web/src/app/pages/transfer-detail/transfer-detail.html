@@ -1,0 +1,98 @@
+<a routerLink="/transfers" class="back"
+  ><app-icon name="back" [size]="16" />
+  @if (auth.isOperator()) {
+    <span i18n="@@nav.allTransfers">Tous les virements</span>
+  } @else {
+    <span i18n="@@nav.transfers">Mes virements</span>
+  }
+</a>
+
+@if (transfer(); as t) {
+  <header class="page-header">
+    <div>
+      <span class="eyebrow" i18n="@@transferDetail.eyebrow">Virement</span>
+      <h1 class="amount">{{ t.amount | currency }}</h1>
+      <p class="muted">
+        <span i18n="@@transferDetail.to"
+          >vers <strong>{{ t.toName }}</strong></span
+        >
+        ·
+        <span class="iban">{{ formatIban(t.toIban) }}</span>
+      </p>
+    </div>
+    <app-status-badge [status]="t.status" />
+  </header>
+
+  <div class="layout">
+    <section class="card saga" aria-labelledby="saga-title">
+      <div class="card-title">
+        <h2 id="saga-title">
+          <app-icon name="activity" [size]="18" />
+          <span i18n="@@transferDetail.saga">Parcours du virement</span>
+        </h2>
+        @if (inFlight()) {
+          <span class="chip live" i18n="@@transferDetail.live">En direct</span>
+        } @else if (elapsed() !== null) {
+          <span class="chip" i18n="@@transferDetail.elapsed"
+            >Réglé en {{ elapsed()! / 1000 | number: '1.1-1' }} s</span
+          >
+        }
+      </div>
+
+      <ol class="stages">
+        @for (stage of stages(); track $index) {
+          <li [attr.data-state]="stage.state" [attr.data-status]="stage.status">
+            <span class="marker" aria-hidden="true">
+              @if (stage.state === 'done') {
+                <app-icon
+                  [name]="stage.status === 'Rejected' || stage.status === 'Failed' ? 'x' : 'check'"
+                  [size]="14"
+                />
+              }
+            </span>
+            <div class="body">
+              <div class="line">
+                <strong>{{ statusLabels[stage.status] }}</strong>
+                <span class="owner" [attr.data-owner]="stage.owner">{{ owners[stage.owner] }}</span>
+              </div>
+              @if (stage.detail) {
+                <p class="detail">{{ stage.detail }}</p>
+              }
+              @if (stage.at) {
+                <time [attr.datetime]="stage.at">{{ stage.at | date: 'HH:mm:ss.SSS' }}</time>
+              }
+            </div>
+          </li>
+        }
+      </ol>
+    </section>
+
+    <aside class="card facts">
+      <dl>
+        <dt i18n="@@transferDetail.from">Compte débité</dt>
+        <dd>
+          <a [routerLink]="['/accounts', t.fromAccountId]">{{ t.fromName }}</a>
+        </dd>
+        <dt i18n="@@transferDetail.beneficiary">Bénéficiaire</dt>
+        <dd>{{ t.toName }}</dd>
+        <dt i18n="@@transferDetail.label">Libellé</dt>
+        <dd>{{ t.label || '—' }}</dd>
+        <dt i18n="@@transferDetail.requested">Demandé le</dt>
+        <dd>{{ t.requestedAt | date: 'medium' }}</dd>
+        <dt i18n="@@transferDetail.reference">Référence</dt>
+        <dd>
+          <code>{{ t.id }}</code>
+        </dd>
+      </dl>
+      <p class="muted note" i18n="@@transferDetail.note">
+        L'identifiant du virement sert aussi d'identifiant de réservation et d'écriture comptable :
+        un message rejoué ne peut ni réserver ni débiter deux fois.
+      </p>
+    </aside>
+  </div>
+} @else if (missing()) {
+  <p class="alert" role="alert" i18n="@@error.transferNotFound">Ce virement n'existe pas.</p>
+} @else {
+  <div class="skeleton" style="height: 4rem; width: 16rem; margin-bottom: 1.5rem"></div>
+  <div class="skeleton" style="height: 20rem"></div>
+}

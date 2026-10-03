@@ -1,0 +1,96 @@
+<header class="page-header">
+  <div>
+    <span class="eyebrow" i18n="@@accounts.eyebrow">Vue d'ensemble</span>
+    <h1 i18n="@@accounts.hello">Bonjour {{ firstName() }}</h1>
+  </div>
+  <a routerLink="/transfers/new" class="button primary"
+    ><app-icon name="send" [size]="16" /> <span i18n="@@nav.newTransfer">Nouveau virement</span></a
+  >
+</header>
+
+<section class="summary card">
+  <div>
+    <span class="label" i18n="@@accounts.total">Avoirs totaux</span>
+    @if (accounts.isLoading() && !accounts.hasValue()) {
+      <div class="skeleton" style="height: 2.6rem; width: 12rem"></div>
+    } @else {
+      <strong class="total amount">{{ total() | currency }}</strong>
+    }
+  </div>
+  @if (held() > 0) {
+    <div class="held">
+      <app-icon name="clock" [size]="16" />
+      <span i18n="@@accounts.held"
+        >{{ held() | currency }} réservés par des virements en cours</span
+      >
+    </div>
+  }
+</section>
+
+@if (accounts.error()) {
+  <p class="alert" role="alert" i18n="@@accounts.error">Impossible de charger vos comptes.</p>
+}
+
+<section class="grid">
+  @if (accounts.isLoading() && !accounts.value().length) {
+    @for (i of [1, 2]; track i) {
+      <div class="skeleton" style="height: 170px"></div>
+    }
+  }
+  @for (account of accounts.value(); track account.id) {
+    <a
+      class="account card"
+      [routerLink]="['/accounts', account.id]"
+      [attr.data-account]="account.name"
+    >
+      <div class="head">
+        <span class="icon"><app-icon name="wallet" /></span>
+        <div>
+          <strong>{{ account.name }}</strong>
+          <span class="iban">{{ account.ibanFormatted }}</span>
+        </div>
+      </div>
+      <strong class="balance amount">{{ account.balance | currency }}</strong>
+      <div class="foot">
+        <span i18n="@@accounts.available"
+          >Disponible <b class="amount">{{ account.available | currency }}</b></span
+        >
+        @if (account.held > 0) {
+          <span class="chip" i18n="@@accounts.holdChip"
+            >{{ account.held | currency }} réservés</span
+          >
+        }
+      </div>
+    </a>
+  }
+</section>
+
+<section class="card">
+  <div class="card-title">
+    <h2 i18n="@@accounts.recent">Derniers virements</h2>
+    <a routerLink="/transfers" class="button ghost sm" i18n="@@accounts.seeAll">Tout voir</a>
+  </div>
+  @if (recent().length === 0) {
+    <p class="muted" i18n="@@accounts.noTransfers">
+      Aucun virement pour l'instant. Essayez-en un : il traverse les trois services en direct.
+    </p>
+  } @else {
+    <ul class="transfers">
+      @for (transfer of recent(); track transfer.id) {
+        <li>
+          <a [routerLink]="['/transfers', transfer.id]">
+            <span class="who">
+              <strong>{{ transfer.toName }}</strong>
+              <small
+                >{{ transfer.label || transfer.fromName }} ·
+                {{ transfer.requestedAt | relativeTime }}</small
+              >
+            </span>
+            <app-status-badge [status]="transfer.status" />
+            <span class="amount">−{{ transfer.amount | currency }}</span>
+          </a>
+        </li>
+      }
+    </ul>
+  }
+</section>

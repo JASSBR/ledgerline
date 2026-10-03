@@ -1,0 +1,126 @@
+<a [routerLink]="auth.isOperator() ? '/ops/trial-balance' : '/accounts'" class="back"
+  ><app-icon name="back" [size]="16" />
+  @if (auth.isOperator()) {
+    <span i18n="@@nav.trialBalance">Balance générale</span>
+  } @else {
+    <span i18n="@@nav.accounts">Mes comptes</span>
+  }
+</a>
+
+@if (account.error()) {
+  <p class="alert" role="alert" i18n="@@account.notFound">
+    Ce compte n'existe pas ou ne vous appartient pas.
+  </p>
+} @else if (account.value(); as a) {
+  <header class="page-header">
+    <div>
+      <span class="eyebrow" i18n="@@account.eyebrow">Compte</span>
+      <h1>{{ a.name }}</h1>
+      <button
+        type="button"
+        class="iban-copy"
+        (click)="copyIban(a.iban)"
+        i18n-title="@@account.copy"
+        title="Copier l'IBAN"
+      >
+        <span class="iban">{{ a.ibanFormatted }}</span>
+        <app-icon [name]="copied() ? 'check' : 'file'" [size]="14" />
+      </button>
+    </div>
+  </header>
+
+  <section class="figures">
+    <div class="card figure">
+      <span i18n="@@account.balance">Solde comptable</span>
+      <strong class="amount">{{ a.balance | currency }}</strong>
+    </div>
+    <div class="card figure">
+      <span i18n="@@account.available">Solde disponible</span>
+      <strong class="amount">{{ a.available | currency }}</strong>
+      <small class="muted" i18n="@@account.availableHint"
+        >Solde moins les réservations en cours</small
+      >
+    </div>
+    <div class="card figure as-of">
+      <label for="as-of" i18n="@@account.asOf">Solde à une date de valeur</label>
+      <input
+        id="as-of"
+        type="date"
+        [max]="maxDate"
+        [value]="asOfDate()"
+        (change)="asOfDate.set($any($event.target).value)"
+      />
+      @if (balanceAsOf.value(); as past) {
+        <strong class="amount">{{ past.balance | currency }}</strong>
+      } @else {
+        <small class="muted" i18n="@@account.asOfHint"
+          >Rejoué depuis les événements du compte (event sourcing).</small
+        >
+      }
+    </div>
+  </section>
+
+  @if (a.holds.length) {
+    <section class="card holds">
+      <div class="card-title">
+        <h2>
+          <app-icon name="clock" [size]="18" />
+          <span i18n="@@account.holds">Réservations en cours</span>
+        </h2>
+      </div>
+      <ul>
+        @for (hold of a.holds; track hold.transferId) {
+          <li>
+            <a [routerLink]="['/transfers', hold.transferId]">{{ hold.reference }}</a>
+            <span class="amount">{{ hold.amount | currency }}</span>
+          </li>
+        }
+      </ul>
+    </section>
+  }
+
+  <section class="card">
+    <div class="card-title">
+      <h2 i18n="@@account.statement">Relevé</h2>
+      <span class="chip" i18n="@@account.lines">{{ statement.value().length }} écritures</span>
+    </div>
+
+    <app-balance-chart [points]="chart()" i18n-label="@@account.chart" label="Évolution du solde" />
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th i18n="@@account.valueDate">Date de valeur</th>
+            <th i18n="@@account.reference">Libellé</th>
+            <th i18n="@@account.counterparty">Contrepartie</th>
+            <th class="num" i18n="@@account.amount">Montant</th>
+            <th class="num" i18n="@@account.balanceAfter">Solde</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (line of statement.value(); track line.entryId) {
+            <tr>
+              <td>{{ line.valueDate | date: 'mediumDate' }}</td>
+              <td>{{ line.reference }}</td>
+              <td class="muted">{{ line.counterparty }}</td>
+              <td class="num amount" [class.credit]="line.amount > 0">
+                {{ line.amount > 0 ? '+' : '' }}{{ line.amount | currency }}
+              </td>
+              <td class="num amount">{{ line.balanceAfter | currency }}</td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="5" class="muted" i18n="@@account.empty">
+                Aucune écriture sur ce compte.
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+} @else {
+  <div class="skeleton" style="height: 3rem; width: 20rem; margin-bottom: 1.5rem"></div>
+  <div class="skeleton" style="height: 8rem"></div>
+}

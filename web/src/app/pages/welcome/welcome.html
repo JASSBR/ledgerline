@@ -1,0 +1,90 @@
+<div class="page">
+  <section class="hero">
+    <div class="brand"><span class="logo" aria-hidden="true"></span> Ledgerline</div>
+
+    <span class="eyebrow" i18n="@@welcome.eyebrow">Démo interactive · banque fictive</span>
+    <h1 i18n="@@welcome.title">
+      Une banque de virements, <span class="gradient">où chaque centime se justifie.</span>
+    </h1>
+    <p class="lead" i18n="@@welcome.lead">
+      Trois microservices — grand livre, paiements, anti-fraude — qui coopèrent par messages, sans
+      jamais perdre ni dupliquer un euro, même sous charge concurrente.
+    </p>
+
+    <ul class="highlights">
+      @for (item of highlights; track item.title) {
+        <li>
+          <span class="icon"><app-icon [name]="item.icon" /></span>
+          <div>
+            <strong>{{ item.title }}</strong>
+            <p>{{ item.text }}</p>
+          </div>
+        </li>
+      }
+    </ul>
+
+    <ul class="stack" aria-label="Technologies">
+      @for (tech of stack; track tech) {
+        <li>{{ tech }}</li>
+      }
+    </ul>
+
+    <div class="links">
+      <a [href]="repositoryUrl" target="_blank" rel="noopener" class="button"
+        ><app-icon name="github" /> <span i18n="@@nav.sourceCode">Code source</span></a
+      >
+      <a
+        [href]="repositoryUrl + '/tree/main/docs/adr'"
+        target="_blank"
+        rel="noopener"
+        class="button ghost"
+        ><span i18n="@@nav.adr">Décisions d'architecture</span>
+        <app-icon name="external" [size]="14"
+      /></a>
+      <a [href]="otherLocale.href" class="button ghost" [attr.hreflang]="otherLocale.code">{{
+        otherLocale.label
+      }}</a>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="choose">
+    <div class="panel-card">
+      <h2 id="choose" i18n="@@welcome.choose">Connectez-vous avec un profil</h2>
+      <p class="muted" i18n="@@welcome.chooseHint">
+        Vous passez par Keycloak (OpenID Connect, PKCE) comme sur un vrai portail bancaire.
+      </p>
+
+      <div class="personas">
+        @for (user of users; track user.username) {
+          <button
+            type="button"
+            class="persona"
+            (click)="enter(user)"
+            [disabled]="pending() !== null"
+            [attr.data-user]="user.username"
+          >
+            <app-avatar [name]="user.name" [size]="44" />
+            <span class="body">
+              <span class="name">{{ user.name }}</span>
+              <span class="title">{{ user.role }}</span>
+              <span class="summary">{{ user.summary }}</span>
+            </span>
+            @if (pending() === user.username) {
+              <span class="spinner" aria-hidden="true"></span>
+            } @else {
+              <app-icon name="arrow" class="go" />
+            }
+          </button>
+        }
+      </div>
+
+      <p class="tip">
+        <app-icon name="key" [size]="16" />
+        <span i18n="@@welcome.password"
+          >Identifiant pré-rempli. Mot de passe commun à tous les profils :
+          <code>{{ password }}</code></span
+        >
+      </p>
+    </div>
+  </section>
+</div>

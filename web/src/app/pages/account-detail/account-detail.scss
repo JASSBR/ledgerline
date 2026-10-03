@@ -1,0 +1,70 @@
+:host {
+  display: grid;
+  gap: 1.25rem;
+  align-content: start;
+}
+.page-header {
+  margin-bottom: 0;
+}
+.iban-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.35rem;
+  padding: 0.2rem 0.5rem;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  cursor: pointer;
+}
+.iban-copy:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.figures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+.figure {
+  display: grid;
+  gap: 0.35rem;
+  align-content: start;
+}
+.figure > span,
+.figure > label {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.figure strong {
+  font-size: 1.7rem;
+  letter-spacing: -0.02em;
+}
+.as-of input {
+  max-width: 12rem;
+}
+
+.holds ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.holds li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.55rem 0;
+  border-top: 1px solid var(--border);
+}
+.holds li:first-child {
+  border-top: 0;
+}
+
+app-balance-chart {
+  margin: 0 -0.25rem 1rem;
+}
+.table-wrap {
+  overflow-x: auto;
+}

@@ -1,0 +1,122 @@
+:host {
+  display: grid;
+  gap: 1.25rem;
+}
+.page-header {
+  margin-bottom: 0;
+}
+.queue {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 440px), 1fr));
+  gap: 1rem;
+}
+.review {
+  display: grid;
+  gap: 1rem;
+  border-left: 3px solid var(--status-review);
+  animation: enter 0.35s ease-out both;
+}
+.review > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.big {
+  font-size: 1.6rem;
+  letter-spacing: -0.02em;
+}
+.review .iban {
+  display: block;
+  margin-top: 0.15rem;
+}
+.hits {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+.hits li {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--radius-sm);
+  color: var(--status-review);
+  background: color-mix(in srgb, var(--status-review) 10%, transparent);
+}
+.hits li[data-outcome='Block'] {
+  color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 10%, transparent);
+}
+.hits div {
+  display: grid;
+}
+.hits small {
+  color: var(--text);
+  opacity: 0.8;
+}
+.comment {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.spacer {
+  flex: 1;
+}
+.empty {
+  grid-column: 1 / -1;
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+  padding: 2.5rem 1rem;
+  text-align: center;
+  color: var(--accent);
+}
+.history {
+  padding-bottom: 0.5rem;
+}
+.table-wrap {
+  overflow-x: auto;
+}
+.rule {
+  margin: 0.1rem 0.25rem 0.1rem 0;
+}
+.rule[data-outcome='Review'] {
+  color: var(--status-review);
+}
+.rule[data-outcome='Block'] {
+  color: var(--danger);
+}
+.outcome {
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+.outcome[data-status='Cleared'],
+.outcome[data-status='ApprovedByAnalyst'] {
+  color: var(--success);
+}
+.outcome[data-status='Blocked'],
+.outcome[data-status='RejectedByAnalyst'] {
+  color: var(--danger);
+}
+.outcome[data-status='PendingReview'] {
+  color: var(--status-review);
+}
+.by {
+  display: block;
+  font-size: 0.75rem;
+}
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
