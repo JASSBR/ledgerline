@@ -18,6 +18,45 @@ export interface Account {
   readonly available: number;
   readonly held: number;
   readonly holds: readonly Hold[];
+  readonly frozen: boolean;
+  readonly frozenReason: string | null;
+}
+
+export type AccountEventType = 'opened' | 'held' | 'released' | 'posted' | 'frozen' | 'unfrozen';
+
+/** One fact of the account's event stream, as stored. */
+export interface AccountEvent {
+  readonly version: number;
+  readonly recordedAt: string;
+  readonly type: AccountEventType;
+  readonly amount: number | null;
+  readonly reference: string | null;
+  readonly detail: string | null;
+}
+
+export interface MovementLine {
+  readonly entryId: string;
+  readonly accountId: string;
+  readonly accountName: string;
+  readonly valueDate: string;
+  readonly reference: string;
+  readonly amount: number;
+  readonly counterparty: string;
+}
+
+export interface MonthlyFlow {
+  /** yyyy-MM */
+  readonly month: string;
+  readonly moneyIn: number;
+  readonly moneyOut: number;
+}
+
+export interface Movements {
+  readonly moneyIn: number;
+  readonly moneyOut: number;
+  readonly net: number;
+  readonly months: readonly MonthlyFlow[];
+  readonly lines: readonly MovementLine[];
 }
 
 export interface StatementLine {
@@ -114,6 +153,16 @@ export interface TransferStatusChanged {
   readonly status: TransferStatus;
   readonly reason: string | null;
   readonly occurredAt: string;
+}
+
+/** Pushed to the beneficiary of someone else's transfer. */
+export interface TransferReceived {
+  readonly transferId: string;
+  readonly toAccountId: string;
+  readonly fromName: string;
+  readonly amount: number;
+  readonly reference: string;
+  readonly receivedAt: string;
 }
 
 export type ScreeningStatus =

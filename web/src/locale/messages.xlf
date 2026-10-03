@@ -128,6 +128,27 @@
           <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="realtime.received" datatype="html">
+        <source>Virement reçu</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/realtime/transfers-realtime.ts</context>
+          <context context-type="linenumber">102</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="realtime.receivedFromWithLabel" datatype="html">
+        <source>+<x id="amount" equiv-text="amount"/> de <x id="from" equiv-text="received.fromName"/> · <x id="label" equiv-text="received.reference"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/realtime/transfers-realtime.ts</context>
+          <context context-type="linenumber">104</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="realtime.receivedFrom" datatype="html">
+        <source>+<x id="amount" equiv-text="amount"/> de <x id="from" equiv-text="received.fromName"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/realtime/transfers-realtime.ts</context>
+          <context context-type="linenumber">105</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="nav.main" datatype="html">
         <source>Navigation principale</source>
         <context-group purpose="location">
@@ -164,18 +185,25 @@
           <context context-type="linenumber">5,7</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="nav.allMovements" datatype="html">
+        <source>Mouvements clients</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/shell.html</context>
+          <context context-type="linenumber">21,23</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="nav.accounting" datatype="html">
         <source>Comptabilité</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/shell.html</context>
-          <context context-type="linenumber">20,21</context>
+          <context context-type="linenumber">23,24</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nav.journal" datatype="html">
         <source>Journal</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/shell.html</context>
-          <context context-type="linenumber">22,24</context>
+          <context context-type="linenumber">25,27</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/journal/journal.html</context>
@@ -186,7 +214,7 @@
         <source>Balance générale</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/shell.html</context>
-          <context context-type="linenumber">25,27</context>
+          <context context-type="linenumber">28,30</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
@@ -201,7 +229,7 @@
         <source>Mes comptes</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/shell.html</context>
-          <context context-type="linenumber">29,31</context>
+          <context context-type="linenumber">32,34</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
@@ -212,11 +240,18 @@
           <context context-type="linenumber">2,5</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="nav.movements" datatype="html">
+        <source>Mouvements</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/shell.html</context>
+          <context context-type="linenumber">35,37</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="nav.newTransfer" datatype="html">
         <source>Nouveau virement</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/shell.html</context>
-          <context context-type="linenumber">32,34</context>
+          <context context-type="linenumber">38,40</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/accounts/accounts.html</context>
@@ -231,7 +266,7 @@
         <source>Mes virements</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/shell.html</context>
-          <context context-type="linenumber">38,39</context>
+          <context context-type="linenumber">44,45</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/transfer-detail/transfer-detail.html</context>
@@ -246,7 +281,7 @@
         <source>Code source</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/shell.html</context>
-          <context context-type="linenumber">48,50</context>
+          <context context-type="linenumber">54,56</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/welcome/welcome.html</context>
@@ -257,7 +292,7 @@
         <source>Décisions d&apos;architecture</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/shell.html</context>
-          <context context-type="linenumber">51,53</context>
+          <context context-type="linenumber">57,59</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/welcome/welcome.html</context>
@@ -268,49 +303,49 @@
         <source>Temps réel</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/shell.html</context>
-          <context context-type="linenumber">61,62</context>
+          <context context-type="linenumber">67,68</context>
         </context-group>
       </trans-unit>
       <trans-unit id="live.off" datatype="html">
         <source>Hors ligne</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/shell.html</context>
-          <context context-type="linenumber">63,65</context>
+          <context context-type="linenumber">69,71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="theme.toggle" datatype="html">
         <source>Changer de thème</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/shell.html</context>
-          <context context-type="linenumber">80,82</context>
+          <context context-type="linenumber">86,88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="role.operator" datatype="html">
         <source>Analyste conformité</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/shell.html</context>
-          <context context-type="linenumber">98,99</context>
+          <context context-type="linenumber">104,105</context>
         </context-group>
       </trans-unit>
       <trans-unit id="role.customer" datatype="html">
         <source>Client particulier</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/shell.html</context>
-          <context context-type="linenumber">100,102</context>
+          <context context-type="linenumber">106,108</context>
         </context-group>
       </trans-unit>
       <trans-unit id="menu.session" datatype="html">
         <source> Session OpenID Connect (Keycloak, PKCE) </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/shell.html</context>
-          <context context-type="linenumber">109,110</context>
+          <context context-type="linenumber">115,116</context>
         </context-group>
       </trans-unit>
       <trans-unit id="menu.logout" datatype="html">
         <source>Se déconnecter</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/layout/shell.html</context>
-          <context context-type="linenumber">112,113</context>
+          <context context-type="linenumber">118,119</context>
         </context-group>
       </trans-unit>
       <trans-unit id="account.notFound" datatype="html">
@@ -334,109 +369,254 @@
           <context context-type="linenumber">24,26</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="freeze.banner" datatype="html">
+        <source>Compte gelé</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">36,38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="freeze.bannerText" datatype="html">
+        <source>Les paiements sortants sont bloqués ; les virements entrants sont toujours crédités.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">39,42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="freeze.bannerReason" datatype="html">
+        <source>Motif : <x id="INTERPOLATION" equiv-text="{{ a.frozenReason }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">43,44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="freeze.title" datatype="html">
+        <source>Contrôle du compte</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">55,57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="freeze.reason" datatype="html">
+        <source>Motif du gel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">61,63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="freeze.placeholder" datatype="html">
+        <source>Motif du gel (suspicion de fraude, litige, demande du client…)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">66,67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="freeze.action" datatype="html">
+        <source>Geler le compte</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">73,75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="freeze.unfreezeHint" datatype="html">
+        <source> Lever le gel rétablit les paiements sortants. L&apos;opération est inscrite dans l&apos;historique. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">77,79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="freeze.unfreeze" datatype="html">
+        <source>Dégeler le compte</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">82,84</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="account.balance" datatype="html">
         <source>Solde comptable</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
-          <context context-type="linenumber">34,35</context>
+          <context context-type="linenumber">94,95</context>
         </context-group>
       </trans-unit>
       <trans-unit id="account.available" datatype="html">
         <source>Solde disponible</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
-          <context context-type="linenumber">38,39</context>
+          <context context-type="linenumber">98,99</context>
         </context-group>
       </trans-unit>
       <trans-unit id="account.availableHint" datatype="html">
         <source>Solde moins les réservations en cours</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
-          <context context-type="linenumber">41,44</context>
+          <context context-type="linenumber">101,104</context>
         </context-group>
       </trans-unit>
       <trans-unit id="account.asOf" datatype="html">
         <source>Solde à une date de valeur</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
-          <context context-type="linenumber">45,47</context>
+          <context context-type="linenumber">105,107</context>
         </context-group>
       </trans-unit>
       <trans-unit id="account.asOfHint" datatype="html">
         <source>Rejoué depuis les événements du compte (event sourcing).</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
-          <context context-type="linenumber">57,60</context>
+          <context context-type="linenumber">117,120</context>
         </context-group>
       </trans-unit>
       <trans-unit id="account.holds" datatype="html">
         <source>Réservations en cours</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
-          <context context-type="linenumber">68,70</context>
+          <context context-type="linenumber">128,130</context>
         </context-group>
       </trans-unit>
       <trans-unit id="account.statement" datatype="html">
-        <source>Relevé</source>
+        <source> Relevé </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
-          <context context-type="linenumber">84,85</context>
+          <context context-type="linenumber">152,154</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="account.history" datatype="html">
+        <source> Historique des événements </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">161,163</context>
         </context-group>
       </trans-unit>
       <trans-unit id="account.lines" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{ statement.value().length }}"/> écritures</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
-          <context context-type="linenumber">85,86</context>
+          <context context-type="linenumber">165,166</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="account.events" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ history.value().length }}"/> événements</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">167,169</context>
         </context-group>
       </trans-unit>
       <trans-unit id="account.chart" datatype="html">
         <source>Évolution du solde</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
-          <context context-type="linenumber">88,90</context>
+          <context context-type="linenumber">175,178</context>
         </context-group>
       </trans-unit>
       <trans-unit id="account.valueDate" datatype="html">
         <source>Date de valeur</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
-          <context context-type="linenumber">94,95</context>
+          <context context-type="linenumber">182,183</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">120,121</context>
         </context-group>
       </trans-unit>
       <trans-unit id="account.reference" datatype="html">
         <source>Libellé</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
-          <context context-type="linenumber">95,96</context>
+          <context context-type="linenumber">183,184</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">121,122</context>
         </context-group>
       </trans-unit>
       <trans-unit id="account.counterparty" datatype="html">
         <source>Contrepartie</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
-          <context context-type="linenumber">96,97</context>
+          <context context-type="linenumber">184,185</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">122,123</context>
         </context-group>
       </trans-unit>
       <trans-unit id="account.amount" datatype="html">
         <source>Montant</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
-          <context context-type="linenumber">97,98</context>
+          <context context-type="linenumber">185,186</context>
         </context-group>
       </trans-unit>
       <trans-unit id="account.balanceAfter" datatype="html">
         <source>Solde</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
-          <context context-type="linenumber">98,100</context>
+          <context context-type="linenumber">186,188</context>
         </context-group>
       </trans-unit>
       <trans-unit id="account.empty" datatype="html">
         <source> Aucune écriture sur ce compte. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
-          <context context-type="linenumber">115,116</context>
+          <context context-type="linenumber">203,204</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="history.intro" datatype="html">
+        <source> Le flux d&apos;événements du compte, tel qu&apos;il est stocké : le solde n&apos;est jamais écrit, il est recalculé à partir de ces faits. Rien ne s&apos;efface, tout se compense. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.html</context>
+          <context context-type="linenumber">212,215</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="history.opened" datatype="html">
+        <source>Compte ouvert</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="history.held" datatype="html">
+        <source>Fonds réservés</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="history.released" datatype="html">
+        <source>Réservation libérée</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="history.posted" datatype="html">
+        <source>Écriture passée</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="history.frozen" datatype="html">
+        <source>Compte gelé</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="history.unfrozen" datatype="html">
+        <source>Compte dégelé</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.ts</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="freeze.reasonRequired" datatype="html">
+        <source>Indiquez le motif du gel.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/account-detail/account-detail.ts</context>
+          <context context-type="linenumber">102</context>
         </context-group>
       </trans-unit>
       <trans-unit id="accounts.eyebrow" datatype="html">
@@ -481,32 +661,39 @@
           <context context-type="linenumber">56,58</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="accounts.frozen" datatype="html">
+        <source>Gelé</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/accounts/accounts.html</context>
+          <context context-type="linenumber">60,62</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="accounts.holdChip" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{ account.held | currency }}"/> réservés</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/accounts/accounts.html</context>
-          <context context-type="linenumber">60,61</context>
+          <context context-type="linenumber">65,66</context>
         </context-group>
       </trans-unit>
       <trans-unit id="accounts.recent" datatype="html">
         <source>Derniers virements</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/accounts/accounts.html</context>
-          <context context-type="linenumber">70,71</context>
+          <context context-type="linenumber">75,76</context>
         </context-group>
       </trans-unit>
       <trans-unit id="accounts.seeAll" datatype="html">
         <source>Tout voir</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/accounts/accounts.html</context>
-          <context context-type="linenumber">71,73</context>
+          <context context-type="linenumber">76,78</context>
         </context-group>
       </trans-unit>
       <trans-unit id="accounts.noTransfers" datatype="html">
         <source> Aucun virement pour l&apos;instant. Essayez-en un : il traverse les trois services en direct. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/accounts/accounts.html</context>
-          <context context-type="linenumber">75,78</context>
+          <context context-type="linenumber">80,83</context>
         </context-group>
       </trans-unit>
       <trans-unit id="callback.failed" datatype="html">
@@ -591,6 +778,223 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/journal/journal.html</context>
           <context context-type="linenumber">61,65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.eyebrow" datatype="html">
+        <source>Grand livre</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.title" datatype="html">
+        <source>Mouvements</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">4,5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.lede" datatype="html">
+        <source> Tout ce qui est entré et sorti de vos comptes, écriture par écriture. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">6,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.export" datatype="html">
+        <source>Exporter en CSV</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">16,20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.filters" datatype="html">
+        <source>Filtres</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">20,21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.direction" datatype="html">
+        <source>Sens</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">22,23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.all" datatype="html">
+        <source> Tout </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">28,30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.in" datatype="html">
+        <source> Entrées </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">36,38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.out" datatype="html">
+        <source> Sorties </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">44,46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.period" datatype="html">
+        <source>Période</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">49,50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.30d" datatype="html">
+        <source>30 derniers jours</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">51,52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.90d" datatype="html">
+        <source>3 derniers mois</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">52,53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.365d" datatype="html">
+        <source>12 derniers mois</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">53,54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.allTime" datatype="html">
+        <source>Depuis l&apos;ouverture</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">54,56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.account" datatype="html">
+        <source>Compte</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">60,61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.allAccounts" datatype="html">
+        <source>Tous les comptes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">62,63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.error" datatype="html">
+        <source>Impossible de charger les mouvements.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">72,75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.moneyIn" datatype="html">
+        <source>Entrées</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">77,78</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.moneyOut" datatype="html">
+        <source>Sorties</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">81,82</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.net" datatype="html">
+        <source>Solde net de la période</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">85,86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.byMonth" datatype="html">
+        <source>Par mois</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">94,96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.legendIn" datatype="html">
+        <source>Entrées</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">96,97</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.legendOut" datatype="html">
+        <source>Sorties</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">97,100</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.chart" datatype="html">
+        <source>Entrées et sorties par mois</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">104,106</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.noMonths" datatype="html">
+        <source>Aucun mouvement sur cette période.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">107,111</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.lines" datatype="html">
+        <source>Écritures</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">113,114</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.count" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ report.value().lines.length }}"/> lignes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">114,116</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.accountColumn" datatype="html">
+        <source>Compte</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">124,126</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.colIn" datatype="html">
+        <source>Entrées</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">126,127</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.colOut" datatype="html">
+        <source>Sorties</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">127,129</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="movements.empty" datatype="html">
+        <source>Aucune écriture ne correspond à ces filtres.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/movements/movements.html</context>
+          <context context-type="linenumber">158,160</context>
         </context-group>
       </trans-unit>
       <trans-unit id="reviews.eyebrow" datatype="html">
@@ -919,53 +1323,60 @@
           <context context-type="linenumber">81,83</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="transfer.frozen" datatype="html">
+        <source>Ce compte est gelé (<x id="INTERPOLATION" equiv-text="{{ from.frozenReason }}"/>) : la réservation sera refusée par le grand livre.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.html</context>
+          <context context-type="linenumber">94,95</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="transfer.overdraft" datatype="html">
         <source>Le montant dépasse le solde disponible (<x id="INTERPOLATION" equiv-text="{{ from.available | currency }}"/>) : la réservation sera refusée par le grand livre.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.html</context>
-          <context context-type="linenumber">94,95</context>
+          <context context-type="linenumber">103,104</context>
         </context-group>
       </trans-unit>
       <trans-unit id="transfer.keyHint" datatype="html">
         <source>Envoyée dans l&apos;en-tête Idempotency-Key : un double envoi ne crée jamais deux virements.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.html</context>
-          <context context-type="linenumber">109,111</context>
+          <context context-type="linenumber">118,120</context>
         </context-group>
       </trans-unit>
       <trans-unit id="transfer.submit" datatype="html">
         <source>Envoyer le virement</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.html</context>
-          <context context-type="linenumber">116,118</context>
+          <context context-type="linenumber">125,127</context>
         </context-group>
       </trans-unit>
       <trans-unit id="transfer.saved" datatype="html">
         <source>Bénéficiaires de démonstration</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.html</context>
-          <context context-type="linenumber">122,124</context>
+          <context context-type="linenumber">131,133</context>
         </context-group>
       </trans-unit>
       <trans-unit id="transfer.own" datatype="html">
         <source>Votre compte</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.html</context>
-          <context context-type="linenumber">133,134</context>
+          <context context-type="linenumber">142,143</context>
         </context-group>
       </trans-unit>
       <trans-unit id="transfer.blocked" datatype="html">
         <source>Sur liste noire : sera bloqué</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.html</context>
-          <context context-type="linenumber">135,137</context>
+          <context context-type="linenumber">144,146</context>
         </context-group>
       </trans-unit>
       <trans-unit id="transfer.rules" datatype="html">
         <source> Règles anti-fraude : au-delà de 3 000 €, ou 1 000 € vers un nouveau bénéficiaire, ou plus de 3 virements en 10 minutes, le virement part en revue chez un analyste. Au-delà de 20 000 €, il est bloqué. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/transfer-new/transfer-new.html</context>
-          <context context-type="linenumber">145,149</context>
+          <context context-type="linenumber">154,158</context>
         </context-group>
       </trans-unit>
       <trans-unit id="transfer.fromRequired" datatype="html">
@@ -1392,6 +1803,13 @@
           <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="flow.month" datatype="html">
+        <source><x id="month" equiv-text="name"/> : <x id="in" equiv-text="moneyIn"/> entrés, <x id="out" equiv-text="moneyOut"/> sortis</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/flow-chart.ts</context>
+          <context context-type="linenumber">106</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="error.amountInvalid" datatype="html">
         <source>Le montant doit être positif, avec au plus deux décimales, et inférieur à 1 000 000 €.</source>
         <context-group purpose="location">
@@ -1455,53 +1873,81 @@
           <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="error.freezeReason" datatype="html">
+        <source>Indiquez le motif du gel.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/problem-details.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="error.alreadyFrozen" datatype="html">
+        <source>Ce compte est déjà gelé.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/problem-details.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="error.notFrozen" datatype="html">
+        <source>Ce compte n&apos;est pas gelé.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/problem-details.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="error.accountFrozen" datatype="html">
+        <source>Ce compte est gelé : les paiements sortants sont bloqués.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/problem-details.ts</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="error.screeningNotFound" datatype="html">
         <source>Aucun contrôle n&apos;existe pour ce virement.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/problem-details.ts</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="error.alreadyDecided" datatype="html">
         <source>Ce virement n&apos;attend plus de revue : un autre analyste a déjà décidé.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/problem-details.ts</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="error.commentRequired" datatype="html">
         <source>Un commentaire est obligatoire pour rejeter un virement.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/problem-details.ts</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="error.unexpected" datatype="html">
         <source>Erreur inattendue.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/problem-details.ts</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="error.network" datatype="html">
         <source>Le service est injoignable. Vérifiez votre connexion.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/problem-details.ts</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">41</context>
         </context-group>
       </trans-unit>
       <trans-unit id="error.rateLimited" datatype="html">
         <source>Trop de demandes en peu de temps. Réessayez dans une minute.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/problem-details.ts</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="error.status" datatype="html">
         <source>Erreur <x id="status" equiv-text="error.status"/>.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/problem-details.ts</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="toast.region" datatype="html">

@@ -1,0 +1,166 @@
+<header class="page-header">
+  <div>
+    <span class="eyebrow" i18n="@@movements.eyebrow">Grand livre</span>
+    <h1 i18n="@@movements.title">Mouvements</h1>
+    <p class="muted lede" i18n="@@movements.lede">
+      Tout ce qui est entré et sorti de vos comptes, écriture par écriture.
+    </p>
+  </div>
+  <button
+    type="button"
+    class="button"
+    (click)="exportCsv()"
+    [disabled]="!report.value().lines.length"
+  >
+    <app-icon name="file" [size]="16" />
+    <span i18n="@@movements.export">Exporter en CSV</span>
+  </button>
+</header>
+
+<section class="filters" i18n-aria-label="@@movements.filters" aria-label="Filtres">
+  <div class="segmented" role="group" i18n-aria-label="@@movements.direction" aria-label="Sens">
+    <button
+      type="button"
+      [attr.aria-pressed]="direction() === 'all'"
+      (click)="direction.set('all')"
+      i18n="@@movements.all"
+    >
+      Tout
+    </button>
+    <button
+      type="button"
+      [attr.aria-pressed]="direction() === 'in'"
+      (click)="direction.set('in')"
+      i18n="@@movements.in"
+    >
+      Entrées
+    </button>
+    <button
+      type="button"
+      [attr.aria-pressed]="direction() === 'out'"
+      (click)="direction.set('out')"
+      i18n="@@movements.out"
+    >
+      Sorties
+    </button>
+  </div>
+
+  <label class="select">
+    <span i18n="@@movements.period">Période</span>
+    <select [value]="period()" (change)="period.set($any($event.target).value)">
+      <option value="30" i18n="@@movements.30d">30 derniers jours</option>
+      <option value="90" i18n="@@movements.90d">3 derniers mois</option>
+      <option value="365" i18n="@@movements.365d">12 derniers mois</option>
+      <option value="all" i18n="@@movements.allTime">Depuis l'ouverture</option>
+    </select>
+  </label>
+
+  @if (customerAccounts().length > 1) {
+    <label class="select">
+      <span i18n="@@movements.account">Compte</span>
+      <select [value]="accountId()" (change)="accountId.set($any($event.target).value)">
+        <option value="" i18n="@@movements.allAccounts">Tous les comptes</option>
+        @for (account of customerAccounts(); track account.id) {
+          <option [value]="account.id">{{ account.name }}</option>
+        }
+      </select>
+    </label>
+  }
+</section>
+
+@if (report.error()) {
+  <p class="alert" role="alert" i18n="@@movements.error">Impossible de charger les mouvements.</p>
+}
+
+<section class="totals card">
+  <div class="total in">
+    <span i18n="@@movements.moneyIn">Entrées</span>
+    <strong class="amount">+{{ report.value().moneyIn | currency }}</strong>
+  </div>
+  <div class="total out">
+    <span i18n="@@movements.moneyOut">Sorties</span>
+    <strong class="amount">−{{ report.value().moneyOut | currency }}</strong>
+  </div>
+  <div class="total net">
+    <span i18n="@@movements.net">Solde net de la période</span>
+    <strong class="amount" [class.negative]="report.value().net < 0"
+      >{{ report.value().net > 0 ? '+' : '' }}{{ report.value().net | currency }}</strong
+    >
+  </div>
+</section>
+
+<section class="card">
+  <div class="card-title">
+    <h2 i18n="@@movements.byMonth">Par mois</h2>
+    <span class="legend">
+      <span class="key in"></span><span i18n="@@movements.legendIn">Entrées</span>
+      <span class="key out"></span><span i18n="@@movements.legendOut">Sorties</span>
+    </span>
+  </div>
+  @if (report.value().months.length) {
+    <app-flow-chart
+      [months]="report.value().months"
+      i18n-label="@@movements.chart"
+      label="Entrées et sorties par mois"
+    />
+  } @else if (!report.isLoading()) {
+    <p class="muted" i18n="@@movements.noMonths">Aucun mouvement sur cette période.</p>
+  }
+</section>
+
+<section class="card">
+  <div class="card-title">
+    <h2 i18n="@@movements.lines">Écritures</h2>
+    <span class="chip" i18n="@@movements.count">{{ report.value().lines.length }} lignes</span>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th i18n="@@account.valueDate">Date de valeur</th>
+          <th i18n="@@account.reference">Libellé</th>
+          <th i18n="@@account.counterparty">Contrepartie</th>
+          @if (showAccount()) {
+            <th i18n="@@movements.accountColumn">Compte</th>
+          }
+          <th class="num" i18n="@@movements.colIn">Entrées</th>
+          <th class="num" i18n="@@movements.colOut">Sorties</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (line of report.value().lines; track line.entryId + line.accountId) {
+          <tr>
+            <td>{{ line.valueDate | date: 'mediumDate' }}</td>
+            <td>{{ line.reference }}</td>
+            <td class="muted">{{ line.counterparty }}</td>
+            @if (showAccount()) {
+              <td>
+                <a [routerLink]="['/accounts', line.accountId]">{{ line.accountName }}</a>
+              </td>
+            }
+            <td class="num amount credit">
+              @if (line.amount > 0) {
+                +{{ line.amount | currency }}
+              }
+            </td>
+            <td class="num amount debit">
+              @if (line.amount < 0) {
+                −{{ -line.amount | currency }}
+              }
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td [attr.colspan]="showAccount() ? 6 : 5" class="muted">
+              @if (report.isLoading()) {
+                <div class="skeleton" style="height: 1.5rem"></div>
+              } @else {
+                <span i18n="@@movements.empty">Aucune écriture ne correspond à ces filtres.</span>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>

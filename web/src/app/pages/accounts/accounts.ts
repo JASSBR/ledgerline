@@ -38,6 +38,7 @@ export class Accounts {
 
   constructor() {
     // Every transfer step can move a hold or a balance: refresh the figures, keep the cards on screen.
-    reloadWhen(inject(TransfersRealtime).lastChange, this.accounts);
+    const realtime = inject(TransfersRealtime);
+    reloadWhen(() => [realtime.lastChange(), realtime.lastReceived()], this.accounts);
   }
 }

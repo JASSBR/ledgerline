@@ -1,4 +1,4 @@
-import { Injectable, InjectionToken, inject, signal } from '@angular/core';
+import { Injectable, InjectionToken, LOCALE_ID, inject, signal } from '@angular/core';
 import {
   HubConnection,
   HubConnectionBuilder,
@@ -6,7 +6,7 @@ import {
   LogLevel,
 } from '@microsoft/signalr';
 import { TRANSFER_STATUS_LABELS } from '../../banking/labels';
-import { TransferStatusChanged } from '../../banking/models';
+import { TransferReceived, TransferStatusChanged } from '../../banking/models';
 import { API_BASE_URL } from '../api-base-url';
 import { Auth } from '../auth/auth';
 import { ToastService } from '../toast';
@@ -40,12 +40,19 @@ export const TRANSFERS_HUB_CONNECTION = new InjectionToken<() => TransfersHubCon
 export class TransfersRealtime {
   private readonly toasts = inject(ToastService);
   private readonly connection = inject(TRANSFERS_HUB_CONNECTION)();
+  private readonly euros = new Intl.NumberFormat(inject(LOCALE_ID), {
+    style: 'currency',
+    currency: 'EUR',
+  });
 
   readonly lastChange = signal<TransferStatusChanged | null>(null);
+  /** Money someone else sent to one of the user's accounts. */
+  readonly lastReceived = signal<TransferReceived | null>(null);
   readonly connected = signal(false);
 
   constructor() {
     this.connection.on('transferChanged', (change: TransferStatusChanged) => this.receive(change));
+    this.connection.on('transferReceived', (received: TransferReceived) => this.credited(received));
     this.connection.onreconnecting(() => this.connected.set(false));
     this.connection.onreconnected(() => this.connected.set(true));
     this.connection.onclose(() => this.connected.set(false));
@@ -85,5 +92,17 @@ export class TransfersRealtime {
         message: change.reason ?? undefined,
       });
     }
+  }
+
+  private credited(received: TransferReceived): void {
+    this.lastReceived.set(received);
+    const amount = this.euros.format(received.amount);
+    this.toasts.show({
+      tone: 'success',
+      title: $localize`:@@realtime.received:Virement reçu`,
+      message: received.reference
+        ? $localize`:@@realtime.receivedFromWithLabel:+${amount}:amount: de ${received.fromName}:from: · ${received.reference}:label:`
+        : $localize`:@@realtime.receivedFrom:+${amount}:amount: de ${received.fromName}:from:`,
+    });
   }
 }

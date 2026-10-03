@@ -68,3 +68,112 @@ app-balance-chart {
 .table-wrap {
   overflow-x: auto;
 }
+
+/* A freeze is written in the margin in red ink, the way a bookkeeper flags an account: hard to miss, not alarming. */
+.frozen {
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+  padding: 0.9rem 1.1rem;
+  border-left: 4px double var(--column);
+  background: color-mix(in srgb, var(--column) 7%, var(--surface));
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  color: var(--text);
+
+  app-icon {
+    color: var(--column);
+    margin-top: 0.1rem;
+  }
+  strong {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--column);
+  }
+  p {
+    margin: 0.15rem 0 0;
+    font-size: 0.9rem;
+  }
+  .reason {
+    display: block;
+    margin-top: 0.2rem;
+    font-family: var(--serif);
+    font-style: italic;
+  }
+}
+
+.control-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+.grow {
+  flex: 1 1 18rem;
+}
+.control-form input {
+  width: 100%;
+}
+.control .field-error {
+  margin: 0.6rem 0 0;
+}
+
+.tabs {
+  display: flex;
+  gap: 1.25rem;
+  border-bottom: 1px solid var(--rule);
+}
+.tabs button {
+  padding: 0 0 0.45rem;
+  margin-bottom: -1px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.tabs button[aria-selected='true'] {
+  color: var(--text);
+  border-bottom-color: var(--text);
+}
+
+.history-intro {
+  max-width: 70ch;
+  margin-bottom: 1rem;
+  font-size: 0.88rem;
+}
+.events {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.events li {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.version {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--muted);
+  text-align: right;
+  padding-right: 0.75rem;
+  border-right: 1px solid color-mix(in srgb, var(--column) 55%, transparent);
+}
+.what {
+  display: grid;
+  min-width: 0;
+}
+.events li[data-type='frozen'] strong,
+.events li[data-type='unfrozen'] strong {
+  color: var(--column);
+}
+.events li[data-type='held'] .amount,
+.events li[data-type='released'] strong {
+  color: var(--muted);
+}

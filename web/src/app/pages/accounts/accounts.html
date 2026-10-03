@@ -55,6 +55,11 @@
         <span i18n="@@accounts.available"
           >Disponible <b class="amount">{{ account.available | currency }}</b></span
         >
+        @if (account.frozen) {
+          <span class="chip frozen-chip"
+            ><app-icon name="lock" [size]="12" /> <span i18n="@@accounts.frozen">Gelé</span></span
+          >
+        }
         @if (account.held > 0) {
           <span class="chip" i18n="@@accounts.holdChip"
             >{{ account.held | currency }} réservés</span

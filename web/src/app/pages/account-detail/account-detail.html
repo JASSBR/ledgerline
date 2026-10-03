@@ -29,6 +29,66 @@
     </div>
   </header>
 
+  @if (a.frozen) {
+    <aside class="frozen" role="status">
+      <app-icon name="lock" [size]="20" />
+      <div>
+        <strong i18n="@@freeze.banner">Compte gelé</strong>
+        <p>
+          <span i18n="@@freeze.bannerText"
+            >Les paiements sortants sont bloqués ; les virements entrants sont toujours
+            crédités.</span
+          >
+          @if (a.frozenReason) {
+            <span class="reason" i18n="@@freeze.bannerReason">Motif : {{ a.frozenReason }}</span>
+          }
+        </p>
+      </div>
+    </aside>
+  }
+
+  @if (auth.isOperator() && a.kind === 'Customer') {
+    <section class="card control">
+      <div class="card-title">
+        <h2>
+          <app-icon name="shield" [size]="18" />
+          <span i18n="@@freeze.title">Contrôle du compte</span>
+        </h2>
+      </div>
+      <form class="control-form" (submit)="$event.preventDefault(); toggleFreeze(a)">
+        @if (!a.frozen) {
+          <label class="grow">
+            <span class="sr-only" i18n="@@freeze.reason">Motif du gel</span>
+            <input
+              type="text"
+              maxlength="200"
+              i18n-placeholder="@@freeze.placeholder"
+              placeholder="Motif du gel (suspicion de fraude, litige, demande du client…)"
+              [value]="freezeReason()"
+              (input)="freezeReason.set($any($event.target).value)"
+            />
+          </label>
+          <button type="submit" class="button danger" [disabled]="freezing()">
+            <app-icon name="lock" [size]="16" />
+            <span i18n="@@freeze.action">Geler le compte</span>
+          </button>
+        } @else {
+          <p class="muted grow" i18n="@@freeze.unfreezeHint">
+            Lever le gel rétablit les paiements sortants. L'opération est inscrite dans
+            l'historique.
+          </p>
+          <button type="submit" class="button primary" [disabled]="freezing()">
+            <app-icon name="check" [size]="16" />
+            <span i18n="@@freeze.unfreeze">Dégeler le compte</span>
+          </button>
+        }
+      </form>
+      @if (freezeError(); as error) {
+        <p class="field-error" role="alert">{{ error }}</p>
+      }
+    </section>
+  }
+
   <section class="figures">
     <div class="card figure">
       <span i18n="@@account.balance">Solde comptable</span>
@@ -81,44 +141,106 @@
 
   <section class="card">
     <div class="card-title">
-      <h2 i18n="@@account.statement">Relevé</h2>
-      <span class="chip" i18n="@@account.lines">{{ statement.value().length }} écritures</span>
+      <div class="tabs" role="tablist">
+        <button
+          type="button"
+          role="tab"
+          [attr.aria-selected]="tab() === 'statement'"
+          (click)="tab.set('statement')"
+          i18n="@@account.statement"
+        >
+          Relevé
+        </button>
+        <button
+          type="button"
+          role="tab"
+          [attr.aria-selected]="tab() === 'history'"
+          (click)="tab.set('history')"
+          i18n="@@account.history"
+        >
+          Historique des événements
+        </button>
+      </div>
+      @if (tab() === 'statement') {
+        <span class="chip" i18n="@@account.lines">{{ statement.value().length }} écritures</span>
+      } @else {
+        <span class="chip" i18n="@@account.events">{{ history.value().length }} événements</span>
+      }
     </div>
 
-    <app-balance-chart [points]="chart()" i18n-label="@@account.chart" label="Évolution du solde" />
+    @if (tab() === 'statement') {
+      <app-balance-chart
+        [points]="chart()"
+        i18n-label="@@account.chart"
+        label="Évolution du solde"
+      />
 
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th i18n="@@account.valueDate">Date de valeur</th>
-            <th i18n="@@account.reference">Libellé</th>
-            <th i18n="@@account.counterparty">Contrepartie</th>
-            <th class="num" i18n="@@account.amount">Montant</th>
-            <th class="num" i18n="@@account.balanceAfter">Solde</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (line of statement.value(); track line.entryId) {
+      <div class="table-wrap">
+        <table>
+          <thead>
             <tr>
-              <td>{{ line.valueDate | date: 'mediumDate' }}</td>
-              <td>{{ line.reference }}</td>
-              <td class="muted">{{ line.counterparty }}</td>
-              <td class="num amount" [class.credit]="line.amount > 0">
-                {{ line.amount > 0 ? '+' : '' }}{{ line.amount | currency }}
-              </td>
-              <td class="num amount">{{ line.balanceAfter | currency }}</td>
+              <th i18n="@@account.valueDate">Date de valeur</th>
+              <th i18n="@@account.reference">Libellé</th>
+              <th i18n="@@account.counterparty">Contrepartie</th>
+              <th class="num" i18n="@@account.amount">Montant</th>
+              <th class="num" i18n="@@account.balanceAfter">Solde</th>
             </tr>
-          } @empty {
-            <tr>
-              <td colspan="5" class="muted" i18n="@@account.empty">
-                Aucune écriture sur ce compte.
-              </td>
-            </tr>
+          </thead>
+          <tbody>
+            @for (line of statement.value(); track line.entryId) {
+              <tr>
+                <td>{{ line.valueDate | date: 'mediumDate' }}</td>
+                <td>{{ line.reference }}</td>
+                <td class="muted">{{ line.counterparty }}</td>
+                <td class="num amount" [class.credit]="line.amount > 0">
+                  {{ line.amount > 0 ? '+' : '' }}{{ line.amount | currency }}
+                </td>
+                <td class="num amount">{{ line.balanceAfter | currency }}</td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="5" class="muted" i18n="@@account.empty">
+                  Aucune écriture sur ce compte.
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    } @else {
+      <p class="muted history-intro" i18n="@@history.intro">
+        Le flux d'événements du compte, tel qu'il est stocké : le solde n'est jamais écrit, il est
+        recalculé à partir de ces faits. Rien ne s'efface, tout se compense.
+      </p>
+      <ol class="events">
+        @for (event of history.value(); track event.version) {
+          <li [attr.data-type]="event.type">
+            <span class="version">#{{ event.version }}</span>
+            <div class="what">
+              <strong>{{ eventLabels[event.type] }}</strong>
+              <small class="muted">
+                {{ event.recordedAt | date: 'medium' }}
+                @if (event.reference) {
+                  · {{ event.reference }}
+                }
+                @if (event.detail) {
+                  · {{ event.detail }}
+                }
+              </small>
+            </div>
+            @if (event.amount !== null) {
+              <span class="amount" [class.credit]="event.amount > 0">
+                {{ event.amount > 0 ? '+' : '' }}{{ event.amount | currency }}
+              </span>
+            }
+          </li>
+        } @empty {
+          @if (history.isLoading()) {
+            <li><div class="skeleton" style="height: 2.5rem; width: 100%"></div></li>
           }
-        </tbody>
-      </table>
-    </div>
+        }
+      </ol>
+    }
   </section>
 } @else {
   <div class="skeleton" style="height: 3rem; width: 20rem; margin-bottom: 1.5rem"></div>

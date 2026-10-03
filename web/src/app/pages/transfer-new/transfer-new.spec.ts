@@ -18,6 +18,8 @@ const ACCOUNTS: Account[] = [
     available: 6400,
     held: 0,
     holds: [],
+    frozen: false,
+    frozenReason: null,
   },
 ];
 const BOB = 'FR7699999000012000000000112';

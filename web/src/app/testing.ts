@@ -1,6 +1,6 @@
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { Account, Transfer, TransferStatusChanged } from './banking/models';
+import { Account, Transfer, TransferReceived, TransferStatusChanged } from './banking/models';
 import { Auth, CurrentUser } from './core/auth/auth';
 import { TransfersRealtime } from './core/realtime/transfers-realtime';
 
@@ -34,6 +34,7 @@ export function fakeAuth(user: CurrentUser | null = ALICE) {
 export function fakeRealtime() {
   const fake = {
     lastChange: signal<TransferStatusChanged | null>(null),
+    lastReceived: signal<TransferReceived | null>(null),
     connected: signal(true),
     connect: async () => undefined,
     disconnect: async () => undefined,
@@ -72,6 +73,8 @@ export function account(overrides: Partial<Account> = {}): Account {
     available: 6400,
     held: 0,
     holds: [],
+    frozen: false,
+    frozenReason: null,
     ...overrides,
   };
 }

@@ -2,19 +2,22 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { account, fakeAuth, fakeRealtime, settle } from '../../testing';
+import { Account } from '../../banking/models';
+import { OLIVIA, account, fakeAuth, fakeRealtime, settle } from '../../testing';
 import { AccountDetail } from './account-detail';
 
 describe('AccountDetail', () => {
   let http: HttpTestingController;
+  let auth: ReturnType<typeof fakeAuth>;
 
   beforeEach(() => {
+    auth = fakeAuth();
     TestBed.configureTestingModule({
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
         provideRouter([]),
-        fakeAuth().provider,
+        auth.provider,
         fakeRealtime().provider,
       ],
     });
@@ -23,7 +26,7 @@ describe('AccountDetail', () => {
 
   afterEach(() => http.verify());
 
-  async function render() {
+  async function render(overrides: Partial<Account> = {}) {
     const fixture = TestBed.createComponent(AccountDetail);
     fixture.componentRef.setInput('id', 'acc-1');
     fixture.detectChanges();
@@ -32,6 +35,7 @@ describe('AccountDetail', () => {
         held: 50,
         available: 6350,
         holds: [{ transferId: 't9', amount: 50, reference: 'Cinéma' }],
+        ...overrides,
       }),
     );
     http
@@ -93,5 +97,78 @@ describe('AccountDetail', () => {
     const { element } = await render();
     (element.querySelector('.iban-copy') as HTMLButtonElement).click();
     expect(writeText).toHaveBeenCalledWith('FR7699999000011000000000162');
+  });
+
+  it('warns the customer that a frozen account cannot pay out, and why', async () => {
+    const { element } = await render({ frozen: true, frozenReason: 'Litige en cours' });
+
+    const banner = element.querySelector('.frozen')!.textContent!;
+    expect(banner).toContain('Compte gelé');
+    expect(banner).toContain('Litige en cours');
+    expect(element.querySelector('.control')).toBeNull();
+  });
+
+  it('lets an operator freeze an account, but only with a reason', async () => {
+    auth.fake.user.set(OLIVIA);
+    const { element, fixture } = await render();
+    const form = element.querySelector<HTMLFormElement>('.control form')!;
+
+    form.dispatchEvent(new Event('submit'));
+    fixture.detectChanges();
+    expect(element.querySelector('.control .field-error')!.textContent).toContain('motif');
+
+    const reason = form.querySelector('input')!;
+    reason.value = 'Suspicion de fraude';
+    reason.dispatchEvent(new Event('input'));
+    form.dispatchEvent(new Event('submit'));
+    const request = http.expectOne('/api/ledger/accounts/acc-1/freeze');
+    expect(request.request.body).toEqual({ reason: 'Suspicion de fraude' });
+    request.flush(account({ frozen: true, frozenReason: 'Suspicion de fraude' }));
+    await fixture.whenStable();
+
+    expect(element.querySelector('.frozen')).not.toBeNull();
+    expect(element.querySelector('.control button')!.textContent).toContain('Dégeler');
+  });
+
+  it('reads the event stream only when the history tab is opened', async () => {
+    const { element, fixture } = await render();
+    const historyTab = element.querySelectorAll<HTMLButtonElement>('[role="tab"]')[1];
+
+    historyTab.click();
+    await settle();
+    http
+      .expectOne((r) => r.url === '/api/ledger/accounts/acc-1/history')
+      .flush([
+        {
+          version: 3,
+          recordedAt: '2026-10-01T10:00:00Z',
+          type: 'frozen',
+          amount: null,
+          reference: 'Litige',
+          detail: null,
+        },
+        {
+          version: 2,
+          recordedAt: '2026-09-30T10:00:00Z',
+          type: 'posted',
+          amount: -900,
+          reference: 'Loyer',
+          detail: 'Bob',
+        },
+        {
+          version: 1,
+          recordedAt: '2026-09-01T10:00:00Z',
+          type: 'opened',
+          amount: null,
+          reference: 'FR76…',
+          detail: 'Alice',
+        },
+      ]);
+    await fixture.whenStable();
+
+    const items = element.querySelectorAll('.events li');
+    expect(items).toHaveLength(3);
+    expect(items[0].textContent).toContain('Compte gelé');
+    expect(items[1].textContent).toContain('Écriture passée');
   });
 });

@@ -31,6 +31,11 @@ export const routes: Routes = [
           import('./pages/account-detail/account-detail').then((m) => m.AccountDetail),
       },
       {
+        path: 'movements',
+        title: 'Mouvements · Ledgerline',
+        loadComponent: () => import('./pages/movements/movements').then((m) => m.Movements),
+      },
+      {
         path: 'transfers/new',
         title: 'Nouveau virement · Ledgerline',
         canActivate: [customerGuard],

@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Transfer, TransferRequest } from './models';
+import { Account, Transfer, TransferRequest } from './models';
 
 /** Commands only: reads are httpResource declarations next to the views that render them. */
 @Injectable({ providedIn: 'root' })
@@ -30,5 +30,13 @@ export class BankApi {
       amount,
       reference,
     });
+  }
+
+  freeze(accountId: string, reason: string): Observable<Account> {
+    return this.http.post<Account>(`/api/ledger/accounts/${accountId}/freeze`, { reason });
+  }
+
+  unfreeze(accountId: string): Observable<Account> {
+    return this.http.post<Account>(`/api/ledger/accounts/${accountId}/unfreeze`, {});
   }
 }

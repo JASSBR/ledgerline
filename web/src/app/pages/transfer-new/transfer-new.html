@@ -87,6 +87,15 @@
     </div>
 
     @if (source(); as from) {
+      @if (from.frozen) {
+        <p class="warning" role="status">
+          <app-icon name="lock" [size]="16" />
+          <span i18n="@@transfer.frozen"
+            >Ce compte est gelé ({{ from.frozenReason }}) : la réservation sera refusée par le grand
+            livre.</span
+          >
+        </p>
+      }
       @if (model().amount > from.available) {
         <p class="warning" role="status">
           <app-icon name="alert" [size]="16" />

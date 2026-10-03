@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { HubConnectionState } from '@microsoft/signalr';
-import { TransferStatusChanged } from '../../banking/models';
+import { TransferReceived, TransferStatusChanged } from '../../banking/models';
 import { ToastService } from '../toast';
 import { TRANSFERS_HUB_CONNECTION, TransfersRealtime } from './transfers-realtime';
 
 function fakeHub() {
-  const handlers = new Map<string, (payload: TransferStatusChanged) => void>();
+  const handlers = new Map<string, (payload: never) => void>();
   const hooks: Record<string, () => void> = {};
   return {
     state: HubConnectionState.Disconnected,
@@ -13,12 +13,12 @@ function fakeHub() {
       this.state = HubConnectionState.Connected;
     }),
     stop: vi.fn(async () => undefined),
-    on: (name: string, handler: (payload: TransferStatusChanged) => void) =>
-      handlers.set(name, handler),
+    on: (name: string, handler: (payload: never) => void) => handlers.set(name, handler),
     onreconnecting: (callback: () => void) => (hooks['reconnecting'] = callback),
     onreconnected: (callback: () => void) => (hooks['reconnected'] = callback),
     onclose: (callback: () => void) => (hooks['close'] = callback),
-    push: (payload: TransferStatusChanged) => handlers.get('transferChanged')!(payload),
+    push: (payload: TransferStatusChanged) => handlers.get('transferChanged')!(payload as never),
+    credit: (payload: TransferReceived) => handlers.get('transferReceived')!(payload as never),
     hooks,
   };
 }
@@ -87,5 +87,24 @@ describe('TransfersRealtime', () => {
     const { realtime, hub } = setup();
     await realtime.disconnect();
     expect(hub.stop).toHaveBeenCalled();
+  });
+
+  it('tells the beneficiary that money came in, with amount, sender and label', () => {
+    const { realtime, toasts, hub } = setup();
+
+    hub.credit({
+      transferId: 't7',
+      toAccountId: 'acc-9',
+      fromName: 'Bob Durand — Compte courant',
+      amount: 999,
+      reference: 'Remboursement',
+      receivedAt: '2026-10-03T15:24:00Z',
+    });
+
+    expect(realtime.lastReceived()?.transferId).toBe('t7');
+    const [toast] = toasts.toasts();
+    expect(toast.tone).toBe('success');
+    expect(toast.title).toBe('Virement reçu');
+    expect(toast.message).toMatch(/\+999,00\s€ de Bob Durand — Compte courant · Remboursement/);
   });
 });

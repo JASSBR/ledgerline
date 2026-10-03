@@ -136,3 +136,7 @@
     display: none;
   }
 }
+.frozen-chip {
+  color: var(--column);
+  background: color-mix(in srgb, var(--column) 10%, transparent);
+}

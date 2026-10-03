@@ -17,6 +17,9 @@
         <a routerLink="/transfers" routerLinkActive="active"
           ><app-icon name="send" /> <span i18n="@@nav.allTransfers">Tous les virements</span></a
         >
+        <a routerLink="/movements" routerLinkActive="active"
+          ><app-icon name="activity" /> <span i18n="@@nav.allMovements">Mouvements clients</span></a
+        >
         <p class="nav-label" i18n="@@nav.accounting">Comptabilité</p>
         <a routerLink="/ops/journal" routerLinkActive="active"
           ><app-icon name="book" /> <span i18n="@@nav.journal">Journal</span></a
@@ -27,6 +30,9 @@
       } @else {
         <a routerLink="/accounts" routerLinkActive="active"
           ><app-icon name="wallet" /> <span i18n="@@nav.accounts">Mes comptes</span></a
+        >
+        <a routerLink="/movements" routerLinkActive="active"
+          ><app-icon name="activity" /> <span i18n="@@nav.movements">Mouvements</span></a
         >
         <a routerLink="/transfers/new" routerLinkActive="active"
           ><app-icon name="plus" /> <span i18n="@@nav.newTransfer">Nouveau virement</span></a
