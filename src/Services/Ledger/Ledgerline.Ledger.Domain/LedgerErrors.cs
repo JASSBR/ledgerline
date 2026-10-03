@@ -21,4 +21,16 @@ public static class LedgerErrors
 
     public static Error InsufficientFunds(Money available) =>
         Error.Conflict("ledger.insufficient_funds", $"Insufficient available funds ({available}).");
+
+    public static readonly Error FreezeReasonRequired =
+        Error.Validation("ledger.freeze_reason_required", "Freezing an account requires a reason.");
+
+    public static readonly Error AlreadyFrozen =
+        Error.Conflict("ledger.already_frozen", "The account is already frozen.");
+
+    public static readonly Error NotFrozen =
+        Error.Conflict("ledger.not_frozen", "The account is not frozen.");
+
+    public static Error AccountFrozen(string reason) =>
+        Error.Conflict("ledger.account_frozen", $"The account is frozen: {reason}. Outgoing payments are blocked.");
 }

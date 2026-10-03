@@ -16,6 +16,7 @@ internal static class AccountEndpoints
         accounts.MapGet("/{id:guid}", GetAsync).WithSummary("Balance, available balance and pending holds");
         accounts.MapGet("/{id:guid}/statement", StatementAsync).WithSummary("Posted lines, newest first, with running balance");
         accounts.MapGet("/{id:guid}/balance", BalanceAsOfAsync).WithSummary("Balance at any past value date, replayed from the event stream");
+        accounts.MapGet("/{id:guid}/history", HistoryAsync).WithSummary("Every event of the account's stream, newest first: the audit trail");
         accounts.MapGet("/lookup", LookupAsync).WithSummary("Confirms who owns an IBAN before paying it (verification of payee)");
     }
 
@@ -80,6 +81,37 @@ internal static class AccountEndpoints
         var state = Account.Replay(events.Select(e => e.Data).OfType<IAccountEvent>().Where(e => e is AccountOpened || ValueDate(e) <= asOf));
         return TypedResults.Ok(new BalanceAsOfResponse(id, asOf, state?.Balance.ToEuros() ?? 0, state?.Available.ToEuros() ?? 0));
     }
+
+    private static async Task<IResult> HistoryAsync(Guid id, ClaimsPrincipal user, IQuerySession session, int? limit, CancellationToken cancellationToken)
+    {
+        if (await LoadVisibleAsync(id, user, session, cancellationToken) is null)
+        {
+            return LedgerErrors.AccountNotFound.ToProblem();
+        }
+
+        var events = await session.Events.FetchStreamAsync(id, token: cancellationToken);
+        var counterparties = await NamesAsync(session, events.Select(e => e.Data).OfType<EntryPosted>().Select(posted => posted.CounterpartyAccountId), cancellationToken);
+        var isOperator = user.IsOperator();
+
+        return TypedResults.Ok(events
+            .Where(e => e.Data is IAccountEvent)
+            .Select(e => Describe(e, counterparties, isOperator))
+            .Reverse()
+            .Take(Math.Clamp(limit ?? 100, 1, 500))
+            .ToList());
+    }
+
+    // Who froze an account is back-office information: the customer sees the reason, not the operator's id.
+    private static AccountEventResponse Describe(IEvent e, Dictionary<Guid, string> counterparties, bool isOperator) => e.Data switch
+    {
+        AccountOpened opened => new(e.Version, e.Timestamp, "opened", null, opened.Iban, opened.Name),
+        FundsHeld held => new(e.Version, e.Timestamp, "held", new Money(-held.AmountCents).ToEuros(), held.Reference, null),
+        HoldReleased released => new(e.Version, e.Timestamp, "released", null, null, released.Reason),
+        EntryPosted posted => new(e.Version, e.Timestamp, "posted", new Money(posted.AmountCents).ToEuros(), posted.Reference, counterparties.GetValueOrDefault(posted.CounterpartyAccountId, "—")),
+        AccountFrozen frozen => new(e.Version, e.Timestamp, "frozen", null, frozen.Reason, isOperator ? frozen.By : null),
+        AccountUnfrozen unfrozen => new(e.Version, e.Timestamp, "unfrozen", null, null, isOperator ? unfrozen.By : null),
+        _ => new(e.Version, e.Timestamp, e.EventTypeName, null, null, null),
+    };
 
     private static async Task<Ok<IbanLookupResponse>> LookupAsync(string iban, IQuerySession session, CancellationToken cancellationToken)
     {

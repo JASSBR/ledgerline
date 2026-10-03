@@ -114,4 +114,43 @@ public sealed class AccountTests
         account.Available.ShouldBe(new Money(15_000));
         Account.Replay(history[..3])!.Available.ShouldBe(new Money(15_000));
     }
+
+    [Fact]
+    public void FrozenAccount_RefusesNewHoldsAndDirectDebits_ButStillReceivesMoney()
+    {
+        var account = Customer(10_000);
+        account = account.Apply(account.Freeze("suspected fraud", "operator", Now).Value);
+
+        account.Frozen.ShouldBeTrue();
+        account.PlaceHold(Guid.CreateVersion7(), Fifty, "TRF-1", Now).Error!.Code.ShouldBe("ledger.account_frozen");
+        account.Post(Guid.CreateVersion7(), -Fifty, "debit", Guid.CreateVersion7(), null, Now).Error!.Code.ShouldBe("ledger.account_frozen");
+        account.Post(Guid.CreateVersion7(), Fifty, "credit", Guid.CreateVersion7(), null, Now).IsSuccess.ShouldBeTrue();
+    }
+
+    [Fact]
+    public void FrozenAccount_StillCapturesAHoldPlacedBeforeTheFreeze()
+    {
+        var holdId = Guid.CreateVersion7();
+        var account = Customer(10_000);
+        account = account.Apply(account.PlaceHold(holdId, Fifty, "TRF-1", Now).Value);
+        account = account.Apply(account.Freeze("dispute", "operator", Now).Value);
+
+        account.Post(holdId, -Fifty, "TRF-1", Guid.CreateVersion7(), holdId, Now).IsSuccess.ShouldBeTrue();
+    }
+
+    [Fact]
+    public void Freeze_RequiresAReason_AndCannotBeRepeated_UnfreezeRestoresDebits()
+    {
+        var account = Customer(10_000);
+
+        account.Freeze("  ", "operator", Now).Error.ShouldBe(LedgerErrors.FreezeReasonRequired);
+        account.Unfreeze("operator", Now).Error.ShouldBe(LedgerErrors.NotFrozen);
+
+        account = account.Apply(account.Freeze("dispute", "operator", Now).Value);
+        account.Freeze("again", "operator", Now).Error.ShouldBe(LedgerErrors.AlreadyFrozen);
+
+        account = account.Apply(account.Unfreeze("operator", Now).Value);
+        account.Frozen.ShouldBeFalse();
+        account.PlaceHold(Guid.CreateVersion7(), Fifty, "TRF-2", Now).IsSuccess.ShouldBeTrue();
+    }
 }

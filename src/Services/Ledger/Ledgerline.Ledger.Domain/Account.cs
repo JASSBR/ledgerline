@@ -17,8 +17,11 @@ public sealed record Account(
     AccountKind Kind,
     Money Balance,
     ImmutableDictionary<Guid, Hold> Holds,
-    ImmutableHashSet<Guid> PostedEntries)
+    ImmutableHashSet<Guid> PostedEntries,
+    string? FrozenReason = null)
 {
+    public bool Frozen => FrozenReason is not null;
+
     public Money Held => new(Holds.Values.Sum(hold => hold.Amount.Cents));
 
     public Money Available => Balance - Held;
@@ -39,6 +42,8 @@ public sealed record Account(
             Holds = posted.HoldId is { } holdId ? Holds.Remove(holdId) : Holds,
             PostedEntries = PostedEntries.Add(posted.EntryId),
         },
+        AccountFrozen frozen => this with { FrozenReason = frozen.Reason },
+        AccountUnfrozen => this with { FrozenReason = null },
         _ => this,
     };
 
@@ -69,6 +74,11 @@ public sealed record Account(
         if (!amount.IsPositive)
         {
             return LedgerErrors.AmountNotPositive;
+        }
+
+        if (Frozen)
+        {
+            return LedgerErrors.AccountFrozen(FrozenReason!);
         }
 
         if (Kind == AccountKind.Customer && Available < amount)
@@ -111,6 +121,10 @@ public sealed record Account(
                 return LedgerErrors.HoldMismatch;
             }
         }
+        else if (signedAmount < Money.Zero && Frozen)
+        {
+            return LedgerErrors.AccountFrozen(FrozenReason!);
+        }
         else if (signedAmount < Money.Zero && Kind == AccountKind.Customer && Available < -signedAmount)
         {
             return LedgerErrors.InsufficientFunds(Available);
@@ -118,4 +132,25 @@ public sealed record Account(
 
         return Result.Success<IReadOnlyList<IAccountEvent>>([new EntryPosted(entryId, signedAmount.Cents, reference, counterparty, holdId, now)]);
     }
+
+    /// <summary>
+    /// Blocks new debits. Holds placed before the freeze can still be captured: that money was already committed
+    /// to a payment in flight, and the saga must be able to finish it.
+    /// </summary>
+    public Result<IReadOnlyList<IAccountEvent>> Freeze(string reason, string by, DateTimeOffset now)
+    {
+        if (string.IsNullOrWhiteSpace(reason))
+        {
+            return LedgerErrors.FreezeReasonRequired;
+        }
+
+        return Frozen
+            ? LedgerErrors.AlreadyFrozen
+            : Result.Success<IReadOnlyList<IAccountEvent>>([new AccountFrozen(reason.Trim(), by, now)]);
+    }
+
+    public Result<IReadOnlyList<IAccountEvent>> Unfreeze(string by, DateTimeOffset now) =>
+        Frozen
+            ? Result.Success<IReadOnlyList<IAccountEvent>>([new AccountUnfrozen(by, now)])
+            : LedgerErrors.NotFrozen;
 }

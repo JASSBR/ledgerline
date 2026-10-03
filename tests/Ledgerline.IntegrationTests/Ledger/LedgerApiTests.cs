@@ -126,6 +126,56 @@ public sealed class LedgerApiTests(Infrastructure infrastructure) : IAsyncLifeti
         (await anonymous.GetAsync("/api/ledger/accounts", TestContext.Current.CancellationToken)).StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
     }
 
+    [Fact]
+    public async Task FrozenAccount_RefusesReservations_UntilAnOperatorUnfreezesIt()
+    {
+        var host = _ledger.Services.GetRequiredService<IHost>();
+        using var ops = Client(TestUsers.Operator);
+        using var chloe = Client(TestUsers.Customer(DemoAccounts.ChloeUserId));
+        var freezeUrl = $"/api/ledger/accounts/{DemoAccounts.ChloeCurrent}/freeze";
+
+        (await chloe.PostAsJsonAsync(freezeUrl, new FreezeRequest("self-service"), TestContext.Current.CancellationToken)).StatusCode.ShouldBe(HttpStatusCode.Forbidden);
+        (await ops.PostAsJsonAsync(freezeUrl, new FreezeRequest(""), TestContext.Current.CancellationToken)).StatusCode.ShouldBe(HttpStatusCode.BadRequest);
+        (await ops.PostAsJsonAsync(freezeUrl, new FreezeRequest("Suspected account takeover"), TestContext.Current.CancellationToken)).StatusCode.ShouldBe(HttpStatusCode.OK);
+
+        var frozen = await chloe.GetFromJsonAsync<AccountResponse>($"/api/ledger/accounts/{DemoAccounts.ChloeCurrent}", Json, TestContext.Current.CancellationToken);
+        frozen!.Frozen.ShouldBeTrue();
+        frozen.FrozenReason.ShouldBe("Suspected account takeover");
+        var (_, rejected) = await host.InvokeMessageAndWaitAsync<FundsReservationRejected>(new ReserveFunds(Guid.CreateVersion7(), DemoAccounts.ChloeCurrent, 100, "Coffee"));
+        rejected.ShouldNotBeNull().Code.ShouldBe("ledger.account_frozen");
+
+        (await ops.PostAsync($"/api/ledger/accounts/{DemoAccounts.ChloeCurrent}/unfreeze", null, TestContext.Current.CancellationToken)).StatusCode.ShouldBe(HttpStatusCode.OK);
+        var (_, reserved) = await host.InvokeMessageAndWaitAsync<FundsReserved>(new ReserveFunds(Guid.CreateVersion7(), DemoAccounts.ChloeCurrent, 100, "Coffee"));
+        reserved.ShouldNotBeNull();
+
+        var history = await chloe.GetFromJsonAsync<List<AccountEventResponse>>($"/api/ledger/accounts/{DemoAccounts.ChloeCurrent}/history", Json, TestContext.Current.CancellationToken);
+        history.ShouldNotBeNull();
+        history.Select(e => e.Type).Take(3).ShouldBe(["held", "unfrozen", "frozen"]);
+        history[^1].Type.ShouldBe("opened");
+        history.Single(e => e.Type == "frozen").Detail.ShouldBeNull();
+    }
+
+    [Fact]
+    public async Task Movements_SplitMoneyInAndOut_AcrossTheCallersAccountsOnly()
+    {
+        var host = _ledger.Services.GetRequiredService<IHost>();
+        var transferId = Guid.CreateVersion7();
+        await host.InvokeMessageAndWaitAsync<FundsReserved>(new ReserveFunds(transferId, DemoAccounts.AliceCurrent, 4_200, "Courses"));
+        await host.InvokeMessageAndWaitAsync<TransferCaptured>(new CaptureTransfer(transferId, DemoAccounts.AliceCurrent, DemoAccounts.BobCurrent, 4_200, "Courses"));
+        using var alice = Client(TestUsers.Customer(DemoAccounts.AliceUserId));
+
+        var all = await alice.GetFromJsonAsync<MovementsResponse>("/api/ledger/movements", Json, TestContext.Current.CancellationToken);
+        var outgoing = await alice.GetFromJsonAsync<MovementsResponse>("/api/ledger/movements?direction=out", Json, TestContext.Current.CancellationToken);
+
+        all!.Lines.Select(l => l.AccountId).Distinct().ShouldBeSubsetOf([DemoAccounts.AliceCurrent, DemoAccounts.AliceSavings]);
+        all.Net.ShouldBe(all.MoneyIn - all.MoneyOut);
+        all.Months.Sum(m => m.MoneyIn).ShouldBe(all.MoneyIn);
+        outgoing!.Lines.ShouldAllBe(l => l.Amount < 0);
+        outgoing.Lines.ShouldContain(l => l.EntryId == transferId && l.Amount == -42m && l.Counterparty == "Bob Durand — Compte courant");
+        outgoing.MoneyIn.ShouldBe(all.MoneyIn);
+        (await alice.GetAsync("/api/ledger/movements?direction=sideways", TestContext.Current.CancellationToken)).StatusCode.ShouldBe(HttpStatusCode.BadRequest);
+    }
+
     private HttpClient Client(System.Net.Http.Headers.AuthenticationHeaderValue auth)
     {
         var client = _ledger.CreateClient();

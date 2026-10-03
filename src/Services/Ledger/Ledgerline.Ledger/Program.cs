@@ -19,6 +19,7 @@ app.UseLedgerlineService();
 var api = app.MapGroup("/api/ledger");
 AccountEndpoints.Map(api);
 OperationsEndpoints.Map(api);
+MovementEndpoints.Map(api);
 
 // JasperFx commands: `codegen write` pre-generates handler and storage code at image build time.
 return await app.RunJasperFxCommands(args);

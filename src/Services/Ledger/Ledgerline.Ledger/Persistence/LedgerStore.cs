@@ -11,6 +11,6 @@ internal static class LedgerStore
         options.Projections.Add<AccountProjection>(ProjectionLifecycle.Inline);
         options.Projections.Add<JournalProjection>(ProjectionLifecycle.Inline);
         options.Schema.For<Account>().UniqueIndex(account => account.Iban).Index(account => account.OwnerId);
-        options.Events.AddEventTypes([typeof(AccountOpened), typeof(FundsHeld), typeof(HoldReleased), typeof(EntryPosted)]);
+        options.Events.AddEventTypes([typeof(AccountOpened), typeof(FundsHeld), typeof(HoldReleased), typeof(EntryPosted), typeof(AccountFrozen), typeof(AccountUnfrozen)]);
     }
 }

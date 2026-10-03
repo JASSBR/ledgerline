@@ -36,3 +36,8 @@ public sealed record EntryPosted(
     Guid CounterpartyAccountId,
     Guid? HoldId,
     DateTimeOffset PostedAt) : IAccountEvent;
+
+/// <summary>An operator blocks outgoing money (fraud suspicion, dispute, customer request). Incoming money still lands.</summary>
+public sealed record AccountFrozen(string Reason, string By, DateTimeOffset FrozenAt) : IAccountEvent;
+
+public sealed record AccountUnfrozen(string By, DateTimeOffset UnfrozenAt) : IAccountEvent;
