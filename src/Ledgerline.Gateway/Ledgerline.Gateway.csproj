@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <!-- Single public entry point: routing, CORS, rate limiting, security headers. No business logic, no auth decisions. -->
+  <ItemGroup>
+    <PackageReference Include="Yarp.ReverseProxy" />
+    <PackageReference Include="Microsoft.Extensions.ServiceDiscovery.Yarp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ledgerline.ServiceDefaults\Ledgerline.ServiceDefaults.csproj" />
+  </ItemGroup>
+</Project>

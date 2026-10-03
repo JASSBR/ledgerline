@@ -20,5 +20,9 @@ public static class DemoAccounts
     /// <summary>A customer account whose IBAN is on Fraud's blocklist (FR76 9999 9000 0166 6666 6666 610).</summary>
     public static readonly Guid MuleAccount = Guid.Parse("01920000-0000-7000-8000-00000000d001");
 
+    public const long AliceCurrentNumber = 10_000_000_001;
+    public const long AliceSavingsNumber = 10_000_000_002;
+    public const long BobCurrentNumber = 20_000_000_001;
+    public const long ChloeCurrentNumber = 30_000_000_001;
     public const long MuleAccountNumber = 66_666_666_666;
 }

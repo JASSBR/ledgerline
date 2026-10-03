@@ -2,6 +2,7 @@
   <Folder Name="/src/">
     <Project Path="src/Ledgerline.AppHost/Ledgerline.AppHost.csproj" />
     <Project Path="src/Ledgerline.Contracts/Ledgerline.Contracts.csproj" />
+    <Project Path="src/Ledgerline.Gateway/Ledgerline.Gateway.csproj" />
     <Project Path="src/Ledgerline.Hosting/Ledgerline.Hosting.csproj" />
     <Project Path="src/Ledgerline.ServiceDefaults/Ledgerline.ServiceDefaults.csproj" />
     <Project Path="src/Ledgerline.SharedKernel/Ledgerline.SharedKernel.csproj" />

@@ -2,11 +2,22 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net10.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
     <AspireUseCliBundle>true</AspireUseCliBundle>
-    <UserSecretsId>38614da4-fb6b-4603-bf1b-b1f7fee6d6ab</UserSecretsId>
+    <UserSecretsId>ledgerline-apphost</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.JavaScript" />
+    <PackageReference Include="Aspire.Hosting.Keycloak" />
+    <PackageReference Include="Aspire.Hosting.PostgreSQL" />
+    <PackageReference Include="Aspire.Hosting.RabbitMQ" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Services\Ledger\Ledgerline.Ledger\Ledgerline.Ledger.csproj" />
+    <ProjectReference Include="..\Services\Payments\Ledgerline.Payments\Ledgerline.Payments.csproj" />
+    <ProjectReference Include="..\Services\Fraud\Ledgerline.Fraud\Ledgerline.Fraud.csproj" />
+    <ProjectReference Include="..\Ledgerline.Gateway\Ledgerline.Gateway.csproj" />
+  </ItemGroup>
 
 </Project>
