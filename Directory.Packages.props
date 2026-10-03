@@ -40,7 +40,7 @@
     <PackageVersion Include="Testcontainers.RabbitMq" Version="4.15.0" />
     <PackageVersion Include="xunit.v3" Version="4.0.1" />
     <!-- Analyzers (compile-time only) -->
-    <PackageVersion Include="Meziantou.Analyzer" Version="3.0.291" />
+    <PackageVersion Include="Meziantou.Analyzer" Version="3.0.292" />
     <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.35.0.4138" />
   </ItemGroup>
 </Project>
