@@ -30,6 +30,8 @@ spec:
       containers:
         - name: postgres
           image: postgres:18
+          # Budget: 5 service pods × a pool of 20 (set in their connection strings) + headroom for operators.
+          args: [-c, max_connections=150]
           ports: [{ containerPort: 5432, name: postgres }]
           env:
             - name: POSTGRES_PASSWORD

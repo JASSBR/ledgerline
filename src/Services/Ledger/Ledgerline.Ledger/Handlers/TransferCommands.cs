@@ -12,7 +12,7 @@ public static class TransferCommandHandler
 {
     public static async Task<object> Handle(ReserveFunds command, IDocumentSession session, TimeProvider time, CancellationToken cancellationToken)
     {
-        var stream = await session.Events.FetchForWriting<Account>(command.AccountId, cancellationToken);
+        var stream = await session.Events.FetchForExclusiveWriting<Account>(command.AccountId, cancellationToken);
         if (stream.Aggregate is null)
         {
             return new FundsReservationRejected(command.TransferId, LedgerErrors.AccountNotFound.Code, LedgerErrors.AccountNotFound.Description);
@@ -49,7 +49,7 @@ public static class TransferCommandHandler
 
     public static async Task<FundsReleased> Handle(ReleaseFunds command, IDocumentSession session, TimeProvider time, CancellationToken cancellationToken)
     {
-        var stream = await session.Events.FetchForWriting<Account>(command.AccountId, cancellationToken);
+        var stream = await session.Events.FetchForExclusiveWriting<Account>(command.AccountId, cancellationToken);
         if (stream.Aggregate is not null)
         {
             stream.AppendMany(stream.Aggregate.ReleaseHold(command.TransferId, command.Reason, time.GetUtcNow()));

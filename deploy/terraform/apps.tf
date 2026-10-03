@@ -91,11 +91,12 @@ resource "azurerm_container_app" "bank" {
     identity = azurerm_user_assigned_identity.pull.id
   }
 
+  # Burstable B1ms accepts about 50 connections in total: 3 services × a pool of 10 stays well inside it.
   dynamic "secret" {
     for_each = local.services
     content {
       name  = "${secret.key}-db"
-      value = "Host=${local.postgres_host};Database=${var.name}_${secret.key};Username=${local.postgres_login};Password=${local.postgres_password};Ssl Mode=Require"
+      value = "Host=${local.postgres_host};Database=${var.name}_${secret.key};Username=${local.postgres_login};Password=${local.postgres_password};Ssl Mode=Require;Maximum Pool Size=10"
     }
   }
 

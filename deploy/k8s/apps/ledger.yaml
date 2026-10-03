@@ -26,7 +26,7 @@ spec:
               valueFrom: { secretKeyRef: { name: ledgerline-secrets, key: rabbitmq-password } }
             # $(VAR) expands the variables above: the secret never sits in a manifest.
             - name: ConnectionStrings__ledgerdb
-              value: Host=postgres;Database=ledgerdb;Username=postgres;Password=$(POSTGRES_PASSWORD)
+              value: Host=postgres;Database=ledgerdb;Username=postgres;Password=$(POSTGRES_PASSWORD);Maximum Pool Size=20
             - name: ConnectionStrings__messaging
               value: amqp://ledgerline:$(RABBITMQ_PASSWORD)@rabbitmq:5672
             - { name: Auth__Authority, value: http://keycloak:8080/realms/ledgerline }

@@ -22,4 +22,5 @@ app.UseLedgerlineService();
 TransferEndpoints.Map(app.MapGroup("/api/payments"));
 app.MapHub<TransfersHub>(TransfersHub.Path);
 
-await app.RunAsync();
+// JasperFx commands: `codegen write` pre-generates handler and storage code at image build time.
+return await app.RunJasperFxCommands(args);

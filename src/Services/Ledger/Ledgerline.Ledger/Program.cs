@@ -1,3 +1,4 @@
+using JasperFx;
 using Ledgerline.Hosting;
 using Ledgerline.Ledger;
 using Ledgerline.Ledger.Endpoints;
@@ -19,5 +20,6 @@ var api = app.MapGroup("/api/ledger");
 AccountEndpoints.Map(api);
 OperationsEndpoints.Map(api);
 
-await app.RunAsync();
+// JasperFx commands: `codegen write` pre-generates handler and storage code at image build time.
+return await app.RunJasperFxCommands(args);
 

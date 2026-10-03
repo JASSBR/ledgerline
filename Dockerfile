@@ -11,6 +11,14 @@ WORKDIR /src
 COPY global.json Directory.Build.props Directory.Packages.props .editorconfig ./
 COPY src/ src/
 RUN dotnet restore "$PROJECT"
+# Services pre-generate their Wolverine handler code, compiled into the image: no Roslyn at startup.
+# The connection strings are placeholders: `codegen write` builds the host but never connects.
+RUN if grep -q RunJasperFxCommands "$(dirname "$PROJECT")/Program.cs"; then \
+      cd "$(dirname "$PROJECT")" \
+      && ConnectionStrings__ledgerdb=Host=codegen ConnectionStrings__paymentsdb=Host=codegen \
+         ConnectionStrings__frauddb=Host=codegen ConnectionStrings__messaging=amqp://codegen \
+         dotnet run -c Release --no-restore -- codegen write; \
+    fi
 RUN dotnet publish "$PROJECT" -c Release -o /app --no-restore \
     # The native launcher embeds the name of its assembly: a fixed file name keeps one ENTRYPOINT for all images.
     && mv "/app/$(basename "$PROJECT" .csproj)" /app/service
