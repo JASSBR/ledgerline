@@ -67,8 +67,29 @@ sleep 3
 
 test "$(curl -s -o /dev/null -w '%{http_code}' http://localhost:18080/api/ledger/accounts)" = 401
 # The issuer must read http://keycloak:8080 (what the services expect), so ask Keycloak with that Host header.
-TOKEN=$(curl -sf -H 'Host: keycloak:8080' http://localhost:18081/realms/ledgerline/protocol/openid-connect/token \
-  -d grant_type=password -d client_id=ledgerline-smoke -d username=olivia -d password=ledgerline-demo \
-  | python3 -c 'import json,sys; print(json.load(sys.stdin)["access_token"])')
+token() {
+  curl -sf -H 'Host: keycloak:8080' http://localhost:18081/realms/ledgerline/protocol/openid-connect/token \
+    -d grant_type=password -d client_id=ledgerline-smoke -d username="$1" -d password=ledgerline-demo \
+    | python3 -c 'import json,sys; print(json.load(sys.stdin)["access_token"])'
+}
+TOKEN=$(token olivia)
 curl -sf -H "Authorization: Bearer $TOKEN" http://localhost:18080/api/ledger/trial-balance \
   | python3 -c 'import json,sys; r=json.load(sys.stdin); assert r["balanced"] and r["journalEntries"] > 0, r; print("✓ books balanced,", r["journalEntries"], "entries, via gateway on Kubernetes")'
+
+# A read proves the gateway, Keycloak and the Ledger. A transfer proves the rest: Payments, Fraud and the broker
+# between them, which only settle once every replica has started and Wolverine has assigned its durable agents.
+# Until a transfer completes, the end-to-end tests would race the warm-up.
+BOB=$(token bob)
+FROM=$(curl -sf -H "Authorization: Bearer $BOB" http://localhost:18080/api/ledger/accounts | python3 -c 'import json,sys; print(json.load(sys.stdin)[0]["id"])')
+TO=$(curl -sf -H "Authorization: Bearer $(token alice)" http://localhost:18080/api/ledger/accounts | python3 -c 'import json,sys; print(json.load(sys.stdin)[0]["iban"])')
+TRANSFER=$(curl -sf -H "Authorization: Bearer $BOB" -H "Idempotency-Key: smoke-$(date +%s)" -H 'Content-Type: application/json' \
+  -d "{\"fromAccountId\":\"$FROM\",\"toIban\":\"$TO\",\"amount\":1,\"label\":\"Smoke test\"}" \
+  http://localhost:18080/api/payments/transfers | python3 -c 'import json,sys; print(json.load(sys.stdin)["id"])')
+for attempt in $(seq 1 60); do
+  STATUS=$(curl -sf -H "Authorization: Bearer $BOB" "http://localhost:18080/api/payments/transfers/$TRANSFER" \
+    | python3 -c 'import json,sys; print(json.load(sys.stdin)["status"])' || true)
+  [ "$STATUS" = Completed ] && break
+  sleep 2
+done
+[ "$STATUS" = Completed ] || { echo "✗ smoke transfer stuck in '$STATUS'"; exit 1; }
+echo "✓ transfer completed through Payments, Fraud and the Ledger ($((attempt * 2)) s)"
