@@ -44,6 +44,10 @@ json.dump(realm, open(sys.argv[1], 'w'))
 PY
 kubectl -n "$NS" create configmap keycloak-realm --from-file=ledgerline-realm.json="$REALM" \
   --dry-run=client -o yaml | kubectl apply -f - >/dev/null
+THEME=deploy/keycloak/themes/ledgerline/login
+kubectl -n "$NS" create configmap keycloak-theme --from-file="$THEME/theme.properties" \
+  --from-file="$THEME/resources/css/ledgerline.css" --from-file="$THEME/resources/fonts/geist-latin-wght-normal.woff2" \
+  --dry-run=client -o yaml | kubectl apply -f - >/dev/null
 
 kubectl apply -k deploy/k8s
 # Images keep the tag "local": restart the apps so that a re-run picks up the freshly loaded ones.

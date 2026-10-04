@@ -1,6 +1,10 @@
 {
   "realm": "ledgerline",
   "displayName": "Ledgerline",
+  "loginTheme": "ledgerline",
+  "internationalizationEnabled": true,
+  "supportedLocales": ["fr", "en"],
+  "defaultLocale": "fr",
   "enabled": true,
   "sslRequired": "external",
   "registrationAllowed": false,

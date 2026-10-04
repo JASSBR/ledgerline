@@ -1,0 +1,253 @@
+/*
+ * Ledgerline's sign-in page. The same identity as the app: a near-black green ink with its faint statement grid,
+ * Geist, a single mint accent, and the white card where the credentials go.
+ */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../fonts/geist-latin-wght-normal.woff2') format('woff2-variations');
+}
+
+:root {
+  --ll-ink: #0b1712;
+  --ll-ink-3: #1d3127;
+  --ll-mint: #4fe0a0;
+  --ll-text: #0e1512;
+  --ll-muted: #69736d;
+  --ll-border: #e2e5df;
+
+  --pf-v5-global--FontFamily--text: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --pf-v5-global--FontFamily--heading: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --pf-v5-global--primary-color--100: var(--ll-ink);
+  --pf-v5-global--primary-color--200: var(--ll-ink-3);
+  --pf-v5-global--link--Color: #0d7a50;
+  --pf-v5-global--link--Color--hover: var(--ll-ink);
+  --pf-v5-global--active-color--100: #0d7a50;
+  --pf-v5-global--BorderRadius--sm: 10px;
+}
+
+body#keycloak-bg {
+  min-height: 100vh;
+  font-family: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  color: var(--ll-text);
+  background:
+    radial-gradient(60% 55% at 85% 10%, rgb(79 224 160 / 20%), transparent 70%),
+    radial-gradient(55% 50% at 5% 100%, rgb(79 224 160 / 10%), transparent 70%),
+    var(--ll-ink);
+}
+/* The statement grid, fading towards the edges. */
+body#keycloak-bg::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgb(255 255 255 / 3%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 3%) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(70% 60% at 50% 40%, #000, transparent 80%);
+  pointer-events: none;
+}
+
+.pf-v5-c-login {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem 1rem;
+  background: transparent;
+}
+.pf-v5-c-login__container {
+  display: grid;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 440px;
+  margin: 0;
+  padding: 0;
+  grid-template-columns: 1fr;
+  grid-template-areas: 'header' 'main';
+}
+
+/* Brand: the mint mark (two offset bars, the two sides of an entry) and the name. */
+.pf-v5-c-login__header {
+  grid-area: header;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+#kc-header-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0;
+  font-family: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.4rem;
+  font-weight: 650;
+  letter-spacing: -0.03em;
+  text-transform: none;
+  color: #eef5f0;
+  white-space: nowrap;
+}
+#kc-header-wrapper::before {
+  content: '';
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9px;
+  background:
+    linear-gradient(var(--ll-ink), var(--ll-ink)) 0.48rem 0.62rem / 0.82rem 0.22rem no-repeat,
+    linear-gradient(var(--ll-ink), var(--ll-ink)) 0.7rem 1.16rem / 0.82rem 0.22rem no-repeat,
+    var(--ll-mint);
+}
+
+/* The card. */
+.pf-v5-c-login__main {
+  grid-area: main;
+  margin: 0;
+  padding: 2rem 2rem 1.5rem;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow:
+    0 30px 60px -30px rgb(0 0 0 / 70%),
+    0 0 0 1px rgb(255 255 255 / 6%);
+  animation: ll-rise 0.3s ease-out;
+}
+/* Title on the left, the language switch as a small pill on the right; no coloured top border. */
+.pf-v5-c-login__main-header,
+div.pf-v5-c-login__main-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  padding: 0 0 1.4rem;
+  border-top: 0;
+}
+.pf-v5-c-login__main-header-utilities {
+  margin: 0;
+}
+.pf-v5-c-login__main-header-utilities .pf-v5-c-form-control {
+  border-radius: 999px;
+  background: #f4f5f2;
+}
+.pf-v5-c-login__main-header-utilities select {
+  padding: 0.3rem 2rem 0.3rem 0.8rem;
+  font-size: 0.8rem;
+  font-weight: 550;
+  color: var(--ll-muted);
+}
+#kc-page-title,
+.pf-v5-c-login__main-header .pf-v5-c-title {
+  font-size: 1.5rem;
+  font-weight: 650;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  color: var(--ll-text);
+}
+.pf-v5-c-login__main-body {
+  padding: 0;
+}
+.pf-v5-c-login__main-footer {
+  padding: 0;
+}
+.pf-v5-c-login__main-footer:empty {
+  display: none;
+}
+
+/* Fields. */
+.pf-v5-c-form__label-text {
+  font-size: 0.82rem;
+  font-weight: 550;
+  color: var(--ll-text);
+}
+.pf-v5-c-form-control {
+  --pf-v5-c-form-control--BorderRadius: 10px;
+  --pf-v5-c-form-control--before--BorderColor: var(--ll-border);
+  --pf-v5-c-form-control--after--BorderColor: transparent;
+  --pf-v5-c-form-control--hover--after--BorderColor: transparent;
+  --pf-v5-c-form-control--focus--after--BorderColor: transparent;
+  border-radius: 10px;
+}
+/* PatternFly draws borders with ::before/::after (and a blue underline on focus): one quiet border instead. */
+.pf-v5-c-form-control::before {
+  border: 1px solid var(--ll-border) !important;
+  border-radius: 10px;
+}
+.pf-v5-c-form-control::after {
+  border: 0 !important;
+}
+.pf-v5-c-form-control > input {
+  padding: 0.65rem 0.8rem;
+  font-size: 0.95rem;
+}
+.pf-v5-c-form-control:focus-within {
+  box-shadow: 0 0 0 3px rgb(13 122 80 / 25%);
+}
+/* Password and its "show" button read as one field. */
+.pf-v5-c-input-group .pf-v5-c-form-control::before {
+  border-right: 0 !important;
+  border-radius: 10px 0 0 10px;
+}
+.pf-v5-c-input-group .pf-v5-c-button.pf-m-control {
+  padding-inline: 0.9rem;
+  border-radius: 0 10px 10px 0;
+  background: #fff;
+  color: var(--ll-muted);
+}
+.pf-v5-c-input-group .pf-v5-c-button.pf-m-control::after {
+  border: 1px solid var(--ll-border) !important;
+  border-left-color: transparent !important;
+  border-radius: 0 10px 10px 0;
+}
+.pf-v5-c-input-group:focus-within {
+  border-radius: 10px;
+  box-shadow: 0 0 0 3px rgb(13 122 80 / 25%);
+}
+.pf-v5-c-input-group .pf-v5-c-form-control:focus-within {
+  box-shadow: none;
+}
+
+/* The one action: an ink pill, as in the app. */
+#kc-login,
+.pf-v5-c-button.pf-m-primary {
+  --pf-v5-c-button--m-primary--BackgroundColor: var(--ll-ink);
+  --pf-v5-c-button--m-primary--hover--BackgroundColor: var(--ll-ink-3);
+  --pf-v5-c-button--m-primary--focus--BackgroundColor: var(--ll-ink-3);
+  --pf-v5-c-button--m-primary--active--BackgroundColor: var(--ll-ink-3);
+  --pf-v5-c-button--m-primary--Color: #eef5f0;
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+#kc-login::after {
+  border-radius: 999px;
+}
+.pf-v5-c-form__actions {
+  margin-top: 0.5rem;
+}
+
+/* Alerts (wrong password, expired session). */
+.pf-v5-c-alert {
+  border-radius: 12px;
+}
+
+/* Language switch, when shown. */
+#kc-locale,
+.pf-v5-c-login__main-header-utilities {
+  font-size: 0.85rem;
+}
+
+@keyframes ll-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pf-v5-c-login__main {
+    animation: none;
+  }
+}

@@ -12,7 +12,9 @@ var messaging = builder.AddRabbitMQ("messaging").WithManagementPlugin().WithLife
 
 // Keycloak serves HTTPS with the Aspire dev certificate (also on the "http" endpoint name).
 // Realm re-imported on each start (no data volume): the demo users and their ids are always the documented ones.
-var keycloak = builder.AddKeycloak("keycloak", port: 8080).WithRealmImport("../../deploy/keycloak");
+var keycloak = builder.AddKeycloak("keycloak", port: 8080)
+    .WithRealmImport("../../deploy/keycloak")
+    .WithBindMount("../../deploy/keycloak/themes/ledgerline", "/opt/keycloak/themes/ledgerline", isReadOnly: true);
 var authority = ReferenceExpression.Create($"{keycloak.GetEndpoint("http")}/realms/ledgerline");
 
 IResourceBuilder<ProjectResource> Service<TProject>(string name, IResourceBuilder<PostgresDatabaseResource> database)

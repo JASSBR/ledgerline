@@ -40,9 +40,18 @@ spec:
             limits: { memory: 1Gi }
           volumeMounts:
             - { name: realm, mountPath: /opt/keycloak/data/import, readOnly: true }
+            - { name: theme, mountPath: /opt/keycloak/themes/ledgerline/login, readOnly: true }
       volumes:
         - name: realm
           configMap: { name: keycloak-realm }
+        # The sign-in theme, flattened into a ConfigMap by kind.sh and laid back out in its folders here.
+        - name: theme
+          configMap:
+            name: keycloak-theme
+            items:
+              - { key: theme.properties, path: theme.properties }
+              - { key: ledgerline.css, path: resources/css/ledgerline.css }
+              - { key: geist-latin-wght-normal.woff2, path: resources/fonts/geist-latin-wght-normal.woff2 }
 ---
 apiVersion: v1
 kind: Service

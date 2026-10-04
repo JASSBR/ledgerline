@@ -2,3 +2,5 @@
 #   docker build -t ledgerline-keycloak deploy/keycloak
 FROM quay.io/keycloak/keycloak:26.6
 COPY ledgerline-realm.json /opt/keycloak/data/import/ledgerline-realm.json
+# The sign-in page in Ledgerline's identity (CSS over Keycloak's own templates).
+COPY themes/ledgerline /opt/keycloak/themes/ledgerline

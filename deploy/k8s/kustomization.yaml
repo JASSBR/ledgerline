@@ -1,7 +1,8 @@
 # The whole bank on any Kubernetes cluster (validated on kind in CI).
-# Two things live outside the repo and are created first (see deploy/k8s/README.md):
+# Three things live outside the repo and are created first (see deploy/k8s/README.md):
 #   - Secret ledgerline-secrets: postgres-password, rabbitmq-password, keycloak-admin-password
 #   - ConfigMap keycloak-realm: from deploy/keycloak/ledgerline-realm.json
+#   - ConfigMap keycloak-theme: from deploy/keycloak/themes/ledgerline (the sign-in page)
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: ledgerline

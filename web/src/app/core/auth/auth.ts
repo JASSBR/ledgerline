@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Injectable, InjectionToken, computed, inject, signal } from '@angular/core';
+import { Injectable, InjectionToken, computed, inject, signal, LOCALE_ID } from '@angular/core';
 import { User, UserManager, WebStorageStateStore } from 'oidc-client-ts';
 import { environment } from '../../../environments/environment';
 
@@ -25,6 +25,8 @@ export const USER_MANAGER = new InjectionToken<UserManager>('USER_MANAGER', {
       post_logout_redirect_uri: document.baseURI,
       response_type: 'code',
       scope: 'openid profile',
+      // Keycloak's sign-in page in the language of the build the user is on (FR or EN).
+      ui_locales: inject(LOCALE_ID).slice(0, 2),
       automaticSilentRenew: true,
       userStore: new WebStorageStateStore({ store: globalThis.sessionStorage }),
     });
