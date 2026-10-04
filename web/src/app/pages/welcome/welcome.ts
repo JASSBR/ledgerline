@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment';
 import { TRANSFER_STATUS_LABELS } from '../../banking/labels';
 import { Auth } from '../../core/auth/auth';
 import { otherLocaleLink } from '../../core/locale';
+import { warmUpBackends } from '../../core/warm-up';
 import { Avatar } from '../../shared/avatar';
 import { Icon, IconName } from '../../shared/icon';
 import { Money } from '../../shared/money';
@@ -27,6 +28,10 @@ export const DEMO_PASSWORD = 'ledgerline-demo';
 })
 export class Welcome {
   private readonly auth = inject(Auth);
+
+  constructor() {
+    warmUpBackends();
+  }
 
   protected readonly repositoryUrl = environment.repositoryUrl;
   protected readonly otherLocale = otherLocaleLink();

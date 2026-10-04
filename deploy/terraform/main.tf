@@ -57,31 +57,13 @@ locals {
   environment_domain = var.existing_environment == null ? azapi_resource.environment[0].output.properties.defaultDomain : data.azurerm_container_app_environment.existing[0].default_domain
 }
 
-data "azurerm_container_registry" "this" {
-  name                = var.registry_name
-  resource_group_name = var.registry_resource_group
-}
-
-# The apps pull images with their own identity: no registry password anywhere.
-resource "azurerm_user_assigned_identity" "pull" {
-  name                = "${var.name}-pull"
-  resource_group_name = azurerm_resource_group.this.name
-  location            = azurerm_resource_group.this.location
-}
-
-resource "azurerm_role_assignment" "pull" {
-  scope                = data.azurerm_container_registry.this.id
-  role_definition_name = "AcrPull"
-  principal_id         = azurerm_user_assigned_identity.pull.principal_id
-}
-
 resource "random_password" "rabbitmq" {
   length  = 32
   special = false
 }
 
 locals {
-  registry       = data.azurerm_container_registry.this.login_server
+  registry       = var.image_registry
   keycloak_fqdn  = "${var.name}-auth.${local.environment_domain}"
   authority      = "https://${local.keycloak_fqdn}/realms/ledgerline"
   service_ports  = { ledger = 8081, payments = 8082, fraud = 8083 }

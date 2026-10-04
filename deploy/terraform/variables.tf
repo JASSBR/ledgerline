@@ -15,14 +15,10 @@ variable "name" {
   description = "Prefix of every resource name."
 }
 
-variable "registry_name" {
+variable "image_registry" {
   type        = string
-  description = "Existing Azure Container Registry holding the images (deploy/azure.sh builds and pushes them)."
-}
-
-variable "registry_resource_group" {
-  type        = string
-  description = "Resource group of the registry."
+  default     = "ghcr.io/jassbr"
+  description = "Public registry holding the images, built and pushed by .github/workflows/images.yml."
 }
 
 variable "image_tag" {

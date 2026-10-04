@@ -1,32 +1,21 @@
 #!/usr/bin/env bash
-# Deploys Ledgerline to Azure Container Apps with Terraform (deploy/terraform), images built locally.
-# Re-runnable: Terraform converges; each run ships a fresh image tag.
-# Prerequisites: `az login`, Docker, Terraform. Settings come from deploy/terraform/terraform.tfvars (gitignored),
-# see terraform.tfvars.example.
-#
-# Azure for Students: ACR Tasks (remote builds) is forbidden, so images are built here — for linux/amd64,
-# mandatory on Apple Silicon.
+# Deploys Ledgerline to Azure Container Apps with Terraform (deploy/terraform).
+# Images are built by GitHub Actions (.github/workflows/images.yml) and published on ghcr.io, tagged with the
+# commit: this script deploys the commit you are on, once CI has published its images. Nothing is built here.
+# Re-runnable: Terraform converges. Prerequisites: `az login`, Terraform, and HEAD pushed to GitHub.
+# Settings come from deploy/terraform/terraform.tfvars (gitignored), see terraform.tfvars.example.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
 TFVARS=deploy/terraform/terraform.tfvars
 [ -f "$TFVARS" ] || { echo "✗ Missing $TFVARS (copy terraform.tfvars.example)"; exit 1; }
 az account show >/dev/null 2>&1 || { echo "✗ Not logged in: run 'az login' first."; exit 1; }
-ACR=$(sed -nE 's/^registry_name *= *"([^"]+)".*/\1/p' "$TFVARS")
-REGISTRY=$(az acr show -n "$ACR" --query loginServer -o tsv)
-TAG="$(git rev-parse --short HEAD)-$(date +%H%M%S)"
+TAG="sha-$(git rev-parse --short=7 HEAD)"
+source deploy/ghcr.sh
 
-az acr login -n "$ACR" --only-show-errors >/dev/null
-build() { # name, build args...
-  echo "→ image ledgerline-$1:$TAG"
-  local name=$1; shift
-  docker buildx build --platform linux/amd64 --push -q -t "$REGISTRY/ledgerline-$name:$TAG" "$@" >/dev/null
-}
-build ledger --build-arg PROJECT=src/Services/Ledger/Ledgerline.Ledger/Ledgerline.Ledger.csproj .
-build payments --build-arg PROJECT=src/Services/Payments/Ledgerline.Payments/Ledgerline.Payments.csproj .
-build fraud --build-arg PROJECT=src/Services/Fraud/Ledgerline.Fraud/Ledgerline.Fraud.csproj .
-build gateway --build-arg PROJECT=src/Ledgerline.Gateway/Ledgerline.Gateway.csproj .
-build keycloak deploy/keycloak
+for image in ledger payments fraud gateway keycloak; do
+  wait_for_image "ledgerline-$image" "$TAG"
+done
 
 echo "→ terraform apply"
 cd deploy/terraform

@@ -7,16 +7,6 @@ resource "azurerm_container_app" "keycloak" {
   revision_mode                = "Single"
   workload_profile_name        = "Consumption"
 
-  identity {
-    type         = "UserAssigned"
-    identity_ids = [azurerm_user_assigned_identity.pull.id]
-  }
-
-  registry {
-    server   = local.registry
-    identity = azurerm_user_assigned_identity.pull.id
-  }
-
   secret {
     name  = "keycloak-admin-password"
     value = random_password.keycloak_admin.result
@@ -62,7 +52,6 @@ resource "azurerm_container_app" "keycloak" {
     }
   }
 
-  depends_on = [azurerm_role_assignment.pull]
 }
 
 resource "random_password" "keycloak_admin" {
@@ -80,16 +69,6 @@ resource "azurerm_container_app" "bank" {
   container_app_environment_id = local.environment_id
   revision_mode                = "Single"
   workload_profile_name        = "Consumption"
-
-  identity {
-    type         = "UserAssigned"
-    identity_ids = [azurerm_user_assigned_identity.pull.id]
-  }
-
-  registry {
-    server   = local.registry
-    identity = azurerm_user_assigned_identity.pull.id
-  }
 
   # Burstable B1ms accepts 50 connections in total, possibly shared: 3 services × a pool of 6 leaves room.
   dynamic "secret" {
@@ -213,5 +192,5 @@ resource "azurerm_container_app" "bank" {
     }
   }
 
-  depends_on = [azurerm_role_assignment.pull, azurerm_postgresql_flexible_server_database.service]
+  depends_on = [azurerm_postgresql_flexible_server_database.service]
 }
