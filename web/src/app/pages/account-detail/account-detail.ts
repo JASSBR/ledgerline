@@ -17,6 +17,7 @@ import { TransfersRealtime } from '../../core/realtime/transfers-realtime';
 import { reloadWhen } from '../../core/realtime/reload-when';
 import { BalanceChart, BalancePoint } from '../../shared/balance-chart';
 import { Icon } from '../../shared/icon';
+import { Money } from '../../shared/money';
 
 const today = (): string => new Date().toISOString().slice(0, 10);
 
@@ -31,7 +32,7 @@ const EVENT_LABELS: Readonly<Record<AccountEventType, string>> = {
 
 @Component({
   selector: 'app-account-detail',
-  imports: [CurrencyPipe, DatePipe, RouterLink, Icon, BalanceChart],
+  imports: [CurrencyPipe, DatePipe, RouterLink, Icon, Money, BalanceChart],
   templateUrl: './account-detail.html',
   styleUrl: './account-detail.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

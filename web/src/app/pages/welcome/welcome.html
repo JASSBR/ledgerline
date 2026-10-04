@@ -11,6 +11,34 @@
       jamais perdre ni dupliquer un euro, même sous charge concurrente.
     </p>
 
+    <div class="preview" aria-hidden="true">
+      <div class="preview-card">
+        <div class="preview-top">
+          <span i18n="@@welcome.previewAccount">Compte courant</span>
+          <span class="logo"></span>
+        </div>
+        <strong class="preview-balance"><app-money [value]="6400" /></strong>
+        <span class="preview-iban">FR76 9999 9000 0110 •••• 162</span>
+      </div>
+      <div class="preview-transfer">
+        <div class="preview-row">
+          <span class="preview-avatar">BD</span>
+          <span class="preview-who">
+            <strong>Bob Durand</strong>
+            <small i18n="@@welcome.previewLabel">Loyer d'octobre</small>
+          </span>
+          <span class="preview-amount">{{ -3500 | currency }}</span>
+        </div>
+        <ol class="preview-steps">
+          @for (step of previewSteps; track step.label; let i = $index) {
+            <li [class.done]="i < 2" [class.now]="i === 2" [style.animation-delay.s]="i * 0.6">
+              <span class="dot"></span>{{ step.label }}
+            </li>
+          }
+        </ol>
+      </div>
+    </div>
+
     <ul class="highlights">
       @for (item of highlights; track item.title) {
         <li>

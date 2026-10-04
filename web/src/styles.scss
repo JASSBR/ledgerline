@@ -1,73 +1,85 @@
-@use '@fontsource/source-serif-4/500.css' as sourceserif-500;
-@use '@fontsource/source-serif-4/600.css' as sourceserif-600;
-@use '@fontsource/source-serif-4/700.css' as sourceserif-700;
-@use '@fontsource/work-sans/400.css' as worksans-400;
-@use '@fontsource/work-sans/500.css' as worksans-500;
-@use '@fontsource/work-sans/600.css' as worksans-600;
+@use '@fontsource-variable/geist/wght.css' as geist;
+@use '@fontsource-variable/geist-mono/wght.css' as geist-mono;
 
 /*
- * Ledgerline — "the columnar ledger book".
- * Banks kept their books on green-ruled columnar paper, with red vertical rules between the money columns, a double
- * underline under every total, and a cloth-bound cover stamped in gold. The interface is that book.
+ * Ledgerline — "calm money".
+ * Modern banks earn trust through restraint: one typeface, figures that line up, a near-black ink for the surfaces
+ * that carry money, and a single mint accent. Colour signals state (in, out, pending, refused), never decoration.
  */
 :root {
-  --bg: #eef4ec;
-  --surface: #fbfdf9;
-  --surface-2: #e4eee1;
-  --border: #c9dcc8;
-  --rule: #bfd8c2;
-  --column: #c8463d;
-  --text: #13261b;
-  --muted: #5d7264;
-  --accent: #1e6b47;
-  --accent-2: #2f5d8a;
-  --accent-soft: #dcebdf;
+  --bg: #f4f5f2;
+  --surface: #ffffff;
+  --surface-2: #eef0ec;
+  --border: #e2e5df;
+  --rule: #ebede8;
+  --text: #0e1512;
+  --muted: #69736d;
+  --faint: #9aa29d;
+
+  /* Ink: the deep green-black of the sidebar and the balance panels. */
+  --ink: #0b1712;
+  --ink-2: #13231b;
+  --ink-3: #1d3127;
+  --on-ink: #eef5f0;
+  --on-ink-muted: rgb(238 245 240 / 62%);
+  --mint: #4fe0a0;
+
+  --accent: #0d7a50;
+  --accent-soft: #e2f3ea;
   --on-accent: #ffffff;
-  --binding: #173d2b;
-  --gold: #b8913a;
-  --danger: #b3261e;
-  --success: #1e6b47;
-  --status-declared: #2f5d8a;
-  --status-review: #9a6400;
-  --status-info: #8a3d6b;
-  --status-approved: #1e6b47;
-  --status-rejected: #b3261e;
-  --status-settled: #2f5d8a;
-  --radius: 4px;
-  --radius-sm: 3px;
-  --shadow: none;
-  --shadow-lg: 0 14px 30px -18px rgb(19 38 27 / 45%);
-  --focus: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent);
-  --serif: 'Source Serif 4', Georgia, serif;
-  --sans: 'Work Sans', system-ui, sans-serif;
+  --credit: #0b8a58;
+  --debit: #0e1512;
+  --danger: #d4423d;
+  --warning: #b7791f;
+  --info: #2f6fd0;
+
+  /* Kept as names because pages use them: the red that flags (frozen, outgoing), the brand accent on ink. */
+  --column: var(--danger);
+  --gold: var(--mint);
+  --binding: var(--ink);
+
+  --success: var(--credit);
+  --status-declared: var(--info);
+  --status-review: var(--warning);
+  --status-info: #8a3d9e;
+  --status-approved: var(--credit);
+  --status-rejected: var(--danger);
+  --status-settled: var(--info);
+
+  --radius: 16px;
+  --radius-sm: 10px;
+  --shadow: 0 1px 2px rgb(14 21 18 / 4%), 0 1px 1px rgb(14 21 18 / 2%);
+  --shadow-lg: 0 24px 48px -24px rgb(11 23 18 / 35%), 0 2px 6px rgb(11 23 18 / 6%);
+  --focus: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent);
+  --sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
+  --mono: 'Geist Mono Variable', ui-monospace, monospace;
+  /* Display figures use the same face, tightened: no second typeface competing with the numbers. */
+  --serif: var(--sans);
   color-scheme: light;
 }
 
-/* The same book read at night: dark green cloth, cream rules. */
 [data-theme='dark'] {
-  --bg: #0c1a13;
-  --surface: #12241a;
-  --surface-2: #183022;
-  --border: #24402f;
-  --rule: #2a4a37;
-  --column: #e0675d;
-  --text: #e5efe4;
-  --muted: #98ae9d;
-  --accent: #6fcf97;
-  --accent-2: #8bb8e8;
-  --accent-soft: #1c3a29;
-  --on-accent: #0c1a13;
-  --binding: #08130d;
-  --gold: #d9b45c;
-  --danger: #f08a80;
-  --success: #6fcf97;
-  --status-declared: #8bb8e8;
-  --status-review: #e4b45c;
-  --status-info: #e29bc6;
-  --status-approved: #6fcf97;
-  --status-rejected: #f08a80;
-  --status-settled: #8bb8e8;
-  --shadow-lg: 0 16px 40px -14px rgb(0 0 0 / 70%);
+  --bg: #080c0a;
+  --surface: #0f1512;
+  --surface-2: #151d19;
+  --border: #212b26;
+  --rule: #1a231f;
+  --text: #e9efeb;
+  --muted: #8f9a94;
+  --faint: #5f6a64;
+  --ink: #0c1813;
+  --ink-2: #13241c;
+  --ink-3: #1b3027;
+  --accent: #4fd69a;
+  --accent-soft: #12281e;
+  --on-accent: #06110c;
+  --credit: #4fd69a;
+  --debit: #e9efeb;
+  --danger: #ff6b63;
+  --warning: #e6a944;
+  --info: #79a8f2;
+  --shadow: 0 1px 2px rgb(0 0 0 / 40%);
+  --shadow-lg: 0 24px 48px -20px rgb(0 0 0 / 80%);
   color-scheme: dark;
 }
 
@@ -86,7 +98,8 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font: 15px/1.55 var(--sans);
+  font: 14.5px/1.55 var(--sans);
+  font-feature-settings: 'ss01', 'cv11';
   font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
 }
@@ -94,28 +107,34 @@ body {
 h1,
 h2,
 h3 {
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-weight: 600;
   line-height: 1.15;
+  letter-spacing: -0.02em;
 }
 h1 {
-  font-size: clamp(1.9rem, 3.4vw, 2.5rem);
+  font-size: clamp(1.7rem, 3vw, 2.15rem);
+  letter-spacing: -0.035em;
   margin: 0;
 }
 h2 {
-  font-size: 1.25rem;
+  font-size: 1.05rem;
   margin: 0 0 0.9rem;
 }
 h3 {
-  font-size: 1.05rem;
+  font-size: 0.98rem;
   margin: 1rem 0 0.5rem;
 }
 a {
   color: var(--accent);
+  text-underline-offset: 3px;
 }
 :focus-visible {
   outline: none;
   box-shadow: var(--focus);
+}
+::selection {
+  background: color-mix(in srgb, var(--mint) 45%, transparent);
 }
 
 input,
@@ -123,12 +142,18 @@ select,
 textarea {
   font: inherit;
   width: 100%;
-  padding: 0.55rem 0.7rem;
+  padding: 0.62rem 0.8rem;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   background: var(--surface);
   color: var(--text);
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
 
+  &:hover {
+    border-color: color-mix(in srgb, var(--text) 18%, var(--border));
+  }
   &:focus {
     outline: none;
     border-color: var(--accent);
@@ -139,44 +164,44 @@ textarea {
   }
 }
 
-/* ---------- The ledger page: green rows, red column rules, figures in the book serif ---------- */
+/* ---------- Tables: quiet headers, figures aligned on the right ---------- */
 table {
   width: 100%;
   border-collapse: collapse;
 }
 th,
 td {
-  padding: 0.7rem 0.9rem;
+  padding: 0.8rem 0.9rem;
   text-align: left;
   border-bottom: 1px solid var(--rule);
 }
 th {
-  font-family: var(--serif);
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--text);
-  border-bottom: 2px solid var(--text);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--muted);
   background: transparent;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
 }
-/* The red vertical rules a bookkeeper draws before every money column. */
-th.num,
-td.num {
-  border-left: 1px solid color-mix(in srgb, var(--column) 55%, transparent);
+tbody tr {
+  transition: background-color 0.12s;
 }
 tbody tr:hover {
-  background: color-mix(in srgb, var(--accent) 6%, transparent);
+  background: color-mix(in srgb, var(--surface-2) 60%, transparent);
+}
+tbody tr:last-child td {
+  border-bottom: 0;
 }
 tfoot th,
 tfoot td {
-  border-top: 1px solid var(--text);
-  border-bottom: 3px double var(--text);
+  border-top: 1px solid var(--border);
+  border-bottom: 0;
+  font-weight: 600;
+  color: var(--text);
 }
 .num {
   text-align: right;
   font-variant-numeric: tabular-nums;
-}
-.amount {
-  font-family: var(--serif);
 }
 
 /* ---------- Components ---------- */
@@ -187,10 +212,10 @@ button.button {
   justify-content: center;
   gap: 0.45rem;
   font: inherit;
-  font-size: 0.9rem;
-  font-weight: 600;
-  padding: 0.55rem 1rem;
-  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  font-weight: 550;
+  padding: 0.58rem 1.05rem;
+  border-radius: 999px;
   border: 1px solid var(--border);
   background: var(--surface);
   color: var(--text);
@@ -198,52 +223,68 @@ button.button {
   text-decoration: none;
   white-space: nowrap;
   transition:
-    transform 0.1s,
+    transform 0.12s,
     background-color 0.15s,
     border-color 0.15s,
     box-shadow 0.15s;
 
   &:hover:not(:disabled) {
-    border-color: color-mix(in srgb, var(--text) 25%, var(--border));
+    border-color: color-mix(in srgb, var(--text) 22%, var(--border));
+    background: color-mix(in srgb, var(--surface-2) 50%, var(--surface));
   }
   &:active:not(:disabled) {
-    transform: translateY(1px);
+    transform: scale(0.98);
   }
   &:disabled {
-    opacity: 0.5;
+    opacity: 0.45;
     cursor: not-allowed;
   }
   &.primary {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: var(--on-accent);
-    box-shadow: 0 4px 14px -4px color-mix(in srgb, var(--accent) 60%, transparent);
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--on-ink);
+  }
+  &.primary:hover:not(:disabled) {
+    background: var(--ink-3);
+    border-color: var(--ink-3);
   }
   &.success {
-    background: var(--success);
-    border-color: var(--success);
+    background: var(--credit);
+    border-color: var(--credit);
     color: #fff;
   }
   &.danger {
     background: transparent;
-    border-color: color-mix(in srgb, var(--danger) 40%, transparent);
+    border-color: color-mix(in srgb, var(--danger) 35%, transparent);
     color: var(--danger);
+  }
+  &.danger:hover:not(:disabled) {
+    background: color-mix(in srgb, var(--danger) 8%, transparent);
+    border-color: var(--danger);
   }
   &.ghost {
     background: transparent;
     border-color: transparent;
   }
   &.sm {
-    padding: 0.35rem 0.7rem;
-    font-size: 0.82rem;
+    padding: 0.36rem 0.75rem;
+    font-size: 0.8rem;
   }
+}
+[data-theme='dark'] .button.primary {
+  background: var(--mint);
+  border-color: var(--mint);
+  color: #06110c;
+}
+[data-theme='dark'] .button.primary:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--mint) 85%, white);
 }
 
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 1.25rem;
+  padding: 1.35rem;
   box-shadow: var(--shadow);
 }
 
@@ -271,11 +312,10 @@ button.button {
 }
 .eyebrow {
   display: block;
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 0.95rem;
+  font-size: 0.8rem;
+  font-weight: 500;
   color: var(--muted);
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.3rem;
 }
 .muted {
   color: var(--muted);
@@ -285,21 +325,22 @@ button.button {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  margin-bottom: 0.75rem;
-  font-size: 0.88rem;
+  margin-bottom: 0.85rem;
+  font-size: 0.85rem;
   text-decoration: none;
   color: var(--muted);
 }
 .back:hover {
-  color: var(--accent);
+  color: var(--text);
 }
 .alert {
   margin: 0;
-  padding: 0.75rem 1rem 0.75rem 2rem;
+  padding: 0.8rem 1rem 0.8rem 2rem;
   border-radius: var(--radius-sm);
-  background: color-mix(in srgb, var(--danger) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--danger) 25%, transparent);
+  background: color-mix(in srgb, var(--danger) 7%, var(--surface));
   color: var(--danger);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
 }
 p.alert {
   padding-left: 1rem;
@@ -321,12 +362,13 @@ p.alert {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.2rem 0.6rem;
+  padding: 0.18rem 0.6rem;
   border-radius: 999px;
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.74rem;
+  font-weight: 550;
   background: var(--surface-2);
   color: var(--muted);
+  white-space: nowrap;
 }
 
 .skeleton {
@@ -334,7 +376,7 @@ p.alert {
   background: linear-gradient(
     90deg,
     var(--surface-2) 25%,
-    color-mix(in srgb, var(--surface-2) 50%, var(--surface)) 50%,
+    color-mix(in srgb, var(--surface-2) 40%, var(--surface)) 50%,
     var(--surface-2) 75%
   );
   background-size: 200% 100%;
@@ -344,6 +386,14 @@ p.alert {
 @keyframes shimmer {
   to {
     background-position: -200% 0;
+  }
+}
+
+/* Content settles in rather than popping: one short rise, the same everywhere. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
   }
 }
 
@@ -359,35 +409,47 @@ p.alert {
 /* ---------- Money ---------- */
 .amount {
   font-variant-numeric: tabular-nums;
+  font-weight: 550;
+  letter-spacing: -0.01em;
   white-space: nowrap;
 }
 .amount.credit {
-  color: var(--success);
+  color: var(--credit);
 }
 .amount.debit {
-  color: var(--text);
+  color: var(--debit);
 }
 .iban {
-  font-family: var(--serif);
-  font-size: 0.95em;
-  letter-spacing: 0.06em;
-  font-variant-numeric: tabular-nums;
+  font-family: var(--mono);
+  font-size: 0.86em;
+  letter-spacing: 0.02em;
 }
 
-/* Brand mark: a monogram stamped in gold foil, as on a ledger's cloth cover. */
+/* Brand mark: two offset bars, the two sides of an entry that always balance. */
 .logo {
-  display: inline-grid;
-  place-items: center;
-  width: 1.9rem;
-  height: 1.9rem;
-  border: 1.5px solid var(--gold);
+  position: relative;
+  display: inline-block;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 8px;
+  background: var(--mint);
+  flex-shrink: 0;
+}
+.logo::before,
+.logo::after {
+  content: '';
+  position: absolute;
+  left: 0.42rem;
+  right: 0.42rem;
+  height: 0.2rem;
   border-radius: 2px;
-  color: var(--gold);
-  font-family: var(--serif);
-  font-weight: 700;
-  font-size: 1.05rem;
-  line-height: 1;
+  background: var(--ink);
 }
 .logo::before {
-  content: 'L';
+  top: 0.55rem;
+  right: 0.62rem;
+}
+.logo::after {
+  bottom: 0.55rem;
+  left: 0.62rem;
 }

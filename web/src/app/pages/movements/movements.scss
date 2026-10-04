@@ -18,73 +18,95 @@
 }
 .segmented {
   display: inline-flex;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  overflow: hidden;
+  gap: 0.2rem;
+  padding: 0.22rem;
+  border-radius: 999px;
+  background: var(--surface-2);
 }
 .segmented button {
-  padding: 0.5rem 1rem;
+  padding: 0.42rem 0.95rem;
   border: 0;
-  border-left: 1px solid var(--border);
-  background: var(--surface);
+  border-radius: 999px;
+  background: transparent;
   color: var(--muted);
   font: inherit;
-  font-weight: 600;
-  font-size: 0.88rem;
+  font-weight: 550;
+  font-size: 0.86rem;
   cursor: pointer;
-}
-.segmented button:first-child {
-  border-left: 0;
+  transition:
+    background-color 0.15s,
+    color 0.15s;
 }
 .segmented button[aria-pressed='true'] {
-  background: var(--binding);
-  color: #f6f1e1;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow);
 }
 .select {
   display: grid;
-  gap: 0.25rem;
-  font-size: 0.8rem;
+  gap: 0.3rem;
+  font-size: 0.78rem;
+  font-weight: 500;
   color: var(--muted);
 }
+.select select {
+  min-width: 11rem;
+  border-radius: 999px;
+}
 
-/* The foot of a ledger page: two columns carried forward, then the balance under a double rule. */
+/* Three figures, each on its own tile: in, out, and what is left. */
 .totals {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0;
+  gap: 1rem;
   padding: 0;
-  overflow: hidden;
-  border-top: 3px solid var(--gold);
+  background: transparent;
+  border: 0;
+  box-shadow: none;
 }
 .total {
+  position: relative;
   display: grid;
-  gap: 0.3rem;
-  padding: 1.1rem 1.25rem;
-  border-left: 1px solid color-mix(in srgb, var(--column) 55%, transparent);
-}
-.total:first-child {
-  border-left: 0;
+  gap: 0.35rem;
+  padding: 1.15rem 1.25rem;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  overflow: hidden;
 }
 .total span {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 500;
   color: var(--muted);
 }
 .total strong {
-  font-size: 1.65rem;
-  letter-spacing: -0.01em;
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
 }
 .total.in strong {
-  color: var(--accent);
+  color: var(--credit);
 }
 .total.out strong {
-  color: var(--column);
+  color: var(--danger);
 }
-.total.net strong {
-  justify-self: start;
-  border-bottom: 3px double var(--text);
+.total.net {
+  color: var(--on-ink);
+  background:
+    radial-gradient(
+      120% 140% at 100% 0%,
+      color-mix(in srgb, var(--mint) 22%, transparent),
+      transparent 60%
+    ),
+    var(--ink);
+  border-color: transparent;
+}
+.total.net span {
+  color: var(--on-ink-muted);
 }
 .total.net strong.negative {
-  color: var(--column);
+  color: #ff9a94;
 }
 
 .legend {
@@ -96,31 +118,27 @@
 }
 .key {
   display: inline-block;
-  width: 0.7rem;
-  height: 0.7rem;
-  border-radius: 2px;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
   margin-left: 0.5rem;
 }
 .key.in {
   background: var(--accent);
 }
 .key.out {
-  background: var(--column);
+  background: var(--danger);
 }
 
 .table-wrap {
   overflow-x: auto;
 }
 td.debit {
-  color: var(--column);
+  color: var(--text);
 }
 
 @media (max-width: 640px) {
   .totals {
     grid-template-columns: 1fr;
-  }
-  .total {
-    border-left: 0;
-    border-top: 1px solid var(--rule);
   }
 }

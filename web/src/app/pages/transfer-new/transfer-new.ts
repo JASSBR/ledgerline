@@ -27,6 +27,7 @@ import { formatIban, isValidIban, normalizeIban } from '../../banking/iban';
 import { Account, IbanLookup } from '../../banking/models';
 import { TransfersStore } from '../../banking/transfers.store';
 import { Auth } from '../../core/auth/auth';
+import { Avatar } from '../../shared/avatar';
 import { Icon } from '../../shared/icon';
 import { problemMessages } from '../../shared/problem-details';
 
@@ -42,7 +43,7 @@ const MAX_LABEL = 140;
 
 @Component({
   selector: 'app-transfer-new',
-  imports: [CurrencyPipe, FormField, RouterLink, Icon],
+  imports: [CurrencyPipe, FormField, RouterLink, Icon, Avatar],
   templateUrl: './transfer-new.html',
   styleUrl: './transfer-new.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

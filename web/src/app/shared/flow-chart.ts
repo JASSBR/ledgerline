@@ -34,11 +34,13 @@ import { MonthlyFlow } from '../banking/models';
     .chart {
       display: flex;
       align-items: stretch;
-      gap: 0.5rem;
-      height: 170px;
+      gap: 0.75rem;
+      height: 200px;
       padding-bottom: 0.25rem;
       overflow-x: auto;
-      border-bottom: 1px solid var(--text);
+      /* Four faint gridlines: enough to read a level, not a spreadsheet. */
+      background: repeating-linear-gradient(to top, var(--rule) 0 1px, transparent 1px 25%) 0 0 /
+        100% calc(100% - 1.6rem) no-repeat;
     }
     .month {
       flex: 1 0 2.75rem;
@@ -50,25 +52,35 @@ import { MonthlyFlow } from '../banking/models';
       display: flex;
       align-items: flex-end;
       justify-content: center;
-      gap: 3px;
-      border-bottom: 1px solid var(--rule);
+      gap: 4px;
+      border-bottom: 1px solid var(--border);
     }
     .bar {
-      width: min(40%, 1.1rem);
-      min-height: 1px;
-      border-radius: 2px 2px 0 0;
-      transition: height 0.4s ease;
+      width: min(38%, 1.6rem);
+      min-height: 2px;
+      border-radius: 6px 6px 2px 2px;
+      transition:
+        height 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+        opacity 0.15s;
+      animation: grow 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+      transform-origin: bottom;
+    }
+    .month:hover .bar {
+      opacity: 0.8;
+    }
+    @keyframes grow {
+      from {
+        transform: scaleY(0);
+      }
     }
     .in {
       background: var(--accent);
     }
     .out {
-      background: var(--column);
+      background: var(--danger);
     }
     .name {
-      font-family: var(--serif);
-      font-style: italic;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--muted);
       text-align: center;
       white-space: nowrap;

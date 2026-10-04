@@ -137,15 +137,20 @@
             (click)="pick(beneficiary)"
             [attr.data-beneficiary]="beneficiary.name"
           >
-            <strong>{{ beneficiary.name }}</strong>
-            @if (isOwn(beneficiary)) {
-              <small i18n="@@transfer.own">Votre compte</small>
-            } @else if (!beneficiary.ownerUsername) {
-              <small class="danger" i18n="@@transfer.blocked">Sur liste noire : sera bloqué</small>
-            }
-            <span class="iban"
-              >{{ beneficiary.iban.slice(0, 4) }} … {{ beneficiary.iban.slice(-7) }}</span
-            >
+            <app-avatar [name]="beneficiary.name" [size]="36" />
+            <span class="beneficiary">
+              <strong>{{ beneficiary.name }}</strong>
+              @if (isOwn(beneficiary)) {
+                <small i18n="@@transfer.own">Votre compte</small>
+              } @else if (!beneficiary.ownerUsername) {
+                <small class="danger" i18n="@@transfer.blocked"
+                  >Sur liste noire : sera bloqué</small
+                >
+              }
+              <span class="iban"
+                >{{ beneficiary.iban.slice(0, 4) }} … {{ beneficiary.iban.slice(-7) }}</span
+              >
+            </span>
           </button>
         </li>
       }

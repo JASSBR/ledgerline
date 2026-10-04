@@ -29,6 +29,7 @@
   "accounts.noTransfers": "No transfers yet. Try one: it crosses all three services live.",
   "accounts.recent": "Recent transfers",
   "accounts.seeAll": "See all",
+  "accounts.thisMonth": "This month",
   "accounts.total": "Total holdings",
   "callback.failed": "Sign-in did not complete (link expired or already used).",
   "callback.progress": "Signing you in securely…",
@@ -266,6 +267,8 @@
   "welcome.ledgerText": "Every euro comes from somewhere: the trial balance is always zero.",
   "welcome.ledgerTitle": "Double-entry bookkeeping",
   "welcome.password": "Username pre-filled. Same password for every profile: {START_TAG_CODE}{INTERPOLATION}{CLOSE_TAG_CODE}",
+  "welcome.previewAccount": "Current account",
+  "welcome.previewLabel": "October rent",
   "welcome.sagaText": "Hold, fraud screening, then capture or release of funds, across three services.",
   "welcome.sagaTitle": "Saga with compensation",
   "welcome.title": "A transfer bank {START_TAG_SPAN}where every cent is accounted for.{CLOSE_TAG_SPAN}"

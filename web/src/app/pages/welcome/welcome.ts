@@ -1,9 +1,12 @@
+import { CurrencyPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
+import { TRANSFER_STATUS_LABELS } from '../../banking/labels';
 import { Auth } from '../../core/auth/auth';
 import { otherLocaleLink } from '../../core/locale';
 import { Avatar } from '../../shared/avatar';
 import { Icon, IconName } from '../../shared/icon';
+import { Money } from '../../shared/money';
 
 interface DemoUser {
   readonly username: string;
@@ -17,7 +20,7 @@ export const DEMO_PASSWORD = 'ledgerline-demo';
 
 @Component({
   selector: 'app-welcome',
-  imports: [Avatar, Icon],
+  imports: [Avatar, Icon, Money, CurrencyPipe],
   templateUrl: './welcome.html',
   styleUrl: './welcome.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -29,6 +32,10 @@ export class Welcome {
   protected readonly otherLocale = otherLocaleLink();
   protected readonly password = DEMO_PASSWORD;
   protected readonly pending = signal<string | null>(null);
+  /** The saga a large transfer goes through, as the preview on the left shows it. */
+  protected readonly previewSteps = (['Reserving', 'Screening', 'PendingReview'] as const).map(
+    (status) => ({ label: TRANSFER_STATUS_LABELS[status] }),
+  );
 
   protected readonly users: readonly DemoUser[] = [
     {
