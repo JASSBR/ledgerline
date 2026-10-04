@@ -14,7 +14,9 @@ Six always-on Container Apps (three services, gateway, broker, identity provider
   push, smoke-tests it and runs the Playwright suite against it.
 - **Azure** (`deploy/terraform`): the gateway, the three services and RabbitMQ are containers of **one Container App**
   (sidecars on localhost) that scales to zero, plus Keycloak in a second one. PostgreSQL Flexible Server (B1ms) holds
-  one database per service. Images are pulled with a managed identity.
+  one database per service. Images are built by GitHub Actions and pulled from **ghcr.io** (public, free): the
+  deploy script builds nothing and only points Azure at the commit's tag. (An earlier version pulled from Azure
+  Container Registry with a managed identity: a fixed ~€4.5 a month, and local `amd64` builds under emulation.)
 
 - Two Azure constraints shape the Terraform: since 2026 a new Container Apps environment defaults to *Express* mode,
   which refuses sidecars, so the environment is declared through the ARM API (`azapi`) in *WorkloadProfiles* mode; and
@@ -23,7 +25,9 @@ Six always-on Container Apps (three services, gateway, broker, identity provider
 
 ## Consequences
 
-- ✅ The demo costs nothing when idle; the architecture is still demonstrated in full on Kubernetes.
+- ✅ The demo costs nothing when idle, and no registry bills by the day; the architecture is still demonstrated in
+  full on Kubernetes.
+- ✅ The welcome page pings Keycloak and the gateway on arrival, so they wake while the visitor reads it.
 - ⚠️ On Azure the bank must stay at one replica (each replica would carry its own broker) and the first request after
   idle waits for a cold start.
 - ⚠️ Keycloak runs in dev mode (embedded H2, realm re-imported at start) in both topologies; production would back it

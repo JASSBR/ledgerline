@@ -63,7 +63,7 @@ duplicate a cent, even with 25 transfers per second hammering the same two accou
 | **Correctness proofs** | A [CsCheck property](tests/Ledgerline.Ledger.Domain.Tests): thousands of random operation sequences never create money or overdraw |
 | **Security** | Keycloak OIDC + PKCE, policies enforced in every service, 404 for others' accounts, YARP gateway with rate limiting — [SECURITY.md](SECURITY.md) |
 | **Kubernetes** | [`deploy/k8s`](deploy/k8s): restricted Pod Security, read-only root FS, default-deny NetworkPolicies, probes; **deployed on kind in CI** with the E2E suite run against it |
-| **Infrastructure as code** | [`deploy/terraform`](deploy/terraform): Container Apps, managed identity for image pulls, PostgreSQL — [ADR 0009](docs/adr/0009-deployment-topologies.md) |
+| **Infrastructure as code** | [`deploy/terraform`](deploy/terraform): Container Apps, images built in CI and pulled from ghcr.io, PostgreSQL — [ADR 0009](docs/adr/0009-deployment-topologies.md) |
 | **Modern Angular** | Zoneless, signals, `httpResource`, Signal Forms, **NgRx SignalStore** fed by SignalR, compiled FR/EN builds — [ADR 0008](docs/adr/0008-frontend-live-saga.md) |
 
 ## Architecture
