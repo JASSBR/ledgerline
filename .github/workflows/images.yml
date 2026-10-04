@@ -1,0 +1,53 @@
+name: Images
+
+# Builds the deployable images on GitHub's amd64 runners and publishes them to GitHub Container Registry,
+# tagged with the commit: deploy/azure.sh then only points Azure at a tag that already exists.
+on:
+  push:
+    branches: [main]
+    paths: [src/**, deploy/keycloak/**, Dockerfile, Directory.*.props, global.json, .github/workflows/images.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: images-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  image:
+    name: ${{ matrix.name }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: ledger, context: ., project: src/Services/Ledger/Ledgerline.Ledger/Ledgerline.Ledger.csproj }
+          - { name: payments, context: ., project: src/Services/Payments/Ledgerline.Payments/Ledgerline.Payments.csproj }
+          - { name: fraud, context: ., project: src/Services/Fraud/Ledgerline.Fraud/Ledgerline.Fraud.csproj }
+          - { name: gateway, context: ., project: src/Ledgerline.Gateway/Ledgerline.Gateway.csproj }
+          - { name: keycloak, context: deploy/keycloak, project: '' }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - id: tag
+        run: echo "short=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+      - uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.context }}
+          platforms: linux/amd64
+          build-args: ${{ matrix.project && format('PROJECT={0}', matrix.project) || '' }}
+          push: true
+          tags: |
+            ghcr.io/jassbr/ledgerline-${{ matrix.name }}:sha-${{ steps.tag.outputs.short }}
+            ghcr.io/jassbr/ledgerline-${{ matrix.name }}:latest
+          labels: org.opencontainers.image.source=https://github.com/${{ github.repository }}
+          cache-from: type=gha,scope=${{ matrix.name }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.name }}
