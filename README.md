@@ -7,7 +7,7 @@
 A double-entry ledger, a payments saga and a fraud desk that cooperate through RabbitMQ — and never lose, create or
 duplicate a cent, even with 25 transfers per second hammering the same two accounts.
 
-[**▶ Live demo**](https://ledgerline-bank.vercel.app) · [Architecture decisions](docs/adr/README.md) · [What the load test found](docs/performance.md) · [Français](#-en-français)
+[**▶ Live demo**](https://ledgerline.jassbr.me) · [Architecture decisions](docs/adr/README.md) · [What the load test found](docs/performance.md) · [Français](#-en-français)
 
 [![CI](https://github.com/JASSBR/ledgerline/actions/workflows/ci.yml/badge.svg)](https://github.com/JASSBR/ledgerline/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/JASSBR/ledgerline/actions/workflows/codeql.yml/badge.svg)](https://github.com/JASSBR/ledgerline/actions/workflows/codeql.yml)
@@ -33,7 +33,7 @@ duplicate a cent, even with 25 transfers per second hammering the same two accou
 
 ## Try it in 3 minutes
 
-1. Open the [live demo](https://ledgerline-bank.vercel.app) and sign in as **Alice** — through a real Keycloak login
+1. Open the [live demo](https://ledgerline.jassbr.me) and sign in as **Alice** — through a real Keycloak login
    (password `ledgerline-demo`, shown on the page).
 2. Send **3 500 €** from her savings account to **Bob**. The page shows the transfer crossing the services live: funds
    held by the Ledger, screened by Fraud… and **held for review** (large amount, new beneficiary). Her available balance
@@ -168,4 +168,4 @@ event sourcing, une saga de paiement avec réservation et compensation, et un se
 analyste. Gel de compte par un opérateur (motif obligatoire, inscrit dans l'historique du compte), mouvements
 entrées/sorties avec export CSV, notification « virement reçu » en direct. Idempotence de bout en bout, authentification Keycloak (OIDC + PKCE), suivi du virement en temps réel,
 déploiement Kubernetes validé en CI et Terraform pour Azure. Interface en français et en anglais.
-[Essayer la démo](https://ledgerline-bank.vercel.app/fr/).
+[Essayer la démo](https://ledgerline.jassbr.me/fr/).

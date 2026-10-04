@@ -172,9 +172,12 @@ resource "azurerm_container_app" "bank" {
           value = "http://localhost:${env.value}"
         }
       }
-      env {
-        name  = "Cors__AllowedOrigins__0"
-        value = var.spa_origin
+      dynamic "env" {
+        for_each = var.spa_origins
+        content {
+          name  = "Cors__AllowedOrigins__${env.key}"
+          value = env.value
+        }
       }
 
       startup_probe {

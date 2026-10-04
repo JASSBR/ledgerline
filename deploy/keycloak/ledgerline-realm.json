@@ -39,7 +39,7 @@
       },
       "redirectUris": [
         "http://localhost:4200/*",
-        "https://ledgerline-bank.vercel.app/*"
+        "https://ledgerline.jassbr.me/*", "https://ledgerline-bank.vercel.app/*"
       ],
       "webOrigins": [
         "+"

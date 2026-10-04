@@ -28,7 +28,7 @@ jobs:
             echo
             echo "| Demo | Link |"
             echo "|---|---|"
-            echo "| ClaimFlow | https://claimflow-insurance.vercel.app |"
-            echo "| Ledgerline | https://ledgerline-bank.vercel.app |"
-            echo "| Comptoir | https://comptoir-facade.lemondune-f6dce829.italynorth.azurecontainerapps.io/app/ |"
+            echo "| ClaimFlow | https://claimflow.jassbr.me |"
+            echo "| Ledgerline | https://ledgerline.jassbr.me |"
+            echo "| Comptoir | https://comptoir.jassbr.me/app/ |"
           } >> "$GITHUB_STEP_SUMMARY"

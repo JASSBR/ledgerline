@@ -1,5 +1,5 @@
 subscription_id         = "00000000-0000-0000-0000-000000000000"
-spa_origin              = "https://ledgerline-bank.vercel.app"
+spa_origins = ["https://ledgerline.jassbr.me", "https://ledgerline-bank.vercel.app"]
 
 # Optional: reuse an existing PostgreSQL Flexible Server (one database per service is created on it).
 # existing_postgres_server = { name = "my-pg", resource_group = "rg-shared" }

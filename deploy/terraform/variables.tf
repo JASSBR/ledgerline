@@ -26,10 +26,10 @@ variable "image_tag" {
   description = "Tag of the ledgerline-* images to run."
 }
 
-variable "spa_origin" {
-  type        = string
-  default     = "https://ledgerline-bank.vercel.app"
-  description = "Origin of the Angular app, allowed by CORS on the gateway (and declared in the Keycloak realm)."
+variable "spa_origins" {
+  type        = list(string)
+  default     = ["https://ledgerline.jassbr.me", "https://ledgerline-bank.vercel.app"]
+  description = "Origins of the Angular app, allowed by CORS on the gateway (and declared in the Keycloak realm)."
 }
 
 variable "existing_postgres_server" {
