@@ -35,16 +35,8 @@ public sealed class TransferSagaTests(BankFixture bank)
     public async Task Beneficiary_IsToldLive_WhenSomeoneElsesTransferLandsOnTheirAccount()
     {
         var received = new TaskCompletionSource<TransferReceivedNotice>(TaskCreationOptions.RunContinuationsAsynchronously);
-        await using var alice = new HubConnectionBuilder()
-            .WithUrl(new Uri(bank.Payments.Server.BaseAddress, TransfersHub.Path), options =>
-            {
-                options.HttpMessageHandlerFactory = _ => bank.Payments.Server.CreateHandler();
-                options.Transports = HttpTransportType.LongPolling;
-                options.Headers["Authorization"] = TestUsers.Customer(DemoAccounts.AliceUserId).ToString();
-            })
-            .Build();
+        await using var alice = await ConnectAsync(bank.Payments, DemoAccounts.AliceUserId);
         alice.On<TransferReceivedNotice>("transferReceived", notice => received.TrySetResult(notice));
-        await alice.StartAsync(TestContext.Current.CancellationToken);
 
         var transfer = await RunAsync(DemoAccounts.BobUserId, DemoAccounts.BobCurrent, DemoAccounts.AliceCurrent, 12.5m);
 
@@ -54,6 +46,48 @@ public sealed class TransferSagaTests(BankFixture bank)
         notice.ToAccountId.ShouldBe(DemoAccounts.AliceCurrent);
         notice.Amount.ShouldBe(12.5m);
         notice.FromName.ShouldBe("Bob Durand — Compte courant");
+    }
+
+    [Fact]
+    public async Task EveryReplica_PushesTheTransfersProgress_WhicheverConsumedTheMessage()
+    {
+        // Two browsers of the same customer, each connected to a different Payments replica. The saga's messages are
+        // consumed by one replica or the other; both browsers must still see the transfer complete.
+        var seenByFirst = new System.Collections.Concurrent.ConcurrentQueue<TransferStatusChangedView>();
+        var seenBySecond = new System.Collections.Concurrent.ConcurrentQueue<TransferStatusChangedView>();
+        await using var first = await ConnectAsync(bank.Payments, DemoAccounts.BobUserId);
+        await using var second = await ConnectAsync(bank.PaymentsReplica, DemoAccounts.BobUserId);
+        first.On<TransferStatusChangedView>("transferChanged", seenByFirst.Enqueue);
+        second.On<TransferStatusChangedView>("transferChanged", seenBySecond.Enqueue);
+
+        var transfer = await RunAsync(DemoAccounts.BobUserId, DemoAccounts.BobCurrent, DemoAccounts.AliceCurrent, 3m);
+
+        transfer.Status.ShouldBe(TransferStatus.Completed);
+        bool Completed(System.Collections.Concurrent.ConcurrentQueue<TransferStatusChangedView> seen) =>
+            seen.Any(change => change.TransferId == transfer.Id && string.Equals(change.Status, "Completed", StringComparison.Ordinal));
+        for (var attempt = 0; attempt < 50 && !(Completed(seenByFirst) && Completed(seenBySecond)); attempt++)
+        {
+            await Task.Delay(200, TestContext.Current.CancellationToken);
+        }
+
+        Completed(seenByFirst).ShouldBeTrue("the browser on the first replica missed the completion");
+        Completed(seenBySecond).ShouldBeTrue("the browser on the second replica missed the completion");
+    }
+
+    private sealed record TransferStatusChangedView(Guid TransferId, string Status);
+
+    private static async Task<HubConnection> ConnectAsync(ServiceFactory<Ledgerline.Payments.PaymentsService> payments, string userId)
+    {
+        var connection = new HubConnectionBuilder()
+            .WithUrl(new Uri(payments.Server.BaseAddress, TransfersHub.Path), options =>
+            {
+                options.HttpMessageHandlerFactory = _ => payments.Server.CreateHandler();
+                options.Transports = HttpTransportType.LongPolling;
+                options.Headers["Authorization"] = TestUsers.Customer(userId).ToString();
+            })
+            .Build();
+        await connection.StartAsync(TestContext.Current.CancellationToken);
+        return connection;
     }
 
     [Fact]

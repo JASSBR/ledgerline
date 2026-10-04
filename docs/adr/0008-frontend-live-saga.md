@@ -21,3 +21,9 @@ through Ledger, Fraud and an analyst, live.
 - ✅ One source of truth for transfers; realtime and HTTP never disagree.
 - ✅ The idempotency key is visible in the form: the robustness is part of the demo.
 - ⚠️ Saga step details (fraud reasons) come from the server in English; rule names are localized client-side.
+- ⚠️ SignalR keeps its connections in the memory of the Payments instance a browser reached. With two replicas
+  (Kubernetes), a notification produced or consumed on the other one never reached that browser: the screen froze on a
+  past step while the transfer completed (found as flaky end-to-end tests). Notifications now fan out over RabbitMQ:
+  each instance listens on its own auto-deleted queue bound to the type's exchange, in memory rather than through the
+  durable inbox (shared database, duplicate ids). No Redis or Azure SignalR backplane needed for this load; the test
+  `EveryReplica_PushesTheTransfersProgress_WhicheverConsumedTheMessage` runs two instances.

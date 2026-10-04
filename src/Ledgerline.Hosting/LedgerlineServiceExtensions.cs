@@ -46,11 +46,16 @@ public static class LedgerlineServiceExtensions
     /// <param name="serviceAssembly">
     /// Where Wolverine looks for handlers. Explicit, because the entry assembly is not the service under test hosts.
     /// </param>
+    /// <param name="everyInstanceReceives">
+    /// Contract types each running instance must receive, not just one of them: notifications pushed to the browsers
+    /// connected to that instance (SignalR keeps its connections in memory). See <see cref="AddMessaging"/>.
+    /// </param>
     public static WebApplicationBuilder AddLedgerlineService(
         this WebApplicationBuilder builder,
         string serviceName,
         System.Reflection.Assembly serviceAssembly,
-        Action<StoreOptions> configureStore)
+        Action<StoreOptions> configureStore,
+        IReadOnlySet<Type>? everyInstanceReceives = null)
     {
         ArgumentNullException.ThrowIfNull(builder);
         ArgumentException.ThrowIfNullOrWhiteSpace(serviceName);
@@ -68,7 +73,7 @@ public static class LedgerlineServiceExtensions
         builder.Services.CritterStackDefaults(defaults => defaults.Production.GeneratedCodeMode = TypeLoadMode.Auto);
 
         AddPersistence(builder, serviceName, configureStore);
-        AddMessaging(builder, serviceName, serviceAssembly);
+        AddMessaging(builder, serviceName, serviceAssembly, everyInstanceReceives ?? new HashSet<Type>());
         AddSecurity(builder);
         return builder;
     }
@@ -112,7 +117,19 @@ public static class LedgerlineServiceExtensions
             .ApplyAllDatabaseChangesOnStartup();
     }
 
-    private static void AddMessaging(WebApplicationBuilder builder, string serviceName, System.Reflection.Assembly serviceAssembly) =>
+    /// <summary>
+    /// Wolverine on RabbitMQ, one exchange per contract type. A service's instances normally compete on one queue per
+    /// type, so each message is handled once. Types in <paramref name="everyInstanceReceives"/> fan out instead: each
+    /// instance binds its own temporary queue to the exchange (deleted when it stops), so every instance gets every
+    /// message — without it, a notification reached only the browsers connected to whichever replica consumed it.
+    /// </summary>
+    private static void AddMessaging(
+        WebApplicationBuilder builder,
+        string serviceName,
+        System.Reflection.Assembly serviceAssembly,
+        IReadOnlySet<Type> everyInstanceReceives)
+    {
+        var instance = Guid.NewGuid().ToString("N")[..8];
         builder.UseWolverine(options =>
         {
             options.ServiceName = serviceName;
@@ -132,14 +149,30 @@ public static class LedgerlineServiceExtensions
             var rabbit = builder.Configuration.GetConnectionString(MessagingConnectionName)
                 ?? throw new InvalidOperationException($"Connection string '{MessagingConnectionName}' is missing.");
             var contractsNamespace = typeof(AccountRegistered).Namespace;
-            options.UseRabbitMq(new Uri(rabbit))
+            var rabbitMq = options.UseRabbitMq(new Uri(rabbit))
                 .AutoProvision()
                 // One exchange per contract type; one queue per (service, type). Two services handling the same
                 // event each get every message instead of competing for it.
                 .UseConventionalRouting(convention => convention
                     .IncludeTypes(type => string.Equals(type.Namespace, contractsNamespace, StringComparison.Ordinal))
+                    .ExcludeTypes(everyInstanceReceives.Contains)
                     .QueueNameForListener(type => $"{serviceName}.{type.Name}"));
+
+            // Wired by hand: with a local handler, Wolverine would otherwise deliver the message in-process, to the
+            // replica that produced it only. Published to its exchange, then a queue per instance, auto-deleted
+            // (RabbitMQ 4 refuses transient non-exclusive queues) so the broker drops it when the instance goes.
+            foreach (var type in everyInstanceReceives)
+            {
+                var queue = $"{serviceName}.{type.Name}.{instance}";
+                options.PublishMessage(type).ToRabbitExchange(type.Name);
+                rabbitMq.BindExchange(type.Name, ExchangeType.Fanout).ToQueue(queue, declared => declared.AutoDelete = true);
+                // In memory, not through the inbox: every instance stores to the same database, where the durable inbox
+                // would reject the second copy of a message id as a duplicate. A missed notification is only a stale
+                // screen until the next one; the transfer itself is never at stake.
+                options.ListenToRabbitQueue(queue).BufferedInMemory();
+            }
         });
+    }
 
     private static bool IsDeadlock(Exception exception) =>
         exception is PostgresException { SqlState: PostgresErrorCodes.DeadlockDetected }

@@ -1,4 +1,5 @@
 using JasperFx;
+using Ledgerline.Contracts;
 using Ledgerline.Hosting;
 using Ledgerline.Payments;
 using Ledgerline.Payments.Endpoints;
@@ -9,7 +10,12 @@ using Wolverine.ErrorHandling;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.AddLedgerlineService(PaymentsService.Name, typeof(PaymentsService).Assembly, PaymentsStore.Configure);
+// The hub pushes these to the browsers connected to this instance: every replica must receive each of them.
+builder.AddLedgerlineService(
+    PaymentsService.Name,
+    typeof(PaymentsService).Assembly,
+    PaymentsStore.Configure,
+    everyInstanceReceives: new HashSet<Type> { typeof(TransferStatusChanged), typeof(TransferReceived) });
 builder.AddAccountDirectorySubscription(PaymentsService.Name);
 builder.Services.AddOptions<PaymentsOptions>().Bind(builder.Configuration.GetSection(PaymentsOptions.SectionName));
 builder.Services.AddSignalR().AddJsonProtocol(options => options.PayloadSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter()));

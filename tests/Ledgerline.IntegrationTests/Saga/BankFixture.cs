@@ -23,6 +23,9 @@ public sealed class BankFixture : IAsyncLifetime
 
     public ServiceFactory<PaymentsService> Payments { get; private set; } = null!;
 
+    /// <summary>A second Payments instance on the same database and broker, as on Kubernetes (two replicas).</summary>
+    public ServiceFactory<PaymentsService> PaymentsReplica { get; private set; } = null!;
+
     public ServiceFactory<FraudService> Fraud { get; private set; } = null!;
 
     public IReadOnlyDictionary<Guid, string> Ibans { get; private set; } = new Dictionary<Guid, string>();
@@ -35,8 +38,10 @@ public sealed class BankFixture : IAsyncLifetime
         var vhost = await _infrastructure.CreateVirtualHostAsync("bank");
 
         Ledger = new ServiceFactory<LedgerService>("ledgerdb", await _infrastructure.CreateDatabaseAsync("ledger"), vhost, seed: true);
-        Payments = new ServiceFactory<PaymentsService>("paymentsdb", await _infrastructure.CreateDatabaseAsync("payments"), vhost, seed: false,
-            new Dictionary<string, string>(StringComparer.Ordinal) { ["Payments:ReviewDeadline"] = ReviewDeadline.ToString() });
+        var paymentsDatabase = await _infrastructure.CreateDatabaseAsync("payments");
+        var paymentsSettings = new Dictionary<string, string>(StringComparer.Ordinal) { ["Payments:ReviewDeadline"] = ReviewDeadline.ToString() };
+        Payments = new ServiceFactory<PaymentsService>("paymentsdb", paymentsDatabase, vhost, seed: false, paymentsSettings);
+        PaymentsReplica = new ServiceFactory<PaymentsService>("paymentsdb", paymentsDatabase, vhost, seed: false, paymentsSettings);
         // Velocity would turn the concurrency test into a review queue; it is covered by the rules' unit tests.
         Fraud = new ServiceFactory<FraudService>("frauddb", await _infrastructure.CreateDatabaseAsync("fraud"), vhost, seed: false,
             new Dictionary<string, string>(StringComparer.Ordinal) { ["Fraud:Policy:VelocityLimit"] = "1000" });
@@ -46,6 +51,7 @@ public sealed class BankFixture : IAsyncLifetime
         _ = Ledger.Server;
         await Ledger.Services.GetRequiredService<IHost>().WaitForSeedAsync();
         _ = Payments.Server;
+        _ = PaymentsReplica.Server;
         _ = Fraud.Server;
         await WaitForDirectoryAsync(Payments.Services.GetRequiredService<IDocumentStore>(), store => store.Query<DirectoryAccount>().CountAsync());
         await WaitForDirectoryAsync(Fraud.Services.GetRequiredService<IDocumentStore>(), store => store.Query<KnownAccount>().CountAsync());
@@ -59,6 +65,7 @@ public sealed class BankFixture : IAsyncLifetime
     {
         await Ledger.DisposeAsync();
         await Payments.DisposeAsync();
+        await PaymentsReplica.DisposeAsync();
         await Fraud.DisposeAsync();
         await _infrastructure.DisposeAsync();
     }
