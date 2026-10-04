@@ -40,9 +40,9 @@ ledgerline() {
 comptoir() {
   local jar token
   jar=$(mktemp)
-  until_ok "Comptoir facade + 2014 application (IIS)" 200 "$COMPTOIR/Account/Login" || return 1
+  until_ok "Comptoir facade + 2014 application (IIS)" 200 "$COMPTOIR/Account/Login?classic=1" || return 1
   # Signing in wakes the database; reading the catalogue wakes the new API. Demo account, published password.
-  token=$(curl -s -m 60 -c "$jar" -b "$jar" "$COMPTOIR/Account/Login" |
+  token=$(curl -s -m 60 -c "$jar" -b "$jar" "$COMPTOIR/Account/Login?classic=1" |
     sed -nE 's/.*name="__RequestVerificationToken" type="hidden" value="([^"]+)".*/\1/p' | head -1)
   until_ok "Comptoir database (sign-in)" 302 -c "$jar" -b "$jar" --data-urlencode "__RequestVerificationToken=$token" \
     -d "login=sophie&password=comptoir-demo" "$COMPTOIR/Account/Login" &&
