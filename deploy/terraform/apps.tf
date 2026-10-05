@@ -25,6 +25,24 @@ resource "azurerm_container_app" "keycloak" {
     min_replicas = 0
     max_replicas = 1
 
+    # Keycloak takes ~30 s to start, the first thing a visitor waits for: kept up on weekday working hours, when
+    # recruiters look, and woken by the first request otherwise. A custom rule replaces the default HTTP one, hence both.
+    custom_scale_rule {
+      name             = "weekday-hours"
+      custom_rule_type = "cron"
+      metadata = {
+        timezone        = "Europe/Paris"
+        start           = "0 8 * * 1-5"
+        end             = "0 20 * * 1-5"
+        desiredReplicas = "1"
+      }
+    }
+
+    http_scale_rule {
+      name                = "http"
+      concurrent_requests = "50"
+    }
+
     container {
       name   = "keycloak"
       image  = "${local.registry}/ledgerline-keycloak:${var.image_tag}"
