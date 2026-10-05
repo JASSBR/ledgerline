@@ -16,12 +16,12 @@ duplicate a cent, even with 25 transfers per second hammering the same two accou
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-kind%20in%20CI-326CE5)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-![A transfer that went through review, step by step](docs/images/transfer-completed.png)
+![A transfer, step by step through the Ledger, Fraud and Payments services](docs/images/transfer-completed.png)
 
 <table>
   <tr>
     <td width="50%"><img src="docs/images/welcome.png" alt="Sign-in page: the ledger cover and its first ruled page"></td>
-    <td width="50%"><img src="docs/images/accounts-dark.png" alt="Accounts, dark theme, money on hold"></td>
+    <td width="50%"><img src="docs/images/accounts-dark.png" alt="Accounts, dark theme"></td>
   </tr>
   <tr>
     <td align="center"><sub>Sign-in: the ledger's cover and its first ruled page</sub></td>
