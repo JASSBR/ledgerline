@@ -27,7 +27,7 @@
     <PackageVersion Include="WolverineFx.RuntimeCompilation" Version="6.45.0" />
     <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.12" />
     <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="10.0.12" />
-    <PackageVersion Include="Scalar.AspNetCore" Version="2.17.13" />
+    <PackageVersion Include="Scalar.AspNetCore" Version="2.17.14" />
     <PackageVersion Include="Yarp.ReverseProxy" Version="2.3.0" />
     <!-- Tests -->
     <PackageVersion Include="CsCheck" Version="4.9.1" />
