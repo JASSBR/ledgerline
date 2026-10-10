@@ -19,7 +19,7 @@
     <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="1.19.0" />
     <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="1.19.0" />
     <!-- Services -->
-    <PackageVersion Include="Marten" Version="9.45.0" />
+    <PackageVersion Include="Marten" Version="9.47.0" />
     <PackageVersion Include="WolverineFx" Version="6.45.0" />
     <PackageVersion Include="WolverineFx.Http" Version="6.45.0" />
     <PackageVersion Include="WolverineFx.Marten" Version="6.45.0" />
