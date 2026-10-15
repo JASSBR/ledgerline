@@ -44,7 +44,7 @@ jobs:
         working-directory: web
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -75,7 +75,7 @@ jobs:
           kubectl -n ledgerline port-forward svc/keycloak 8080:8080 > keycloak-pf.log 2>&1 &
           kubectl -n ledgerline port-forward svc/gateway 5300:8080 > gateway-pf.log 2>&1 &
           timeout 60 bash -c 'until curl -sf http://keycloak:8080/realms/ledgerline > /dev/null; do sleep 2; done'
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: npm
